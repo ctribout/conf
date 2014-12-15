@@ -1,0 +1,129 @@
+#### DOCS:
+# Ex commands
+# - http://vimdoc.sourceforge.net/htmldoc/vimindex.html#ex-cmd-index
+# - Note: <L> is <leader>, by default the comma key ','
+
+### Misc
+
+:sh            Launch a shell, and once exited go back to vim
+:! [cmd]       Run [cmd] in the shell
+    :10,15 ! sha512sum
+        => use lines 10 to 15 as input for "sha512sum" external command, and replace them with the output of that command
+ga             Indicates information about the char under the cursor (hex code, etc.)
+
+
+### Search and replace
+
+:%s/old/new/g  Replace all occurences of old by new in the file
+:%s/\%x85/\t/gc
+    Replace 0x85 character with a tab in the file
+V [select lines]:s/a/b/
+    Replace first "a" in each selected line with "b"
+:/^include/+1,$-1s#if#oops#g
+    Replace all occurences of "if" with "oops" from the line following the next line containing "include" (from cursor), up to the line before the last one
+:4,/this line/:s/a/A/g
+    Replace all "a" with "A" starting from line 4 up to first line containing "this line" after the cursor
+:4;/this line/:s/a/A/g
+    Exactly the same command as before, but with "," replaced by ";"
+    Replace all "a" with "A" starting from line 4 up to first line containing "this line" after the line 4
+    ";" sets the "current line" to be the one found to be the start of the range, and not the cursor anymore
+
+
+### Global editing
+
+:g/[pattern]/d
+    Delete all lines matching [pattern]
+:v/[pattern]/d
+:g!/[pattern]/d
+    Delete all lines NOT matching [pattern]
+:g/[pattern]/d 2
+    Delete 2 lines starting from any line matching [pattern]
+:g/pattern/t$
+    Copy all lines matching a pattern to end of file.
+:g/pattern/m$
+    Move all lines matching a pattern to end of file.
+
+
+:2,8co15       Copy lines 2 through 8 after line 15
+:4,15t$        Copy lines 4 through 15 to end of document (t == co)
+:-t$           Copy previous line to end of document
+:m0            Move current line to line 0 (i.e. the top of the document)
+:.,+3m$-1      Current line through current+3 are moved to the lastLine-1 (i.e. next to last)
+
+### Navigation
+
+
+[n]g;          Go to [n] older position in change list.
+[n]g,          Go to [n] newer position in change list.
+]c             Go to next diff
+[c             Go to previous diff
+
+
+## Changes
+
+u              Undo last change
+C-R            Undo last undo
+.              Repeat last operation ("redo")
+
+
+### Buffer
+
+:ls            List all buffers
+:bn            Go to next buffer
+:bp            Go to previous buffer
+:[n]b          Go to [n]th buffer
+:b#            Back to previously active buffer
+
+
+### Split:
+
+:sp            create horizontal split
+:vsp           create vertical split
+
+C-w h          go left split
+C-w j          go up split
+C-w k          go down split
+C-w l          go right spit
+
+C-w =          normalize split sizes
+
+C-w [n]-       [n] lines less for the split
+C-w [n]+       [n] lines more for the split
+C-w [n]<       [n] columns less for the split
+C-w [n]>       [n] columns more for the split
+
+C-w c          close current split
+C-w w          Switch to next split
+
+
+### Wildmenu
+
+enabled in conf, allows to use <up> <down> <right> <left> for navigation in folders/files, and <tab> completion
+
+### Copy and paste
+
+[cursor to beginning] v [cursor to end] y [cursor to target] P
+    Copy a block and paste it after the cursor
+    Notes:
+        * 'V' instead of 'v' to select whole lines
+        * 'd' instead of 'y' to cut
+        * 'p' insteand of 'P' to paster after cursor
+
+
+### Gitglutter plugin
+
+<L> hr         Revert current hunk git changes
+<L> hs         Stage current hunk git changes
+
+### Python-mode plugin
+
+K              Show python docs
+C-space        Rope autocomplete
+C-c g          Rope goto definition
+C-c d          Rope show documentation
+C-c f          Rope find occurrences
+<L> b            Set, unset breakpoint (g:pymode_breakpoint enabled)
+[[             Jump on previous class or function (normal, visual, operator modes)
+]]             Jump on next class or function (normal, visual, operator modes)
+[M             Jump on previous class or method (normal, visual, operator modes)
+]M             Jump on next class or method (normal, visual, operator modes)

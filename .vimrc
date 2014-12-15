@@ -35,8 +35,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'bling/vim-airline'
 " Tag bar (quickly view the classes/functions/vars in a file, and jump there)
 NeoBundle 'majutsushi/tagbar'
-" Show VCS diffs while editing (changes/removed/added lines)
-NeoBundle 'mhinz/vim-signify'
+" Show VCS diffs while editing (changes/removed/added lines), and stage/revert hunks
+NeoBundle 'airblade/vim-gitgutter'
 " Git wrapper, for integration with vim-airline (branch and commits in statusbar)
 NeoBundle 'tpope/vim-fugitive'
 " Quickly view open buffers and switch between them
@@ -230,7 +230,7 @@ nmap <F8> :TagbarOpenAutoClose<CR>
 " => bufexplorer plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <F9> \be
+nmap <F9> <leader>be
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
