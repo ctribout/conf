@@ -7,9 +7,7 @@ scriptDir=$(dirname $0 | xargs -i readlink -f {})
 # Then, create a symlink to our file
 for file in $(find ${scriptDir} -maxdepth 1 -name ".*" \! -name "." \! -name ".git"); do
     origf=~/$(basename ${file})
-    if [ $(readlink ${origf}) = ${file} ]; then
-        continue
-    fi
+    test $(readlink ${origf}) = ${file} && continue
     if [ -e ${origf} ]; then
         mv ${origf} ${origf}.backup
     fi
