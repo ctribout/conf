@@ -2,7 +2,7 @@
 
 " Install NeoBundle if not present yet
 if !isdirectory(expand('~')."/.vim/bundle/neobundle.vim")
-    !curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
+    !wget https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh --quiet -O - | /bin/bash
 endif
 
 if has('vim_starting')
