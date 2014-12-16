@@ -24,7 +24,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " Add or remove your Bundles here:
 "NeoBundle 'Shougo/neosnippet.vim'
 "NeoBundle 'Shougo/neosnippet-snippets'
-"NeoBundle 'tpope/vim-fugitive'
 "NeoBundle 'ctrlpvim/ctrlp.vim'
 "NeoBundle 'flazz/vim-colorschemes'
 
@@ -77,11 +76,10 @@ set autoread
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = ","
 let g:mapleader = ","
 
-" Fast saving
-"nmap <leader>w :w!<cr>
+" Add 'jk' combination to exit insert mode
+:inoremap jk <esc>
 
 " Force checking for modifications from the outside world
 :au CursorHold * if getcmdtype() == '' | checktime | endif
@@ -120,7 +118,7 @@ set hid
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
-set whichwrap+=<,>,h,l
+set whichwrap+=<,>,[,],h,l
 
 " Ignore case when searching
 set ignorecase
@@ -161,6 +159,7 @@ set cursorline
 " Default split behaviour
 set splitbelow
 set splitright
+" Always display status bar
 set laststatus=2
 
 
