@@ -42,8 +42,6 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'jlanzarotta/bufexplorer'
 " Dark color scheme
 NeoBundle 'sjl/badwolf'
-" Clever Python autocompletion (Note: popup issue in vim 7.3 = disabled)
-NeoBundle 'davidhalter/jedi-vim'
 " Python-specific tools
 NeoBundle 'klen/python-mode'
 
@@ -251,11 +249,14 @@ highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
 " => python-mode plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Disable python-mode rope (autocompletion) since jedi-vi is better at this
-let g:pymode_rope = 0
-let g:pymode_rope_lookup_project = 0
+" Disable python-mode rope autocompletion on dot since it makes things VERY slow
+let g:pymode_rope = 1
+let g:pymode_rope_completion = 1
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_rope_lookup_project = 1
+let g:pymode_rope_autoimport = 1
+let g:pymode_rope_autoimport_import_after_complete = 1
 " Disable auto pylint check when writing a python file
 let g:pymode_lint_write = 0
 " Interferes with autocomplete feature...
 let g:pymode_lint = 0
-
