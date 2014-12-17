@@ -1,7 +1,12 @@
 #### DOCS:
 # Ex commands
 # - http://vimdoc.sourceforge.net/htmldoc/vimindex.html
-# - Note: <L> is <leader>, by default the comma key ','
+# Notes:
+#  <L-> is for a leader combination, by default the comma key ','
+#  <C-> is for a CTRL- keys combination
+#  <A-> is for an ALT- keys combination
+#  <S-> is for a SHIFT keys combination
+#  <ESC> is for the ESCAPE key
 
 ### Misc
 
@@ -10,12 +15,16 @@
 :10,15 ! sha512sum
     => use lines 10 to 15 as input for "sha512sum" external command, and replace them with the output of that command
 ga                  Indicates information about the char under the cursor (hex code, etc.)
-V [select lines] C-v I # [esc]
+V [select lines] C-v I # <ESC>
     => adds a # in front of all selected lines
-0 d C-v }           Delete the first character of all lines up to the end of the paragraph
-0 d v }             Delete all the lines from the current one to the end of the paragraph
-[n] C-a             Adds [n] to current number under cursor
-[n] C-x             Substracts [n] to current number under cursor
+0d[C-v]}            Delete the first character of all lines up to the end of the paragraph
+0dv }               Delete all the lines from the current one to the end of the paragraph
+[n][C-a]            Adds [n] to current number under cursor
+[n][C-x]            Substracts [n] to current number under cursor
+di"                 Remove all the content inside the current double quote string the cursor is in, but keep the quotes
+da"                 Idem, but remove the quotes as well
+daW                 Remove the current WORD under the cursor
+di(                 Remove the inner content of the current parenthesis block
 
 ### Copy and move
 
@@ -105,7 +114,7 @@ _                   Go to the beginning of current line (first non-blank char)
 ## Changes
 
 u                   Undo last change
-C-R                 Undo last undo
+[C-R]               Undo last undo
 .                   Repeat last operation ("redo")
 
 
@@ -123,20 +132,20 @@ C-R                 Undo last undo
 :sp                 create horizontal split
 :vsp                create vertical split
 
-C-w h               go left split
-C-w j               go up split
-C-w k               go down split
-C-w l               go right spit
+[C-w] h             go left split
+[C-w] j             go up split
+[C-w] k             go down split
+[C-w] l             go right spit
 
-C-w =               normalize split sizes
+[C-w] =             normalize split sizes
 
-C-w [n]-            [n] lines less for the split
-C-w [n]+            [n] lines more for the split
-C-w [n]<            [n] columns less for the split
-C-w [n]>            [n] columns more for the split
+[C-w][n]-           [n] lines less for the split
+[C-w][n]+           [n] lines more for the split
+[C-w][n]<           [n] columns less for the split
+[C-w][n]>           [n] columns more for the split
 
-C-w c               close current split
-C-w w               Switch to next split
+[C-w]c              close current split
+[C-w]w              Switch to next split
 
 
 ### Wildmenu
@@ -162,10 +171,10 @@ enabled in conf, allows to use <up> <down> <right> <left> for navigation in fold
 
 K                   Show python docs
 C-space             Rope autocomplete
-C-c g               Rope goto definition
-C-c d               Rope show documentation
-C-c f               Rope find occurrences
-<L> b               Set, unset breakpoint (g:pymode_breakpoint enabled)
+[C-c]g              Rope goto definition
+[C-c]d              Rope show documentation
+[C-c]f              Rope find occurrences
+[L-b]               Set, unset breakpoint (g:pymode_breakpoint enabled)
 [[                  Jump on previous class or function (normal, visual, operator modes)
 ]]                  Jump on next class or function (normal, visual, operator modes)
 [M                  Jump on previous class or method (normal, visual, operator modes)
@@ -204,7 +213,7 @@ Example:
 deletes two lines
     dvj
 deletes from the cursor position until the character below the cursor
-    d<C-V>j
+    d[C-v]j
 deletes the character under the cursor and the character below the cursor.
 
 Be careful with forcing a linewise movement to be used characterwise or
