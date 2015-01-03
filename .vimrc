@@ -79,6 +79,10 @@ let g:mapleader = ","
 " Add 'jk' combination to exit insert mode
 :inoremap jk <esc>
 
+" Navigate through open buffers via F2/F3
+nmap <F2> :bp<CR>
+nmap <F3> :bn<CR>
+
 " Force checking for modifications from the outside world
 :au CursorHold * if getcmdtype() == '' | checktime | endif
 
