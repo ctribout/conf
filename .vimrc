@@ -65,10 +65,6 @@ NeoBundleCheck
 " Sets how many lines of history VIM has to remember
 set history=700
 
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
-
 " Set to auto read when a file is changed from the outside
 set autoread
 
@@ -78,10 +74,6 @@ let g:mapleader = ","
 
 " Add 'jk' combination to exit insert mode
 :inoremap jk <esc>
-
-" Navigate through open buffers via F2/F3
-nmap <F2> :bp<CR>
-nmap <F3> :bn<CR>
 
 " Force checking for modifications from the outside world
 :au CursorHold * if getcmdtype() == '' | checktime | endif
@@ -93,9 +85,14 @@ set colorcolumn=80
 set autochdir
 
 " Disable folding when opening files
-set foldmethod=syntax
 set foldlevel=99
 set foldlevelstart=99
+
+" Disable folding (slows things down a lot sometimes)
+set foldmethod=manual
+
+" Always set curdir to current file
+set autochdir
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -212,7 +209,6 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-airline plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -224,7 +220,9 @@ let g:airline_theme = 'light'
 " => tagbar plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <F8> :TagbarOpenAutoClose<CR>
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_show_linenumbers = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -232,6 +230,15 @@ nmap <F8> :TagbarOpenAutoClose<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 nmap <F9> <leader>be
+let g:bufExplorerReverseSort=0
+let g:bufExplorerShowDirectories=1
+let g:bufExplorerShowNoName=1
+let g:bufExplorerShowRelativePath=0
+let g:bufExplorerShowTabBuffer=1
+let g:bufExplorerShowUnlisted=1
+let g:bufExplorerSortBy='fullpath'
+let g:bufExplorerSplitOutPathName=1
+
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -254,12 +261,12 @@ highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Disable python-mode rope autocompletion on dot since it makes things VERY slow
-let g:pymode_rope = 1
-let g:pymode_rope_completion = 1
+let g:pymode_rope = 0
+let g:pymode_rope_completion = 0
 let g:pymode_rope_complete_on_dot = 0
-let g:pymode_rope_lookup_project = 1
-let g:pymode_rope_autoimport = 1
-let g:pymode_rope_autoimport_import_after_complete = 1
+let g:pymode_rope_lookup_project = 0
+let g:pymode_rope_autoimport = 0
+let g:pymode_rope_autoimport_import_after_complete = 0
 " Disable auto pylint check when writing a python file
 let g:pymode_lint_write = 0
 " Interferes with autocomplete feature...
