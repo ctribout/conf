@@ -2,11 +2,13 @@
 # Ex commands
 # - http://vimdoc.sourceforge.net/htmldoc/vimindex.html
 # Notes:
-#  <L-> is for a leader combination, by default the comma key ','
-#  <C-> is for a CTRL- keys combination
-#  <A-> is for an ALT- keys combination
-#  <S-> is for a SHIFT keys combination
-#  <ESC> is for the ESCAPE key
+#  [n] is usually for a digit/number
+#  [L-] is for a leader combination, by default the comma key ','
+#  [C-] is for a CTRL- keys combination
+#  [A-] is for an ALT- keys combination
+#  [S-] is for a SHIFT keys combination
+#  [ESC] is for the ESCAPE key
+#  [TAB] is for the tabulation key
 
 ### Misc
 
@@ -25,6 +27,8 @@ di"                 Remove all the content inside the current double quote strin
 da"                 Idem, but remove the quotes as well
 daW                 Remove the current WORD under the cursor
 di(                 Remove the inner content of the current parenthesis block
+i[C-v][TAB]         Insert a real TAB, ignoring expandtab option
+                        [C-v] in insert mode is for "insert literal copy of next character")
 
 ### Copy and move
 
