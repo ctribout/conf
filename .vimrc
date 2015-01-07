@@ -42,8 +42,6 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'jlanzarotta/bufexplorer'
 " Dark color scheme
 NeoBundle 'sjl/badwolf'
-" Python-specific tools
-NeoBundle 'klen/python-mode'
 
 " Required:
 call neobundle#end()
@@ -254,20 +252,3 @@ highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
 highlight SignifySignAdd    cterm=bold ctermbg=none  ctermfg=119
 highlight SignifySignDelete cterm=bold ctermbg=none  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => python-mode plugin
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Disable python-mode rope autocompletion on dot since it makes things VERY slow
-let g:pymode_rope = 0
-let g:pymode_rope_completion = 0
-let g:pymode_rope_complete_on_dot = 0
-let g:pymode_rope_lookup_project = 0
-let g:pymode_rope_autoimport = 0
-let g:pymode_rope_autoimport_import_after_complete = 0
-" Disable auto pylint check when writing a python file
-let g:pymode_lint_write = 0
-" Interferes with autocomplete feature...
-let g:pymode_lint = 0
