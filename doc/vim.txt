@@ -115,6 +115,12 @@ _                   Go to the beginning of current line (first non-blank char)
 [n]G                Go to the beginning of nth line (first non-blank char), default last one
 
 
+## Editing
+
+o                   Start insert mode on a new line, right after the current one
+O                   Start insert mode on a new line, right before the current one
+
+
 ## Changes
 
 u                   Undo last change
