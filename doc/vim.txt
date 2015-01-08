@@ -30,6 +30,18 @@ di(                 Remove the inner content of the current parenthesis block
 i[C-v][TAB]         Insert a real TAB, ignoring expandtab option
                         [C-v] in insert mode is for "insert literal copy of next character")
 
+[select text] meomsv`ea"[ESC]`si"[ESC]
+                    Add double quotes around the selected text:
+                        - sets a marker "e" at the current location: "me"
+                        - move to other side of selection: "o"
+                        - set a marker "v" there: "ms"
+                        - quit visual mode: "v"
+                        - go to marker "e": "`e"
+                        - append a quote: a"[ESC]
+                        - go to marker "s"
+                        - insert a quote: i"[ESC]
+
+
 ### Copy and move
 
 :2,8co15            Copy lines 2 through 8 after line 15
@@ -88,8 +100,8 @@ V [select lines]:s/a/b/
 [n]g,               Go to [n] newer position in change list.
 ]c                  Go to next diff
 [c                  Go to previous diff
-A-}                 Go to next blank line
-A-{                 Go to previous blank line
+}                   Go to next blank line
+{                   Go to previous blank line
 
 ]]                  Go to next top-level function/class definition start
 ]]                  Go to previous top-level function/class definition start
@@ -113,6 +125,11 @@ $                   Go to end of the line
 _                   Go to the beginning of current line (first non-blank char)
 [n]gg               Go to the beginning of nth line (first non-blank char), default first one
 [n]G                Go to the beginning of nth line (first non-blank char), default last one
+
+[[                  Jump on previous class or function (normal, visual, operator modes)
+]]                  Jump on next class or function (normal, visual, operator modes)
+[M                  Jump on previous class or method (normal, visual, operator modes)
+]M                  Jump on next class or method (normal, visual, operator modes)
 
 
 ## Editing
@@ -176,20 +193,8 @@ enabled in conf, allows to use <up> <down> <right> <left> for navigation in fold
 
 <L> hr              Revert current hunk git changes
 <L> hs              Stage current hunk git changes
-
-### Python-mode plugin
-
-K                   Show python docs
-C-space             Rope autocomplete
-[C-c]g              Rope goto definition
-[C-c]d              Rope show documentation
-[C-c]f              Rope find occurrences
-[L-b]               Set, unset breakpoint (g:pymode_breakpoint enabled)
-[[                  Jump on previous class or function (normal, visual, operator modes)
-]]                  Jump on next class or function (normal, visual, operator modes)
-[M                  Jump on previous class or method (normal, visual, operator modes)
-]M                  Jump on next class or method (normal, visual, operator modes)
-
+]c                  Go to next diff
+[c                  Go to previous diff
 
 ### Directly from vimdoc, for memo
 ##################################

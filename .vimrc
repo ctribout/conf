@@ -42,6 +42,9 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'jlanzarotta/bufexplorer'
 " Dark color scheme
 NeoBundle 'sjl/badwolf'
+" Session management
+NeoBundle 'xolox/vim-misc'
+NeoBundle 'xolox/vim-session'
 
 " Required:
 call neobundle#end()
@@ -91,6 +94,20 @@ set foldmethod=manual
 
 " Always set curdir to current file
 set autochdir
+
+" From http://vim.wikia.com/wiki/Search_for_visually_selected_text
+" Search for selected text, forwards or backwards.
+vnoremap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
