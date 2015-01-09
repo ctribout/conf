@@ -244,7 +244,22 @@ let g:tagbar_show_linenumbers = 1
 " => bufexplorer plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <F9> <leader>be
+let g:_sq_buffers_startup_reloaded = 0
+function _sq_bufexplorer_shortcut()
+  " Display the bufexplorer windows, but reloads all buffers at first attempt.
+  "  Useful because bufexplorer doesn't know about buffers at startup when
+  "  a session was restored via vim-restored, and doesn't display much in that
+  "  case...
+  if g:_sq_buffers_startup_reloaded == 0
+    let g:_sq_buffers_startup_reloaded = 1
+    if exists('g:session_default_name') " only needed if vim-session is used
+      :silent bufdo set guioptions+= " just a useless command on all buffers
+    endif
+  endif
+  :BufExplorer
+endfunction
+
+nmap <F9> :call _sq_bufexplorer_shortcut()<CR>
 let g:bufExplorerReverseSort=0
 let g:bufExplorerShowDirectories=1
 let g:bufExplorerShowNoName=1
@@ -254,6 +269,15 @@ let g:bufExplorerShowUnlisted=1
 let g:bufExplorerSortBy='fullpath'
 let g:bufExplorerSplitOutPathName=1
 
+
+" Enable syntax highlighting when buffers are displayed in a window through
+" :argdo and :bufdo, which disable the Syntax autocmd event to speed up
+" processing.
+" from https://stackoverflow.com/questions/12485981/syntax-highlighting-is-not-turned-on-in-vim-when-opening-multiple-files-using-ar
+augroup EnableSyntaxHighlighting
+    autocmd! BufWinEnter,WinEnter * nested if exists('syntax_on') && ! exists('b:current_syntax') && ! empty(&l:filetype) && index(split(&eventignore, ','), 'Syntax') == -1 | syntax enable | endif
+    autocmd! BufRead * if exists('syntax_on') && exists('b:current_syntax') && ! empty(&l:filetype) && index(split(&eventignore, ','), 'Syntax') != -1 | unlet! b:current_syntax | endif
+augroup END
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -269,3 +293,9 @@ highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
 highlight SignifySignAdd    cterm=bold ctermbg=none  ctermfg=119
 highlight SignifySignDelete cterm=bold ctermbg=none  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-session plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+:let g:session_autoload = 'yes'
+:let g:session_autosave = 'yes'
