@@ -136,7 +136,7 @@ _                   Go to the beginning of current line (first non-blank char)
 
 o                   Start insert mode on a new line, right after the current one
 O                   Start insert mode on a new line, right before the current one
-
+[visual] [C-o]      Use an :ex command in insert mode, and then go back in insert mode
 
 ## Changes
 
