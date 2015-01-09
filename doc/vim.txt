@@ -143,6 +143,15 @@ O                   Start insert mode on a new line, right before the current on
 u                   Undo last change
 [C-R]               Undo last undo
 .                   Repeat last operation ("redo")
+[n]@:               Repeat last :ex command [n] times
+
+
+## Macros
+
+q[letter][whatever]q
+                    Record a macro in register [letter] (all keystrikes)
+[n]@[letter]
+                    Replay macro of register [letter]
 
 
 ### Buffer
@@ -152,6 +161,7 @@ u                   Undo last change
 :bp                 Go to previous buffer
 :[n]b               Go to [n]th buffer
 :b#                 Back to previously active buffer
+:bd                 Remove buffer
 
 
 ### Split:
