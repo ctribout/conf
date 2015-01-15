@@ -45,6 +45,11 @@ NeoBundle 'sjl/badwolf'
 " Session management
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-session'
+" Highlight cursor word
+NeoBundle 'ihacklog/HiCursorWords'
+" Highlight trailing whitespaces
+NeoBundle 'bronson/vim-trailing-whitespace'
+
 
 " Required:
 call neobundle#end()
@@ -108,6 +113,9 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
+" In visual mode, replace selected text
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -143,8 +151,8 @@ set smartcase
 " Highlight search results
 set hlsearch
 
-" Makes search act like search in modern browsers
-set incsearch
+" Stop highlighting search results by pressing CR in normal mode
+nnoremap <cr> :noh<CR><CR>:<backspace>
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
@@ -294,8 +302,17 @@ highlight SignifySignAdd    cterm=bold ctermbg=none  ctermfg=119
 highlight SignifySignDelete cterm=bold ctermbg=none  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-session plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 :let g:session_autoload = 'yes'
 :let g:session_autosave = 'yes'
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => HiCursorWords plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Don't hilight unless the cursor doesn't move for 1 second
+let g:HiCursorWords_delay = 1000
