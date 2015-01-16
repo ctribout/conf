@@ -316,3 +316,10 @@ highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
 
 " Don't hilight unless the cursor doesn't move for 1 second
 let g:HiCursorWords_delay = 1000
+
+"""
+""" Use local .vimrc
+if filereadable(glob("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
+
