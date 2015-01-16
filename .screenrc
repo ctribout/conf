@@ -1,0 +1,12 @@
+# Allow scrolling
+termcapinfo xterm* ti@:te@
+defscrollback 99999
+
+# Misc
+#bind b eval "writebuf" "exec sh -c 'pbcopy < /tmp/screen-exchange'"
+term screen-256color
+startup_message off
+
+# Load local user config now (if exists)
+source $HOME/.screenrc.local
+
