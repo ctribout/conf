@@ -15,56 +15,8 @@ HISTFILESIZE=2000
 export EDITOR=vim
 export VISUAL=vim
 
-# set term
-if [ "${TERM}" = "xterm" ] ; then
-    if [ -z "${COLORTERM}" ] ; then
-        if [ -n "${XTERM_VERSION}" ] ; then
-            case "${XTERM_VERSION}" in
-            "XTerm(256)") TERM="xterm-256color" ;;
-            "XTerm(88)") TERM="xterm-88color" ;;
-            "XTerm") ;;
-            esac
-        fi
-    else
-        case "${COLORTERM}" in
-            gnome-terminal)
-                TERM="gnome-256color" ;;
-        esac
-    fi
-fi
-SCREEN_COLORS="$(tput colors)"
-if [ -z "${SCREEN_COLORS}" ] ; then
-    case "${TERM}" in
-        screen-*color-bce)
-            echo "Unknown terminal ${TERM}. Falling back to 'screen-bce'."
-            export TERM=screen-bce
-            ;;
-        *-88color)
-            echo "Unknown terminal ${TERM}. Falling back to 'xterm-88color'."
-            export TERM=xterm-88color
-            ;;
-        *-256color)
-            echo "Unknown terminal ${TERM}. Falling back to 'xterm-256color'."
-            export TERM=xterm-256color
-            ;;
-    esac
-    SCREEN_COLORS=`tput colors`
-fi
-if [ -z "${SCREEN_COLORS}" ] ; then
-    # Fallback
-    case "${TERM}" in
-        gnome*|xterm*|konsole*|aterm|[Ee]term)
-            export TERM=xterm
-            ;;
-        rxvt*)
-            export TERM=rxvt
-            ;;
-        screen*)
-            export TERM=screen
-            ;;
-    esac
-    SCREEN_COLORS=`tput colors`
-fi
+# TODO: unclear how to correctly handle this and always have 256 colors...
+TERM=xterm-256color
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
