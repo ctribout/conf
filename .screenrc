@@ -9,4 +9,3 @@ startup_message off
 
 # Load local user config now (if exists)
 source $HOME/.screenrc.local
-
