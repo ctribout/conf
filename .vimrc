@@ -69,10 +69,14 @@ NeoBundleCheck
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sets how many lines of history VIM has to remember
-set history=700
+set history=1000
+set undolevels=1000
 
 " Set to auto read when a file is changed from the outside
 set autoread
+
+" change the terminal's title
+set title
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file

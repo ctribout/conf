@@ -1,0 +1,108 @@
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don't put duplicate lines or lines starting with space in the history.
+HISTCONTROL=ignoreboth
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# favorite editor
+export EDITOR=vim
+export VISUAL=vim
+
+# set term
+if [ "${TERM}" = "xterm" ] ; then
+    if [ -z "${COLORTERM}" ] ; then
+        if [ -n "${XTERM_VERSION}" ] ; then
+            case "${XTERM_VERSION}" in
+            "XTerm(256)") TERM="xterm-256color" ;;
+            "XTerm(88)") TERM="xterm-88color" ;;
+            "XTerm") ;;
+            esac
+        fi
+    else
+        case "${COLORTERM}" in
+            gnome-terminal)
+                TERM="gnome-256color" ;;
+        esac
+    fi
+fi
+SCREEN_COLORS="$(tput colors)"
+if [ -z "${SCREEN_COLORS}" ] ; then
+    case "${TERM}" in
+        screen-*color-bce)
+            echo "Unknown terminal ${TERM}. Falling back to 'screen-bce'."
+            export TERM=screen-bce
+            ;;
+        *-88color)
+            echo "Unknown terminal ${TERM}. Falling back to 'xterm-88color'."
+            export TERM=xterm-88color
+            ;;
+        *-256color)
+            echo "Unknown terminal ${TERM}. Falling back to 'xterm-256color'."
+            export TERM=xterm-256color
+            ;;
+    esac
+    SCREEN_COLORS=`tput colors`
+fi
+if [ -z "${SCREEN_COLORS}" ] ; then
+    # Fallback
+    case "${TERM}" in
+        gnome*|xterm*|konsole*|aterm|[Ee]term)
+            export TERM=xterm
+            ;;
+        rxvt*)
+            export TERM=rxvt
+            ;;
+        screen*)
+            export TERM=screen
+            ;;
+    esac
+    SCREEN_COLORS=`tput colors`
+fi
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+    alias less='less -r' # raw control characters
+fi
+
+# some more ls aliases
+alias ll='ls -al'
+alias l='ll'
+# personal aliases
+alias sks='ssh -nNTq -C -D 1080'
+alias k='kate -u'
+alias grep='grep --exclude-dir=.svn --exclude-dir=.git'  # show differences in colour and ignore .svn dirs
+
+set_prompt() {
+    # Retrieve data for prompt
+    _p_ssh=0
+    test -n "${SSH_CLIENT}${SSH_CONNECTION}${SSH_TTY}" && _p_ssh=1
+    _p_screen=0
+    test -n "${STY}" && _p_screen=1
+    _p_vim=0
+    test -n "${VIMRUNTIME}${MYVIMRC}${VIM}" && _p_vim=1
+    _p_has_x=0
+    test -n "${DISPLAY}" && _p_has_x=1
+    _p_root=0
+    test $(id -u) -eq 0 && _p_root=1
+    _p_user=$(whoami)
+    _p_hostname=$(uname -n)
+    test -n "${LOCAL_HOSTNAME}" && _p_hostname=${LOCAL_HOSTNAME}
+    set_prompt_spe ${_p_ssh} ${_p_screen} ${_p_vim} ${_p_has_x} ${_p_root} ${_p_user} ${_p_hostname}
+}
+
+# source local file if relevant
+test -f ~/.shellrc.local && source ~/.shellrc.local
+
+set_prompt
