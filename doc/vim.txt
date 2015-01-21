@@ -9,7 +9,8 @@
 #  [S-] is for a SHIFT keys combination
 #  [ESC] is for the ESCAPE key
 #  [TAB] is for the tabulation key
-
+#  [MOTION] is for a motion (go to end of file, next paragraph, next line, left, etc.)
+#  [visual], [normal], ... is for vim modes in which the command works (by default normal)
 ### Misc
 
 :sh                 Launch a shell, and once exited go back to vim
@@ -158,6 +159,7 @@ q[letter][whatever]q
 ### Buffer
 
 :ls                 List all buffers
+:b[n]               Switch to buffer number [n]
 :bn                 Go to next buffer
 :bp                 Go to previous buffer
 :[n]b               Go to [n]th buffer
@@ -206,6 +208,13 @@ enabled in conf, allows to use <up> <down> <right> <left> for navigation in fold
 <L> hs              Stage current hunk git changes
 ]c                  Go to next diff
 [c                  Go to previous diff
+
+### tcomment_vim plugin
+
+gc[MOTION]          Toggle comments on motion
+[visual]gc          Toggle comments on selection
+[C-_][C-_]          Toggle comments on current line
+[C-_]p              Comment the current inner paragraph
 
 ### Directly from vimdoc, for memo
 ##################################
