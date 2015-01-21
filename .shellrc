@@ -38,18 +38,18 @@ alias grep='grep --exclude-dir=.svn --exclude-dir=.git'  # show differences in c
 
 set_prompt() {
     # Retrieve data for prompt
-    _p_ssh=0
+    local _p_ssh=0
     test -n "${SSH_CLIENT}${SSH_CONNECTION}${SSH_TTY}" && _p_ssh=1
-    _p_screen=0
+    local _p_screen=0
     test -n "${STY}" && _p_screen=1
-    _p_vim=0
+    local _p_vim=0
     test -n "${VIMRUNTIME}${MYVIMRC}${VIM}" && _p_vim=1
-    _p_has_x=0
+    local _p_has_x=0
     test -n "${DISPLAY}" && _p_has_x=1
-    _p_root=0
+    local _p_root=0
     test $(id -u) -eq 0 && _p_root=1
-    _p_user=$(whoami)
-    _p_hostname=$(uname -n)
+    local _p_user=$(whoami)
+    local _p_hostname=$(uname -n)
     test -n "${LOCAL_HOSTNAME}" && _p_hostname=${LOCAL_HOSTNAME}
     set_prompt_spe ${_p_ssh} ${_p_screen} ${_p_vim} ${_p_has_x} ${_p_root} ${_p_user} ${_p_hostname}
 }
@@ -58,3 +58,5 @@ set_prompt() {
 test -f ~/.shellrc.local && source ~/.shellrc.local
 
 set_prompt
+unset -f set_prompt set_prompt_spe
+

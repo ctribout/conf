@@ -4,18 +4,22 @@ test -f ~/.zshrc.local && source ~/.zshrc.local
 autoload -U colors && colors
 
 set_prompt_spe() {
-    is_ssh=$1
+    local is_ssh=$1
 
-    is_screen=$2
-    is_vim=$3
-    has_x=$4
+    local is_screen=$2
+    local is_vim=$3
+    local has_x=$4
 
-    is_user_root=$5
-    user=$6
-    hostname=$7
+    local is_user_root=$5
+    local user=$6
+    local hostname=$7
+
+    local prompt_sfx=
+    local prompt_symb=
+    local prompt_hostname=
 
     PROMPT=
-    prompt_sfx=
+
     test ${is_screen} -eq 1 && prompt_sfx="${prompt_sfx}s"
     test ${is_vim} -eq 1 && prompt_sfx="${prompt_sfx}v"
     test ${has_x} -eq 1 && prompt_sfx="${prompt_sfx}x"

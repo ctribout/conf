@@ -49,7 +49,8 @@ NeoBundle 'xolox/vim-session'
 NeoBundle 'ihacklog/HiCursorWords'
 " Highlight trailing whitespaces
 NeoBundle 'bronson/vim-trailing-whitespace'
-
+" Code comments
+NeoBundle 'tomtom/tcomment_vim'
 
 " Required:
 call neobundle#end()
