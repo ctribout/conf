@@ -1,6 +1,7 @@
 # Allow scrolling
 termcapinfo xterm* ti@:te@
 defscrollback 99999
+shell "/bin/bash"
 
 # Misc
 #bind b eval "writebuf" "exec sh -c 'pbcopy < /tmp/screen-exchange'"
