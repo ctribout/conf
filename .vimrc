@@ -76,9 +76,6 @@ set undolevels=1000
 " Set to auto read when a file is changed from the outside
 set autoread
 
-" change the terminal's title
-set title
-
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let g:mapleader = ","
