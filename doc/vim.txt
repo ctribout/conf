@@ -99,8 +99,6 @@ V [select lines]:s/a/b/
 
 [n]g;               Go to [n] older position in change list.
 [n]g,               Go to [n] newer position in change list.
-]c                  Go to next diff
-[c                  Go to previous diff
 }                   Go to next blank line
 {                   Go to previous blank line
 
@@ -201,6 +199,12 @@ enabled in conf, allows to use <up> <down> <right> <left> for navigation in fold
         * 'd' instead of 'y' to cut
         * 'p' insteand of 'P' to paster after cursor
 
+### diff
+]c                  Go to next diff
+[c                  Go to previous diff
+do                  Get changes from other window
+dp                  Put changes to other window
+:diffupdate         Refresh diff
 
 ### Gitglutter plugin
 
