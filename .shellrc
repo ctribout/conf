@@ -35,6 +35,7 @@ alias l='ll'
 alias sks='ssh -nNTq -C -D 1080'
 alias k='kate -u'
 alias grep='grep --exclude-dir=.svn --exclude-dir=.git'  # show differences in colour and ignore .svn dirs
+alias irssi="screen -wipe; screen -A -U -x -R -S irssi irssi"
 
 set_prompt() {
     # Retrieve data for prompt
