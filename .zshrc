@@ -20,11 +20,11 @@ set_prompt_spe() {
 
     PROMPT=
 
-    test ${is_screen} -eq 1 && prompt_sfx="${prompt_sfx}s"
-    test ${is_vim} -eq 1 && prompt_sfx="${prompt_sfx}v"
-    test ${has_x} -eq 1 && prompt_sfx="${prompt_sfx}x"
+    test ${is_vim} -eq 1 && prompt_sfx="${prompt_sfx}%B%{%F{red}%}v%b%{%f%}"
+    test ${is_screen} -eq 1 && prompt_sfx="${prompt_sfx}%{%F{yellow}%}s%{%f%}"
+    test ${has_x} -eq 1 && prompt_sfx="${prompt_sfx}%{%F{yellow}%}x%{%f%}"
 
-    test -n "${prompt_sfx}" && PROMPT="${PROMPT}%{%F{yellow}%}${prompt_sfx}|%{%f%}"
+    test -n "${prompt_sfx}" && PROMPT="${PROMPT}${prompt_sfx}%{%F{yellow}%}|%{%f%}"
 
     if [ ${is_user_root} -eq 1 ]; then
         prompt_symb='#'
