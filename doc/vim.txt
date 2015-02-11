@@ -1,6 +1,7 @@
 #### DOCS:
 # Ex commands
 # - http://vimdoc.sourceforge.net/htmldoc/vimindex.html
+# - https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim/1220118#1220118
 # Notes:
 #  [n] is usually for a digit/number
 #  [L-] is for a leader combination, by default the comma key ','
@@ -18,7 +19,7 @@
 :10,15 ! sha512sum
     => use lines 10 to 15 as input for "sha512sum" external command, and replace them with the output of that command
 ga                  Indicates information about the char under the cursor (hex code, etc.)
-V [select lines] C-v I # <ESC>
+V [select lines] 0 [C-v] I # <ESC>
     => adds a # in front of all selected lines
 0d[C-v]}            Delete the first character of all lines up to the end of the paragraph
 0dv }               Delete all the lines from the current one to the end of the paragraph
@@ -124,6 +125,9 @@ $                   Go to end of the line
 _                   Go to the beginning of current line (first non-blank char)
 [n]gg               Go to the beginning of nth line (first non-blank char), default first one
 [n]G                Go to the beginning of nth line (first non-blank char), default last one
+f[char]             Go to next [char] on the current line, cursor on the character
+F[char]             Go to previous [char] on the current line, cursor on the character
+                        Note: t/T does the same but with previous characters on the line
 
 [[                  Jump on previous class or function (normal, visual, operator modes)
 ]]                  Jump on next class or function (normal, visual, operator modes)
@@ -198,6 +202,9 @@ enabled in conf, allows to use <up> <down> <right> <left> for navigation in fold
         * 'V' instead of 'v' to select whole lines
         * 'd' instead of 'y' to cut
         * 'p' insteand of 'P' to paster after cursor
+
+"*yy                Copy current line to the system selection buffer (middle-click stuff usually)
+"+yy                Copy current line to the system cut buffer ('clipboard')
 
 ### diff
 ]c                  Go to next diff
