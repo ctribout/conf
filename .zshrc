@@ -1,6 +1,12 @@
 # source local file if relevant
 test -f ~/.zshrc.local && source ~/.zshrc.local
 
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_SPACE
+setopt NO_HIST_BEEP
+
 autoload -U colors && colors
 
 set_prompt_spe() {
