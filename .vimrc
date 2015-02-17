@@ -256,6 +256,18 @@ nmap <F8> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_show_linenumbers = 1
 
+let g:tagbar_type_asciidoc = {
+    \ 'ctagstype' : 'asciidoc',
+    \ 'kinds' : [
+        \ 'h:table of contents',
+        \ 'a:anchors:1',
+        \ 't:titles:1',
+        \ 'n:includes:1',
+        \ 'i:images:1',
+        \ 'I:inline images:1'
+    \ ],
+    \ 'sort' : 0
+    \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => bufexplorer plugin
@@ -270,7 +282,15 @@ function _sq_bufexplorer_shortcut()
   if g:_sq_buffers_startup_reloaded == 0
     let g:_sq_buffers_startup_reloaded = 1
     if exists('g:session_default_name') " only needed if vim-session is used
-      :silent bufdo set guioptions+= " just a useless command on all buffers
+      :bfirst
+      let l:current = 1
+      let l:last = bufnr("$")
+      while l:current <= l:last
+        if bufexists(l:current)
+          execute ":buffer ".l:current
+        endif
+        let l:current = l:current + 1
+      endwhile
     endif
   endif
   :BufExplorer
