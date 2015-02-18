@@ -197,6 +197,13 @@ set laststatus=2
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => File types
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd BufNewFile,BufRead *.ad set filetype=asciidoc
+autocmd BufNewFile,BufRead *.adoc set filetype=asciidoc
+autocmd BufNewFile,BufRead *.asciidoc set filetype=asciidoc
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
