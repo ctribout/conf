@@ -192,9 +192,6 @@ set cursorline
 " Default split behaviour
 set splitbelow
 set splitright
-" Always display status bar
-set laststatus=2
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => File types
@@ -216,7 +213,7 @@ colorscheme badwolf
 set encoding=utf8
 
 " Use Unix as the standard file type
-set ffs=unix,dos,mac
+set fileformats=unix,dos,mac
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -254,6 +251,27 @@ set wrap " Wrap lines for display
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme = 'light'
+let g:airline_powerline_fonts=1
+" Always display status bar
+set laststatus=2
+" Use nicer symbols in the bars
+set guifont=PowerlineSymbols
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => tagbar plugin
