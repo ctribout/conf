@@ -59,6 +59,8 @@ i[C-v][TAB]         Insert a real TAB, ignoring expandtab option
 <<                  Un-indent line
 V [select lines]>   Indent selection
 V [select lines]<   Un-indent selection
+[C-t]               Indent current line in insert mode
+[C-d]               Unindent current line in insert mode
 
 
 ### Search and replace
