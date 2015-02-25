@@ -71,6 +71,9 @@ NeoBundleCheck
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 256-colors support
+set t_Co=256
+
 " Sets how many lines of history VIM has to remember
 set history=1000
 set undolevels=1000
@@ -180,7 +183,9 @@ set matchtime=2
 set noerrorbells
 set novisualbell
 set t_vb=
-set timeoutlen=500 " time in ms for key code sequences
+
+" Time in ms for key code sequences
+set timeoutlen=500 ttimeoutlen=10
 
 " Show line numbers
 set number
