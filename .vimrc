@@ -6,12 +6,12 @@ if !isdirectory(expand('~')."/.vim/bundle/neobundle.vim")
 endif
 
 if has('vim_starting')
-  if &compatible
-    set nocompatible               " Be iMproved
-  endif
+    if &compatible
+        set nocompatible               " Be iMproved
+    endif
 
-  " Required:
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+    " Required:
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
 " Required:
@@ -53,6 +53,15 @@ NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'tomtom/tcomment_vim'
 " Display Marks in the left margin
 NeoBundle 'kshenoy/vim-signature'
+" Indent guides
+NeoBundle 'nathanaelkane/vim-indent-guides'
+" Autocompletion
+let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is so slow to get
+NeoBundle 'Valloric/YouCompleteMe', {
+            \ 'build' : {
+            \   'unix' : './install.sh'
+            \ },
+            \ }
 
 " Required:
 call neobundle#end()
@@ -107,30 +116,30 @@ set foldmethod=manual
 " From http://vim.wikia.com/wiki/Search_for_visually_selected_text
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy/<C-R><C-R>=substitute(
-  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
+    \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+    \gvy/<C-R><C-R>=substitute(
+    \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+    \gV:call setreg('"', old_reg, old_regtype)<CR>
 vnoremap <silent> # :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy?<C-R><C-R>=substitute(
-  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
+    \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+    \gvy?<C-R><C-R>=substitute(
+    \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+    \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 " In visual mode, replace selected text
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 " In visual mode, search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy/<C-R><C-R>=substitute(
-  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
+    \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+    \gvy/<C-R><C-R>=substitute(
+    \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+    \gV:call setreg('"', old_reg, old_regtype)<CR>
 vnoremap <silent> # :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy?<C-R><C-R>=substitute(
-  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
+    \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+    \gvy?<C-R><C-R>=substitute(
+    \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+    \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -211,8 +220,8 @@ autocmd BufNewFile,BufRead *.asciidoc set filetype=asciidoc
 " Enable syntax highlighting
 syntax enable
 
+" set background=dark " Can help other plugins find correct colors
 colorscheme badwolf
-" set background=dark
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -247,7 +256,6 @@ set nolinebreak
 set textwidth=0
 
 set autoindent
-set smartindent
 set wrap " Wrap lines for display
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -279,7 +287,6 @@ let g:airline_symbols.space = ' '
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => tagbar plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 nmap <F8> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_show_linenumbers = 1
@@ -300,28 +307,27 @@ let g:tagbar_type_asciidoc = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => bufexplorer plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 let g:_sq_buffers_startup_reloaded = 0
 function _sq_bufexplorer_shortcut()
-  " Display the bufexplorer windows, but reloads all buffers at first attempt.
-  "  Useful because bufexplorer doesn't know about buffers at startup when
-  "  a session was restored via vim-restored, and doesn't display much in that
-  "  case...
-  if g:_sq_buffers_startup_reloaded == 0
-    let g:_sq_buffers_startup_reloaded = 1
-    if exists('g:session_default_name') " only needed if vim-session is used
-      :bfirst
-      let l:current = 1
-      let l:last = bufnr("$")
-      while l:current <= l:last
-        if bufexists(l:current)
-          execute ":buffer ".l:current
+    " Display the bufexplorer windows, but reloads all buffers at first attempt.
+    "  Useful because bufexplorer doesn't know about buffers at startup when
+    "  a session was restored via vim-restored, and doesn't display much in that
+    "  case...
+    if g:_sq_buffers_startup_reloaded == 0
+        let g:_sq_buffers_startup_reloaded = 1
+        if exists('g:session_default_name') " only needed if vim-session is used
+            :bfirst
+            let l:current = 1
+            let l:last = bufnr("$")
+            while l:current <= l:last
+                if bufexists(l:current)
+                    execute ":buffer ".l:current
+                endif
+                let l:current = l:current + 1
+            endwhile
         endif
-        let l:current = l:current + 1
-      endwhile
     endif
-  endif
-  :BufExplorer
+    :BufExplorer
 endfunction
 
 nmap <F9> :call _sq_bufexplorer_shortcut()<CR>
@@ -348,13 +354,11 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-signify plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119
 highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167
 highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
 
 " highlight signs in Sy
-
 highlight SignifySignAdd    cterm=bold ctermbg=none  ctermfg=119
 highlight SignifySignDelete cterm=bold ctermbg=none  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
@@ -370,37 +374,40 @@ highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => HiCursorWords plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " Don't hilight unless the cursor doesn't move for 1 second
 let g:HiCursorWords_delay = 1000
 
-"""
-""" Use local .vimrc
-if filereadable(glob("~/.vimrc.local"))
-  source ~/.vimrc.local
-endif
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-indent-guides plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 4
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_auto_colors = 0
+" set indent colors: very light (not visible AT ALL on gvim though...)
+hi IndentGuidesOdd  ctermbg=233
+hi IndentGuidesEven ctermbg=234
+let g:indent_guides_color_change_percent=100
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim-signature plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " From https://gist.github.com/kshenoy/14f2c4ce7af28b54882b
 " This function returns the highlight group used by git-gutter depending on how the line was edited (added/modified/deleted)
 function! SignatureGitGutter(lnum)
-  let gg_line_state = filter(copy(gitgutter#diff#process_hunks(gitgutter#hunk#hunks())), 'v:val[0] == a:lnum')
+    let gg_line_state = filter(copy(gitgutter#diff#process_hunks(gitgutter#hunk#hunks())), 'v:val[0] == a:lnum')
 
-  if len(gg_line_state) == 0
-    return 'Exception'
-  endif
+    if len(gg_line_state) == 0
+        return 'Exception'
+    endif
 
-  if gg_line_state[0][1] =~ 'added'
-    return 'GitGutterAdd'
-  elseif gg_line_state[0][1] =~ 'modified'
-    return 'GitGutterChange'
-  elseif gg_line_state[0][1] =~ 'removed'
-    return 'GitGutterDelete'
-  endif
+    if gg_line_state[0][1] =~ 'added'
+        return 'GitGutterAdd'
+    elseif gg_line_state[0][1] =~ 'modified'
+        return 'GitGutterChange'
+    elseif gg_line_state[0][1] =~ 'removed'
+        return 'GitGutterDelete'
+    endif
 endfunction
 
 " Next, assign it to g:SignatureMarkTextHL
@@ -411,4 +418,10 @@ let g:SignatureMarkTextHL = 'SignatureGitGutter(a:lnum)'
 
 " Plugin tuning
 let g:SignaturePurgeConfirmation = 1 " avoid loosing all marks on m<space>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" Use local .vimrc
+if filereadable(glob("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
 
