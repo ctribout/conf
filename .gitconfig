@@ -1,0 +1,60 @@
+[alias]
+    br = branch -v
+    ci = commit
+    co = checkout
+    last = log -1 -p --stat HEAD
+    lg = log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ar)%Creset'
+    st = status
+[branch]
+    autosetupmerge = always
+    autosetuprebase = always
+[color]
+    interactive = auto
+    ui = auto
+[color "branch"]
+    upstream = cyan
+[core]
+    editor = vim
+    excludesfile = ~/.gitignore
+    pager = less -R -+X -+F
+    whitespace = -trailing-space
+[diff]
+    mnemonicPrefix = true
+    renames = true
+    wordRegex = .
+[fetch]
+    recurseSubmodules = on-demand
+[grep]
+    extendedRegexp = true
+[log]
+    abbrevCommit = true
+    decorate = short
+[merge]
+    conflictStyle = diff3
+[mergetool]
+    keepBackup = false
+    keepTemporaries = false
+    prompt = false
+    tool = vimdiff
+[pager]
+    diff = true
+    status = cat
+[pull]
+    rebase = true
+    # Only available starting from 1.8.5
+    # rebase = preserve
+[push]
+    default = upstream
+[rerere]
+    # autoupdate = true
+    # enabled = true
+[status]
+    showUntrackedFiles = all
+    submoduleSummary = true
+[tag]
+    sort = version:refname
+
+[include]
+    # Set there a [user] section for instance, or machine specific config
+    path=~/.gitconfig.local
+
