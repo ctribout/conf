@@ -56,12 +56,14 @@ NeoBundle 'kshenoy/vim-signature'
 " Indent guides
 NeoBundle 'nathanaelkane/vim-indent-guides'
 " Autocompletion
-let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is so slow to get
-NeoBundle 'Valloric/YouCompleteMe', {
-            \ 'build' : {
-            \   'unix' : './install.sh'
-            \ },
-            \ }
+if v:version > 703 || (v:version == 703 && has('patch584'))
+    let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is slow to get
+    NeoBundle 'Valloric/YouCompleteMe', {
+                \ 'build' : {
+                \   'unix' : './install.sh'
+                \ },
+                \ }
+endif
 
 " Required:
 call neobundle#end()
