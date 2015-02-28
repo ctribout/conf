@@ -44,7 +44,7 @@
     # Only available starting from 1.8.5
     # rebase = preserve
 [push]
-    default = upstream
+    default = tracking
 [rerere]
     # autoupdate = true
     # enabled = true
