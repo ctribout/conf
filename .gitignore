@@ -1,2 +1,4 @@
 *.pyc
 *.[oa]
+_obj
+_log
