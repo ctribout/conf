@@ -38,7 +38,7 @@
     tool = vimdiff
 [pager]
     diff = true
-    status = cat
+    status = false
 [pull]
     rebase = true
     # Only available starting from 1.8.5
