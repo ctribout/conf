@@ -53,6 +53,8 @@ NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'tomtom/tcomment_vim'
 " Display Marks in the left margin
 NeoBundle 'kshenoy/vim-signature'
+" Diff blocks instead of full files
+NeoBundle 'AndrewRadev/linediff.vim'
 " Indent guides
 NeoBundle 'nathanaelkane/vim-indent-guides'
 " Autocompletion
