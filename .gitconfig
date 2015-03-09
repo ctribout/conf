@@ -27,7 +27,7 @@
 [grep]
     extendedRegexp = true
 [log]
-    abbrevCommit = true
+    # abbrevCommit = true
     decorate = short
 [merge]
     conflictStyle = diff3
