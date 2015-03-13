@@ -5,6 +5,8 @@
     last = log -1 -p --stat HEAD
     lg = log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ar)%Creset'
     st = status
+    rdiff = !git diff $(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)) HEAD
+    wdiff = !git diff --word-diff
 [branch]
     autosetupmerge = always
     autosetuprebase = always

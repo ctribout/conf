@@ -117,6 +117,9 @@ set foldlevelstart=99
 " Disable folding (slows things down a lot sometimes)
 set foldmethod=manual
 
+" Don't go to SELECT mode instead of VISUAL mode
+:behave xterm
+
 " From http://vim.wikia.com/wiki/Search_for_visually_selected_text
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
@@ -267,6 +270,7 @@ set wrap " Wrap lines for display
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline_theme = 'light'
 let g:airline_powerline_fonts=0
 " Always display status bar
