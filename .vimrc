@@ -233,8 +233,8 @@ colorscheme badwolf
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
 
-" Use Unix as the standard file type
-set fileformats=unix,dos,mac
+" Use Unix as the standard file type and don't keep dos/mac ones
+set fileformats=unix
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
