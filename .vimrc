@@ -134,7 +134,7 @@ vnoremap <silent> # :<C-U>
     \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 " In visual mode, replace selected text
-vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+vnoremap <C-r> "hy:%s@<C-r>h@@gc<left><left><left>
 
 " In visual mode, search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>

@@ -33,11 +33,11 @@
     decorate = short
 [merge]
     conflictStyle = diff3
+    tool = vimdiff
 [mergetool]
     keepBackup = false
     keepTemporaries = false
     prompt = false
-    tool = vimdiff
 [pager]
     diff = true
     status = false
