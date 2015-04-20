@@ -57,6 +57,8 @@ NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'AndrewRadev/linediff.vim'
 " Indent guides
 NeoBundle 'nathanaelkane/vim-indent-guides'
+" Toggle words
+NeoBundle 'vim-scripts/toggle_words.vim'
 " Autocompletion
 if (has('python')) && (v:version > 703 || (v:version == 703 && has('patch584')))
     let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is slow to get
@@ -244,7 +246,6 @@ set nobackup
 set nowritebackup
 set noswapfile
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -290,7 +291,6 @@ let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.branch = '⎇'
 let g:airline_symbols.modified = '⚑'
 let g:airline_symbols.space = ' '
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => tagbar plugin
@@ -348,7 +348,6 @@ let g:bufExplorerShowUnlisted=1
 let g:bufExplorerSortBy='fullpath'
 let g:bufExplorerSplitOutPathName=1
 
-
 " Enable syntax highlighting when buffers are displayed in a window through
 " :argdo and :bufdo, which disable the Syntax autocmd event to speed up
 " processing.
@@ -357,7 +356,6 @@ augroup EnableSyntaxHighlighting
     autocmd! BufWinEnter,WinEnter * nested if exists('syntax_on') && ! exists('b:current_syntax') && ! empty(&l:filetype) && index(split(&eventignore, ','), 'Syntax') == -1 | syntax enable | endif
     autocmd! BufRead * if exists('syntax_on') && exists('b:current_syntax') && ! empty(&l:filetype) && index(split(&eventignore, ','), 'Syntax') != -1 | unlet! b:current_syntax | endif
 augroup END
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-signify plugin
@@ -371,13 +369,11 @@ highlight SignifySignAdd    cterm=bold ctermbg=none  ctermfg=119
 highlight SignifySignDelete cterm=bold ctermbg=none  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-session plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 :let g:session_autoload = 'yes'
 :let g:session_autosave = 'yes'
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => HiCursorWords plugin
@@ -426,6 +422,23 @@ let g:SignatureMarkTextHL = 'SignatureGitGutter(a:lnum)'
 
 " Plugin tuning
 let g:SignaturePurgeConfirmation = 1 " avoid loosing all marks on m<space>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => toggle_words plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! NewCA()
+    let l:cw = tolower(expand("<cword>"))
+    " run the built-in <C-a>
+    execute "normal! \<C-a>"
+    let l:cw2 = tolower(expand("<cword>"))
+    if l:cw == l:cw2
+        " Standard C-a did nothing, try toggling word now
+        ToggleWord
+    endif
+endfun
+command! NewCA :call NewCA()
+nnoremap <C-a> :NewCA<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ Use local .vimrc
