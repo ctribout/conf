@@ -78,7 +78,8 @@ V [select lines]:s/a/b/
     Exactly the same command as before, but with "," replaced by ";"
     Replace all "a" with "A" starting from line 4 up to first line containing "this line" after the line 4
     ";" sets the "current line" to be the one found to be the start of the range, and not the cursor anymore
-
+[I
+    Lists all lines in open buffers that contain the word under cursor
 
 ### Global editing
 
@@ -136,6 +137,9 @@ F[char]             Go to previous [char] on the current line, cursor on the cha
 [M                  Jump on previous class or method (normal, visual, operator modes)
 ]M                  Jump on next class or method (normal, visual, operator modes)
 
+
+[C-o]               Jump back to the previous location in jumplist
+[C-i]               Jump forward to netx location in jumplist
 
 ## Editing
 
