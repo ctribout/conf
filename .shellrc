@@ -14,6 +14,9 @@ HISTFILESIZE=2000
 export EDITOR=vim
 export VISUAL=vim
 
+# Disable STUPID non-breakable spaces when typing Altgr+Space
+# setxkbmap -option "nbsp:none"
+
 # TODO: unclear how to correctly handle this and always have 256 colors...
 TERM=xterm-256color
 

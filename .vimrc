@@ -426,19 +426,7 @@ let g:SignaturePurgeConfirmation = 1 " avoid loosing all marks on m<space>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => toggle_words plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-function! NewCA()
-    let l:cw = tolower(expand("<cword>"))
-    " run the built-in <C-a>
-    execute "normal! \<C-a>"
-    let l:cw2 = tolower(expand("<cword>"))
-    if l:cw == l:cw2
-        " Standard C-a did nothing, try toggling word now
-        ToggleWord
-    endif
-endfun
-command! NewCA :call NewCA()
-nnoremap <C-a> :NewCA<cr>
+nmap <leader>t :ToggleWord<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ Use local .vimrc
