@@ -36,7 +36,7 @@ i[C-v][TAB]         Insert a real TAB, ignoring expandtab option
                     Add double quotes around the selected text:
                         - sets a marker "e" at the current location: "me"
                         - move to other side of selection: "o"
-                        - set a marker "v" there: "ms"
+                        - set a marker "s" there: "ms"
                         - quit visual mode: "v"
                         - go to marker "e": "`e"
                         - append a quote: a"[ESC]
