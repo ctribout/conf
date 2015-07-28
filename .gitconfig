@@ -2,6 +2,7 @@
     br = branch -v
     ci = commit
     co = checkout
+    cp = cherry-pick
     last = log -1 -p --stat HEAD
     lg = log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ar)%Creset'
     st = status
