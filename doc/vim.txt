@@ -43,6 +43,8 @@ i[C-v][TAB]         Insert a real TAB, ignoring expandtab option
                         - go to marker "s"
                         - insert a quote: i"[ESC]
 
+:%!xxd              Hexadecimal display
+:%!xxd -r           Revert to text mode
 
 ### Copy and move
 
