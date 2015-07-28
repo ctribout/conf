@@ -273,7 +273,21 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline_theme = 'light'
-let g:airline_powerline_fonts=0
+if !empty(glob(expand('~')."/.fonts/*Powerline*"))
+    let g:airline_powerline_fonts=1
+else
+    let g:airline_powerline_fonts=0
+    " unicode symbols
+    let g:airline_left_sep = '▶'
+    let g:airline_right_sep = '◀'
+    let g:airline_symbols.paste = '▽'
+    let g:airline_symbols.readonly = '❎'
+    let g:airline_symbols.whitespace = 'Ξ'
+    let g:airline_symbols.linenr = '¶'
+    let g:airline_symbols.branch = '⎇'
+    let g:airline_symbols.modified = '⚑'
+    let g:airline_symbols.space = ' '
+endif
 " Always display status bar
 set laststatus=2
 " Use nicer symbols in the bars
@@ -281,16 +295,6 @@ set guifont=PowerlineSymbols
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-" unicode symbols
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.paste = '▽'
-let g:airline_symbols.readonly = '❎'
-let g:airline_symbols.whitespace = 'Ξ'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.modified = '⚑'
-let g:airline_symbols.space = ' '
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => tagbar plugin
