@@ -1,0 +1,68 @@
+= tmux cheat sheet
+
+Note: linked to my own config !
+
+== General
+
+// Create a new session with a name
+tmux new -s myname
+
+// Reattach a named session
+tmux a -t myname
+
+// List sessions
+tmux ls
+
+// Detach session
+C-a d
+
+== Windows (= tabs)
+
+// Create a window
+C-a c
+
+// Next window
+C-a n
+S-Up,Right
+
+// Previous windows
+C-a p
+S-Down,Left
+
+// Rename window
+C-a A
+
+// Kill windows
+C-a &
+
+== Panes (= splits)
+
+// Create a vertical split
+C-a |
+
+// Create a horizontal split
+C-a -
+
+// Show pane numbers (when shown, type a number to go to it)
+C-a q
+
+// Switch pane zoom (normal <-> full window)
+C-a z
+
+// Swap panes
+C-a o
+
+// Go to adjacent pane (works with left/right arrows too, but not up/down)
+C-a h,j,k,l
+C-Left,Down,Up,Right
+
+// Resize pane in one direction
+C-a H,J,K,L
+C-a Left,Down,Up,Right
+
+// Rename pane (depends on xterm, not that reliable)
+C-a B
+
+// Kill pane
+C-a x
+
