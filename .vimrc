@@ -100,10 +100,10 @@ set autoread
 " like <leader>w saves the current file
 let g:mapleader = ","
 
-" Default copy buffer is the system clipboard(s)
+" Default copy buffer is the system clipboard
 set clipboard=unnamed
 if has('unnamedplus')
-    set clipboard=unnamed,unnamedplus
+    set clipboard=unnamedplus
 endif
 
 " Add 'jk' combination to exit insert mode
