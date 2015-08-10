@@ -50,5 +50,16 @@ set_prompt_spe() {
     PROMPT="${PROMPT}${prompt_hostname}%{%F{yellow}%}(%h):%b%{%f%}%~%B${prompt_symb}%b "
 }
 
+# Ugly, but it works (at least for now) where I need it to work
+# cf http://zshwiki.org/home/zle/bindkeys for help
+bindkey "\e[1~" beginning-of-line
+bindkey "\e[4~" end-of-line
+bindkey "\e[6~" down-line-or-search
+bindkey "\e[5~" up-line-or-search
+bindkey "\e[3~" delete-char
+
+bindkey -M viins '^r' history-incremental-search-backward
+bindkey -M vicmd '^r' history-incremental-search-backward
+
 # source common file
 test -f ~/.shellrc && source ~/.shellrc
