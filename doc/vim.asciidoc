@@ -1,18 +1,26 @@
-#### DOCS:
-# Ex commands
-# - http://vimdoc.sourceforge.net/htmldoc/vimindex.html
-# - https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim/1220118#1220118
-# Notes:
-#  [n] is usually for a digit/number
-#  [L-] is for a leader combination, by default the comma key ','
-#  [C-] is for a CTRL- keys combination
-#  [A-] is for an ALT- keys combination
-#  [S-] is for a SHIFT keys combination
-#  [ESC] is for the ESCAPE key
-#  [TAB] is for the tabulation key
-#  [MOTION] is for a motion (go to end of file, next paragraph, next line, left, etc.)
-#  [visual], [normal], ... is for vim modes in which the command works (by default normal)
-### Misc
+= vim
+
+== Resources
+
+// Ex commands
+http://vimdoc.sourceforge.net/htmldoc/vimindex.html
+
+////
+Notes:
+  [n] is usually for a digit/number
+  [L-] is for a leader combination, by default the comma key ','
+  [C-] is for a CTRL- keys combination
+  [A-] is for an ALT- keys combination
+  [S-] is for a SHIFT keys combination
+  [ESC] is for the ESCAPE key
+  [TAB] is for the tabulation key
+  [MOTION] is for a motion (go to end of file, next paragraph, next line, left, etc.)
+  [visual], [normal], ... is for vim modes in which the command works (by default normal)
+////
+
+== Commands
+
+=== General
 
 :sh                 Launch a shell, and once exited go back to vim
 :! [cmd]            Run [cmd] in the shell
@@ -46,7 +54,7 @@ i[C-v][TAB]         Insert a real TAB, ignoring expandtab option
 :%!xxd              Hexadecimal display
 :%!xxd -r           Revert to text mode
 
-### Copy and move
+=== Copy and move
 
 :2,8co15            Copy lines 2 through 8 after line 15
 :4,15t$             Copy lines 4 through 15 to end of document (t == co)
@@ -54,8 +62,7 @@ i[C-v][TAB]         Insert a real TAB, ignoring expandtab option
 :m0                 Move current line to line 0 (i.e. the top of the document)
 :.,+3m$-1           Current line through current+3 are moved to the lastLine-1 (i.e. next to last)
 
-
-### Format
+=== Format
 
 >>                  Indent line
 <<                  Un-indent line
@@ -64,8 +71,7 @@ V [select lines]<   Un-indent selection
 [C-t]               Indent current line in insert mode
 [C-d]               Unindent current line in insert mode
 
-
-### Search and replace
+===  Search and replace
 
 :%s/old/new/g       Replace all occurences of old by new in the file
 :%s/old/new/gc      Replace all occurences of old by new in the file but ask before each change
@@ -83,7 +89,7 @@ V [select lines]:s/a/b/
 [I
     Lists all lines in open buffers that contain the word under cursor
 
-### Global editing
+=== Global editing
 
 :g/[pattern]/d      Delete all lines matching [pattern]
 :g!/[pattern]/d     Delete all lines NOT matching [pattern]
@@ -92,8 +98,7 @@ V [select lines]:s/a/b/
 :g/pattern/t$       Copy all lines matching a pattern to end of file.
 :g/pattern/m$       Move all lines matching a pattern to end of file.
 
-
-### Navigation
+=== Navigation
 
 [n]*                Search forward for the Nth occurrence of the ident under the cursor
 [n]#                Search backward for the Nth occurrence of the ident under the cursor
@@ -122,7 +127,6 @@ V [select lines]:s/a/b/
 [n]E                Cursor end of N WORDS
     => WORDS = sequence of non-blank characters, separated with white space
 
-
 0                   Go to beginning of the line
 $                   Go to end of the line
 +                   Go to the beginning of next line (first non-blank char)
@@ -143,22 +147,21 @@ F[char]             Go to previous [char] on the current line, cursor on the cha
 [C-o]               Jump back to the previous location in jumplist
 [C-i]               Jump forward to netx location in jumplist
 
-## Editing
+=== Editing
 
 o                   Start insert mode on a new line, right after the current one
 O                   Start insert mode on a new line, right before the current one
 [visual] [C-o]      Use an :ex command in insert mode, and then go back in insert mode
 [C-n]               Autocompletion based on open buffers (and [C-p] to go to previous completion)
 
-## Changes
+=== Changes
 
 u                   Undo last change
 [C-R]               Undo last undo
 .                   Repeat last operation ("redo")
 [n]@:               Repeat last :ex command [n] times
 
-
-## Macros
+=== Macros
 
 q[letter][whatever]q
                     Record a macro in register [letter] (all keystrikes)
@@ -166,7 +169,7 @@ q[letter][whatever]q
                     Replay macro of register [letter]
 
 
-### Buffer
+=== Buffers
 
 :ls                 List all buffers
 :b[n]               Switch to buffer number [n]
@@ -177,7 +180,7 @@ q[letter][whatever]q
 :bd                 Remove buffer
 
 
-### Split:
+=== Split
 
 :sp                 create horizontal split
 :vsp                create vertical split
@@ -198,7 +201,7 @@ q[letter][whatever]q
 [C-w]w              Switch to next split
 
 
-### Wildmenu
+=== Wildmenu
 
 enabled in conf, allows to use <up> <down> <right> <left> for navigation in folders/files, and <tab> completion
 
@@ -221,24 +224,21 @@ do                  Get changes from other window
 dp                  Put changes to other window
 :diffupdate         Refresh diff
 
-### Gitglutter plugin
+=== Gitglutter plugin
 
 <L> hr              Revert current hunk git changes
 <L> hs              Stage current hunk git changes
 ]c                  Go to next diff
 [c                  Go to previous diff
 
-### tcomment_vim plugin
+=== tcomment_vim plugin
 
 gc[MOTION]          Toggle comments on motion
 [visual]gc          Toggle comments on selection
 [C-_][C-_]          Toggle comments on current line
 [C-_]p              Comment the current inner paragraph
 
-### Directly from vimdoc, for memo
-##################################
-
-*operator*
+=== Operators
 
     |c| c   change
     |d| d   delete
@@ -256,7 +256,7 @@ gc[MOTION]          Toggle comments on motion
     |zf|    zf  define a fold
     |g@|    g@      call function set with the 'operatorfunc' option
 
-
+== Misc
 
 FORCING A MOTION TO BE LINEWISE, CHARACTERWISE OR BLOCKWISE
 
