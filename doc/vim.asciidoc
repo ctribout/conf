@@ -53,6 +53,7 @@ i[C-v][TAB]         Insert a real TAB, ignoring expandtab option
 
 :%!xxd              Hexadecimal display
 :%!xxd -r           Revert to text mode
+:%normal A;         Insert a ";" at the end of all lines
 
 === Copy and move
 
