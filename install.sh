@@ -8,16 +8,23 @@ cd ${scriptDir}
 # Then, create a symlink to our file
 
 echo "Installing configuration files..."
-for file in $(find ${scriptDir} -maxdepth 1 -name ".*" \! -name "." \! -name ".git"); do
-    origf=~/$(basename ${file})
-    if [ "$(readlink ${origf})" = "${file}" ]; then
-        continue
-    fi
-    if [ -e ${origf} ]; then
-        mv ${origf} ${origf}.backup
-    fi
-    ln -s ${file} ${origf}
-    echo "  - $(basename ${file})"
+
+for conf_file_folder in $(find ${scriptDir}/files/ -mindepth 1 -maxdepth 1 -type d); do
+    for target_folder in $(${conf_file_folder}/location.sh); do
+        for conf_file in $(find ${conf_file_folder} -mindepth 1 -maxdepth 1 -not -name "location.sh"); do
+            target_file=${target_folder}/$(basename ${conf_file})
+            if [ "$(readlink ${target_file})" = "${conf_file}" ]; then
+                # Already installed
+                continue
+            fi
+            if [ -e ${target_file} -o -L ${target_file} ]; then
+                # File already exists, save it just in case...
+                mv ${target_file} ${target_file}.backup
+            fi
+            ln -s ${conf_file} ${target_file}
+            echo "  - ${conf_file}"
+        done
+    done
 done
 
 if [ ! -d fonts ]; then
@@ -26,3 +33,4 @@ if [ ! -d fonts ]; then
     ./fonts/install.sh
     echo "Done."
 fi
+
