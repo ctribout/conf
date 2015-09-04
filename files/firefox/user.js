@@ -136,7 +136,7 @@ user_pref("network.proxy.socks_remote_dns",		true);
 user_pref("network.websocket.max-connections", 0);
 
 // Don't let websites access the available fonts list
-user_pref("browser.display.use_document_fonts", 0);
+// user_pref("browser.display.use_document_fonts", 0); // breaks some extensions (ublock) and websites
 
 // Disable notifications
 user_pref("dom.webnotifications.enabled", false);
@@ -486,7 +486,7 @@ user_pref("browser.newtab.url",		"about:blank");
 
 // CIS Version 1.2.0 October 21st, 2011 2.1.2 Enable Auto Notification of Outdated Plugins
 // https://wiki.mozilla.org/Firefox3.6/Plugin_Update_Awareness_Security_Review
-user_pref("plugins.update.notifyUser",		true);
+// user_pref("plugins.update.notifyUser",		true); // Annoying new tab at each startup !
 
 // CIS Version 1.2.0 October 21st, 2011 2.1.3 Enable Information Bar for Outdated Plugins
 user_pref("plugins.hide_infobar_for_outdated_plugin",		false);
