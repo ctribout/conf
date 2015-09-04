@@ -23,7 +23,7 @@ and was modified sligthlty
 // disable Location-Aware Browsing
 // http://www.mozilla.org/en-US/firefox/geolocation/
 user_pref("geo.enabled",		false);
-user_pref("geo.wiki.url", "")
+user_pref("geo.wifi.uri", "");
 
 // http://kb.mozillazine.org/Dom.storage.enabled
 // http://dev.w3.org/html5/webstorage/#dom-localstorage
@@ -75,7 +75,6 @@ user_pref("media.getusermedia.screensharing.enabled",		false);
 // https://wiki.mozilla.org/Sensor_API
 user_pref("device.sensors.enabled",		false);
 user_pref("camera.control.face_detection.enabled", false);
-user_pref("camera.control.autofocus_moving_callback.enabled", false);
 
 // http://kb.mozillazine.org/Browser.send_pings
 user_pref("browser.send_pings",		false);
@@ -134,7 +133,7 @@ user_pref("browser.fixup.alternate.enabled",		false);
 user_pref("network.proxy.socks_remote_dns",		true);
 
 // Disable websockets
-user_pref("network.websocket.max-connections", 0)
+user_pref("network.websocket.max-connections", 0);
 
 // Don't let websites access the available fonts list
 user_pref("browser.display.use_document_fonts", 0);
@@ -156,8 +155,9 @@ user_pref("security.mixed_content.block_active_content",		true);
 user_pref("security.mixed_content.block_display_content",		true);
 
 // https://secure.wikimedia.org/wikibooks/en/wiki/Grsecurity/Application-specific_Settings#Firefox_.28or_Iceweasel_in_Debian.29
-user_pref("javascript.options.methodjit.chrome",		false);
-user_pref("javascript.options.methodjit.content",		false);
+// Don't exist anymore
+// user_pref("javascript.options.methodjit.chrome",		false);
+// user_pref("javascript.options.methodjit.content",		false);
 
 // CIS Mozilla Firefox 24 ESR v1.0.0 - 3.7 Disable JAR from opening Unsafe File Types
 // http://kb.mozillazine.org/Network.jar.open-unsafe-types
@@ -387,7 +387,7 @@ user_pref("network.cookie.cookieBehavior",		1);
  ******************************************************************************/
 
 // Reduce number of cached pages for "back" button
-user_pref("browser.sessionhistory.max_entries", 2)
+user_pref("browser.sessionhistory.max_entries", 2);
 
 // http://kb.mozillazine.org/Browser.sessionstore.postdata
 // NOTE: relates to CIS 2.5.7
