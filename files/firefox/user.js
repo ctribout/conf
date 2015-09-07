@@ -364,13 +364,13 @@ user_pref("security.csp.enable",		true);
 // https://en.wikipedia.org/wiki/Do_not_track_header
 // https://dnt-dashboard.mozilla.org
 // https://github.com/pyllyukko/user.js/issues/11
-//user_pref("privacy.donottrackheader.enabled",		true);
+user_pref("privacy.donottrackheader.enabled",		false); // useless anyway
 
 // http://kb.mozillazine.org/Network.http.sendRefererHeader#0
 // https://bugzilla.mozilla.org/show_bug.cgi?id=822869
 // Send a referer header with the target URI as the source
-user_pref("network.http.sendRefererHeader",		1);
-user_pref("network.http.referer.spoofSource",		true);
+// user_pref("network.http.sendRefererHeader",		1); // breaks website (OVH manager for instance) ; handled via an extension (Referrer Control)
+// user_pref("network.http.referer.spoofSource",		true);
 // CIS Version 1.2.0 October 21st, 2011 2.4.3 Disable Referer from an SSL Website
 user_pref("network.http.sendSecureXSiteReferrer",		false);
 
@@ -408,7 +408,7 @@ user_pref("browser.cache.offline.enable",		false);
 // https://support.mozilla.org/en-US/kb/Clear%20Recent%20History#w_how-do-i-make-firefox-clear-my-history-automatically
 user_pref("privacy.sanitize.sanitizeOnShutdown",		true);
 user_pref("privacy.clearOnShutdown.cache",		true);
-// user_pref("privacy.clearOnShutdown.cookies",		true);
+user_pref("privacy.clearOnShutdown.cookies",		false);
 user_pref("privacy.clearOnShutdown.downloads",		true);
 // user_pref("privacy.clearOnShutdown.formdata",		true);
 user_pref("privacy.clearOnShutdown.history",		true);
@@ -554,7 +554,7 @@ user_pref("security.ssl.enable_ocsp_stapling",		true);
 
 // require certificate revocation check through OCSP protocol.
 // NOTICE: this leaks information about the sites you visit to the CA.
-user_pref("security.OCSP.require",		true);
+// user_pref("security.OCSP.require",		true);
 
 // https://www.blackhat.com/us-13/briefings.html#NextGen
 user_pref("security.enable_tls_session_tickets",		false);
