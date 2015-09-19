@@ -115,7 +115,7 @@ user_pref("dom.netinfo.enabled", false);
  ******************************************************************************/
 
 // Home page
-user_pref("browser.startup.homepage", "https://www.google.com") // Haha...
+user_pref("browser.startup.homepage", "https://www.google.com"); // Haha...
 // Default search engine
 //user_pref("browser.search.defaultenginename",		"DuckDuckGo");
 
