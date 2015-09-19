@@ -114,6 +114,8 @@ user_pref("dom.netinfo.enabled", false);
  *                                                                            *
  ******************************************************************************/
 
+// Home page
+user_pref("browser.startup.homepage", "https://www.google.com") // Haha...
 // Default search engine
 //user_pref("browser.search.defaultenginename",		"DuckDuckGo");
 
@@ -387,7 +389,7 @@ user_pref("network.cookie.cookieBehavior",		1);
  ******************************************************************************/
 
 // Reduce number of cached pages for "back" button
-user_pref("browser.sessionhistory.max_entries", 2);
+user_pref("browser.sessionhistory.max_entries", 10);
 
 // http://kb.mozillazine.org/Browser.sessionstore.postdata
 // NOTE: relates to CIS 2.5.7
@@ -700,4 +702,11 @@ user_pref("security.ssl3.dhe_rsa_aes_256_sha", True);
  ******************************************************************************/
 
 user_pref("extensions.foxyproxy.socks_remote_dns", True);
+user_pref("extensions.tabmix.tabs.closeButtons.enable", True);
+user_pref("extensions.tabmix.hideTabBarButton", False);
+user_pref("noscript.forbidWebGL", True);
+user_pref("noscript.global", True);
+user_pref("noscript.notify", False);
+user_pref("noscript.notify.bottom", False);
+user_pref("noscript.firstRunRedirection", False);
 
