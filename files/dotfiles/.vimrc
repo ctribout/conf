@@ -64,7 +64,7 @@ if (has('python')) && (v:version > 703 || (v:version == 703 && has('patch584')))
     let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is slow to get
     NeoBundle 'Valloric/YouCompleteMe', {
                 \ 'build' : {
-                \   'unix' : './install.sh'
+                \   'unix' : './install.py'
                 \ },
                 \ }
 endif
