@@ -709,4 +709,5 @@ user_pref("noscript.global", True);
 user_pref("noscript.notify", False);
 user_pref("noscript.notify.bottom", False);
 user_pref("noscript.firstRunRedirection", False);
+user_pref("extensions.referrercontrol.defaultPolicy", 2);
 
