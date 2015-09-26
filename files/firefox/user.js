@@ -176,6 +176,9 @@ user_pref("security.fileuri.strict_origin_policy",		true);
 // http://kb.mozillazine.org/Browser.urlbar.filter.javascript
 user_pref("browser.urlbar.filter.javascript",		true);
 
+// Don't hide parts of URLs in the url bar
+user_pref("browser.urlbar.trimURLs", false);
+
 // Disable HTML frames
 // WARNING: might make your life difficult!
 // NOTE: to be removed(?) see: https://bugzilla.mozilla.org/show_bug.cgi?id=729030
