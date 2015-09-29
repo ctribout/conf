@@ -4,6 +4,9 @@ case $- in
       *) return;;
 esac
 
+# Default PATH
+export PATH=${PATH}:~/.local/bin:~/.local/usr/bin
+
 # setting shell shitory
 HISTFILE=~/.shell_history
 HISTSIZE=1000
