@@ -62,6 +62,12 @@ set_prompt() {
     set_prompt_spe ${_p_ssh} ${_p_screen} ${_p_vim} ${_p_has_x} ${_p_root} ${_p_user} ${_p_hostname}
 }
 
+if [ -n "${TMUX}" ]; then
+    refresh() {
+        export "$(tmux show-environment -g DISPLAY)"
+    }
+fi
+
 # source local file if relevant
 test -f ~/.shellrc.local && source ~/.shellrc.local
 

@@ -53,3 +53,10 @@ set_prompt_spe() {
 
 # source common file
 test -f ~/.shellrc && source ~/.shellrc
+
+if [ -n "${TMUX}" ]; then
+    preexec () {
+      refresh
+    }
+fi
+
