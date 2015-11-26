@@ -9,7 +9,6 @@ This file comes from https://github.com/pyllyukko/user.js/blob/master/user.js
 and was modified sligthlty
 */
 
-
 /******************************************************************************
  * user.js                                                                    *
  * https://github.com/pyllyukko/user.js                                       *
@@ -503,9 +502,15 @@ user_pref("security.warn_entering_weak",		true);
 // http://kb.mozillazine.org/Network.IDN_show_punycode
 user_pref("network.IDN_show_punycode",		true);
 
+user_pref("browser.urlbar.suggest.bookmark", true);
+user_pref("browser.urlbar.suggest.history", false);
+user_pref("browser.urlbar.suggest.history.onlyTyped", false);
+user_pref("browser.urlbar.suggest.openpage", false);
+user_pref("browser.urlbar.suggest.searches", false);
+
 // http://kb.mozillazine.org/About:config_entries#Browser
 // http://kb.mozillazine.org/Inline_autocomplete
-user_pref("browser.urlbar.autoFill",		false);
+user_pref("browser.urlbar.autoFill",		true); // limited to bookmarks
 user_pref("browser.urlbar.autoFill.typed",		false);
 
 // http://www.labnol.org/software/browsers/prevent-firefox-showing-bookmarks-address-location-bar/3636/
@@ -520,7 +525,7 @@ user_pref("layout.css.visited_links_enabled",		false);
 // http://kb.mozillazine.org/Places.frecency.unvisited%28place_type%29Bonus
 
 // http://kb.mozillazine.org/Disabling_autocomplete_-_Firefox#Firefox_3.5
-user_pref("browser.urlbar.autocomplete.enabled",		false);
+user_pref("browser.urlbar.autocomplete.enabled",		true);
 
 // http://kb.mozillazine.org/Signon.autofillForms
 // https://www.torproject.org/projects/torbrowser/design/#identifier-linkability
