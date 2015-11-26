@@ -75,7 +75,7 @@ set_prompt() {
 
 if [ -n "${TMUX}" ]; then
     refresh() {
-        export "$(tmux show-environment -g DISPLAY)"
+        export "$(tmux show-environment DISPLAY)"
     }
 fi
 
