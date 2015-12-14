@@ -65,6 +65,9 @@ if (_sq_uid != 0)
     NeoBundle 'nathanaelkane/vim-indent-guides'
     " Toggle words
     NeoBundle 'vim-scripts/toggle_words.vim'
+    " jinja2 syntax
+    NeoBundle 'Glench/Vim-Jinja2-Syntax'
+
     " Autocompletion
     if (has('python')) && (v:version > 703 || (v:version == 703 && has('patch584')))
         let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is slow to get
