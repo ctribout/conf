@@ -17,7 +17,12 @@ HISTFILESIZE=2000
 export EDITOR=vim
 export VISUAL=vim
 
-# Disable STUPID non-breakable spaces when typing Altgr+Space
+# set terminal title
+setttitle() {
+    echo -ne "\033]0;$1\007"
+}
+
+# Disable STUPID non-breakable spaces when typing AltGr+Space
 test -z "${SSH_CONNECTION}" && setxkbmap -option "nbsp:none"
 
 # TODO: unclear how to correctly handle this and always have 256 colors...
