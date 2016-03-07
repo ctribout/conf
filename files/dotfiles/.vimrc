@@ -37,7 +37,8 @@ if (_sq_uid != 0)
     "NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
 
     " Title and Status bar tuning
-    NeoBundle 'bling/vim-airline'
+    NeoBundle 'vim-airline/vim-airline'
+    NeoBundle 'vim-airline/vim-airline-themes'
     " Tag bar (quickly view the classes/functions/vars in a file, and jump there)
     NeoBundle 'majutsushi/tagbar'
     " Show VCS diffs while editing (changes/removed/added lines), and stage/revert hunks
@@ -403,6 +404,12 @@ if (_sq_uid != 0)
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " Don't hilight unless the cursor doesn't move for 1 second
     let g:HiCursorWords_delay = 1000
+
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " => YouCompleteMe plugin
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Terrible performaces and RAM usage otherwise, on py files at least
+    let g:ycm_collect_identifiers_from_tags_files = 0
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => vim-indent-guides plugin
