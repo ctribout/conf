@@ -378,9 +378,9 @@ user_pref("privacy.donottrackheader.enabled",		false); // useless anyway
 // CIS Version 1.2.0 October 21st, 2011 2.4.3 Disable Referer from an SSL Website
 user_pref("network.http.sendSecureXSiteReferrer",		false);
 
-// CIS 2.5.1 Accept Only 1st Party Cookies
+// CIS 2.5.1 Accept Only 1st Party Cookies (modified: accept all now...)
 // http://kb.mozillazine.org/Network.cookie.cookieBehavior#1
-user_pref("network.cookie.cookieBehavior",		1);
+user_pref("network.cookie.cookieBehavior",		0); // was set to 1, but this might break a few websites (PSN...) ; cookies handled via an extension anyway to block all but 1st parties by default
 
 // user-agent
 //user_pref("general.useragent.override", "Mozilla/5.0 (Windows NT 6.1; rv:31.0) Gecko/20100101 Firefox/31.0");
