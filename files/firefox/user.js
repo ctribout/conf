@@ -43,7 +43,7 @@ user_pref("dom.telephony.enabled",		false);
 // https://developer.mozilla.org/en-US/docs/Web/API/navigator.sendBeacon
 user_pref("beacon.enabled",		false);
 // https://developer.mozilla.org/en-US/docs/Mozilla/Preferences/Preference_reference/dom.event.clipboardevents.enabled
-user_pref("dom.event.clipboardevents.enabled",		false);
+// user_pref("dom.event.clipboardevents.enabled",		false);
 // https://wiki.mozilla.org/Security/Reviews/Firefox/NavigationTimingAPI
 user_pref("dom.enable_performance",		false);
 // Disable User Timing API - https://trac.torproject.org/projects/tor/ticket/16336
