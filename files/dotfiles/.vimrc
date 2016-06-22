@@ -293,7 +293,7 @@ if (_sq_uid != 0)
     let g:airline#extensions#tabline#fnamemod = ':t'
     let g:airline#extensions#hunks#non_zero_only = 1
     let g:airline_theme = 'light'
-    if !empty(glob(expand('~')."/.fonts/*Powerline*"))
+    if !empty(glob(expand('~')."/.fonts/*Powerline*")) || !empty(glob(expand('~')."/.local/share/fonts/*Powerline*"))
         let g:airline_powerline_fonts=1
     else
         let g:airline_powerline_fonts=0
