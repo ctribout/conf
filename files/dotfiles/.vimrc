@@ -298,6 +298,9 @@ if (_sq_uid != 0)
     else
         let g:airline_powerline_fonts=0
         " unicode symbols
+        if !exists('g:airline_symbols')
+          let g:airline_symbols = {}
+        endif
         let g:airline_left_sep = '▶'
         let g:airline_right_sep = '◀'
         let g:airline_symbols.paste = '▽'
@@ -312,9 +315,6 @@ if (_sq_uid != 0)
     set laststatus=2
     " Use nicer symbols in the bars
     set guifont=PowerlineSymbols
-    if !exists('g:airline_symbols')
-      let g:airline_symbols = {}
-    endif
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => tagbar plugin
