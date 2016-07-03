@@ -151,9 +151,9 @@ user_pref("dom.webnotifications.enabled", false);
  * https://developer.mozilla.org/en-US/docs/Site_Compatibility_for_Firefox_23#Non-SSL_contents_on_SSL_pages_are_blocked_by_default
  * https://blog.mozilla.org/tanvi/2013/04/10/mixed-content-blocking-enabled-in-firefox-23/
  */
-user_pref("security.mixed_content.block_active_content",		true);
+// user_pref("security.mixed_content.block_active_content",		true);
 // Mixed Passive Content (a.k.a. Mixed Display Content).
-user_pref("security.mixed_content.block_display_content",		true);
+// user_pref("security.mixed_content.block_display_content",		true);
 
 // https://secure.wikimedia.org/wikibooks/en/wiki/Grsecurity/Application-specific_Settings#Firefox_.28or_Iceweasel_in_Debian.29
 // Don't exist anymore
