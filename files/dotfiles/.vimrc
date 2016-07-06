@@ -132,6 +132,9 @@ set foldlevelstart=99
 " Disable folding (slows things down a lot sometimes)
 set foldmethod=manual
 
+" To be able to "zoom in" a split (actually a new tab, :q to exit it)
+:noremap tt :tab split<CR>
+
 " Don't go to SELECT mode instead of VISUAL mode
 :behave xterm
 
