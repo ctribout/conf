@@ -134,7 +134,7 @@ user_pref("browser.fixup.alternate.enabled",		false);
 user_pref("network.proxy.socks_remote_dns",		true);
 
 // Disable websockets
-user_pref("network.websocket.max-connections", 0);
+// user_pref("network.websocket.max-connections", 0);
 
 // Don't let websites access the available fonts list
 // user_pref("browser.display.use_document_fonts", 0); // breaks some extensions (ublock) and websites
