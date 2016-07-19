@@ -66,3 +66,14 @@ C-a B
 // Kill pane
 C-a x
 
+// Move current pane clockwise, counterclockwise
+C-a }
+C-a {
+
+// Rotate all the panes clockwise, counterclockwise
+C-a M-o
+C-a C-o
+
+// Make the current pane a new window
+C-a !
+

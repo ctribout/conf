@@ -98,6 +98,8 @@ V [select lines]:s/a/b/
 :g/[pattern]/d 2    Delete 2 lines starting from any line matching [pattern]
 :g/pattern/t$       Copy all lines matching a pattern to end of file.
 :g/pattern/m$       Move all lines matching a pattern to end of file.
+:g/pattern/exe "normal! [commands]" Execute a set of VIM commands for each line matchin a pattern
+
 
 === Navigation
 
