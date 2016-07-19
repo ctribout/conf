@@ -49,6 +49,7 @@ if (_sq_uid != 0)
     NeoBundle 'jlanzarotta/bufexplorer'
     " Dark color scheme
     NeoBundle 'sjl/badwolf'
+    NeoBundle 'nanotech/jellybeans.vim'
     " Session management
     NeoBundle 'xolox/vim-misc'
     NeoBundle 'xolox/vim-session'
@@ -247,7 +248,12 @@ syntax enable
 
 " set background=dark " Can help other plugins find correct colors
 if (_sq_uid != 0)
-    colorscheme badwolf
+    " colorscheme badwolf
+    if &diff
+        colorscheme jellybeans
+    else
+        colorscheme badwolf
+    endif
 else
     colorscheme slate
 endif
@@ -387,10 +393,6 @@ if (_sq_uid != 0)
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => vim-signify plugin
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119
-    highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167
-    highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
-
     " highlight signs in Sy
     highlight SignifySignAdd    cterm=bold ctermbg=none  ctermfg=119
     highlight SignifySignDelete cterm=bold ctermbg=none  ctermfg=167
