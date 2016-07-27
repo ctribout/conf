@@ -36,39 +36,41 @@ if (_sq_uid != 0)
     " You can specify revision/branch/tag.
     "NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
 
-    " Title and Status bar tuning
-    NeoBundle 'vim-airline/vim-airline'
-    NeoBundle 'vim-airline/vim-airline-themes'
-    " Tag bar (quickly view the classes/functions/vars in a file, and jump there)
-    NeoBundle 'majutsushi/tagbar'
-    " Show VCS diffs while editing (changes/removed/added lines), and stage/revert hunks
-    NeoBundle 'airblade/vim-gitgutter'
-    " Git wrapper, for integration with vim-airline (branch and commits in statusbar)
-    NeoBundle 'tpope/vim-fugitive'
-    " Quickly view open buffers and switch between them
-    NeoBundle 'jlanzarotta/bufexplorer'
     " Dark color scheme
     NeoBundle 'sjl/badwolf'
     NeoBundle 'nanotech/jellybeans.vim'
-    " Session management
-    NeoBundle 'xolox/vim-misc'
-    NeoBundle 'xolox/vim-session'
+    " Title and Status bar tuning
+    NeoBundle 'vim-airline/vim-airline'
+    NeoBundle 'vim-airline/vim-airline-themes'
     " Highlight cursor word
     NeoBundle 'ihacklog/HiCursorWords'
     " Highlight trailing whitespaces
     NeoBundle 'bronson/vim-trailing-whitespace'
-    " Code comments
-    NeoBundle 'tomtom/tcomment_vim'
     " Display Marks in the left margin
     NeoBundle 'kshenoy/vim-signature'
-    " Diff blocks instead of full files
-    NeoBundle 'AndrewRadev/linediff.vim'
-    " Indent guides
-    NeoBundle 'nathanaelkane/vim-indent-guides'
-    " Toggle words
-    NeoBundle 'vim-scripts/toggle_words.vim'
-    " jinja2 syntax
-    NeoBundle 'Glench/Vim-Jinja2-Syntax'
+    if !&diff
+        " Tag bar (quickly view the classes/functions/vars in a file, and jump there)
+        NeoBundle 'majutsushi/tagbar'
+        " Show VCS diffs while editing (changes/removed/added lines), and stage/revert hunks
+        NeoBundle 'airblade/vim-gitgutter'
+        " Git wrapper, for integration with vim-airline (branch and commits in statusbar)
+        NeoBundle 'tpope/vim-fugitive'
+        " Quickly view open buffers and switch between them
+        NeoBundle 'jlanzarotta/bufexplorer'
+        " Session management
+        NeoBundle 'xolox/vim-misc'
+        NeoBundle 'xolox/vim-session'
+        " Code comments
+        NeoBundle 'tomtom/tcomment_vim'
+        " Diff blocks instead of full files
+        NeoBundle 'AndrewRadev/linediff.vim'
+        " Indent guides
+        NeoBundle 'nathanaelkane/vim-indent-guides'
+        " Toggle words
+        NeoBundle 'vim-scripts/toggle_words.vim'
+        " jinja2 syntax
+        NeoBundle 'Glench/Vim-Jinja2-Syntax'
+    endif
 
     " Autocompletion
     if (has('python')) && (v:version > 703 || (v:version == 703 && has('patch584')))
