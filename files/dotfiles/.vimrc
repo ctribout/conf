@@ -110,11 +110,11 @@ set autoread
 " like <leader>w saves the current file
 let g:mapleader = ","
 
-" Default copy buffer is the system clipboard
-set clipboard=unnamed
-if has('unnamedplus')
-    set clipboard=unnamedplus
-endif
+" " Default copy buffer is the system clipboard
+" set clipboard=unnamed
+" if has('unnamedplus')
+"     set clipboard=unnamedplus
+" endif
 
 " Add 'jk' combination to exit insert mode
 :inoremap jk <esc>
@@ -326,6 +326,8 @@ if (_sq_uid != 0)
     set laststatus=2
     " Use nicer symbols in the bars
     set guifont=PowerlineSymbols
+    " Force command bar height to be 1 (often set otherwise by plugins)
+    set cmdheight=1
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => tagbar plugin
