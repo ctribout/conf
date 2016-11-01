@@ -541,6 +541,11 @@ user_pref("security.ssl.warn_missing_rfc5746",		1);
 // CIS Version 1.2.0 October 21st, 2011 2.5.3 Disable Prompting for Credential Storage
 // user_pref("security.ask_for_password",		0);
 
+// Don't try paste and open/load stuff via the middle click
+user_pref("middlemouse.contentLoadURL", false);
+user_pref("middlemouse.paste", false);
+
+
 /******************************************************************************
  * TLS / HTTPS / OCSP related stuff                                           *
  *                                                                            *
