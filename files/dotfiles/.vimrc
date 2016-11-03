@@ -27,15 +27,6 @@ if (_sq_uid != 0)
     " Required:
     NeoBundleFetch 'Shougo/neobundle.vim'
 
-    " Add or remove your Bundles here:
-    "NeoBundle 'Shougo/neosnippet.vim'
-    "NeoBundle 'Shougo/neosnippet-snippets'
-    "NeoBundle 'ctrlpvim/ctrlp.vim'
-    "NeoBundle 'flazz/vim-colorschemes'
-
-    " You can specify revision/branch/tag.
-    "NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
-
     " Dark color scheme
     NeoBundle 'sjl/badwolf'
     NeoBundle 'nanotech/jellybeans.vim'
@@ -51,8 +42,10 @@ if (_sq_uid != 0)
     if !&diff
         " Tag bar (quickly view the classes/functions/vars in a file, and jump there)
         NeoBundle 'majutsushi/tagbar'
-        " Show VCS diffs while editing (changes/removed/added lines), and stage/revert hunks
+        " Show git diffs while editing (changes/removed/added lines), and stage/revert hunks
         NeoBundle 'airblade/vim-gitgutter'
+        " Show svn diffs while editing (changes/removed/added lines)
+        NeoBundle 'vim-scripts/vim-svngutter'
         " Git wrapper, for integration with vim-airline (branch and commits in statusbar)
         NeoBundle 'tpope/vim-fugitive'
         " Quickly view open buffers and switch between them
@@ -70,6 +63,8 @@ if (_sq_uid != 0)
         NeoBundle 'vim-scripts/toggle_words.vim'
         " jinja2 syntax
         NeoBundle 'Glench/Vim-Jinja2-Syntax'
+        " Utilities for tabs
+        NeoBundle 'gcmt/taboo.vim'
 
         " Autocompletion
         if (has('python')) && (v:version > 703 || (v:version == 703 && has('patch584')))
@@ -302,6 +297,7 @@ if (_sq_uid != 0)
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#fnamemod = ':t'
+    let g:airline#extensions#taboo#enabled = 1
     let g:airline#extensions#hunks#non_zero_only = 1
     let g:airline_theme = 'light'
     if !empty(glob(expand('~')."/.fonts/*Powerline*")) || !empty(glob(expand('~')."/.local/share/fonts/*Powerline*"))
@@ -376,12 +372,13 @@ if (_sq_uid != 0)
     endfunction
 
     nmap <F9> :call _sq_bufexplorer_shortcut()<CR>
+    let g:bufExplorerFindActive=1
     let g:bufExplorerReverseSort=0
     let g:bufExplorerShowDirectories=1
-    let g:bufExplorerShowNoName=1
+    let g:bufExplorerShowNoName=0
     let g:bufExplorerShowRelativePath=0
-    let g:bufExplorerShowTabBuffer=1
-    let g:bufExplorerShowUnlisted=1
+    let g:bufExplorerShowTabBuffer=0
+    let g:bufExplorerShowUnlisted=0
     let g:bufExplorerSortBy='fullpath'
     let g:bufExplorerSplitOutPathName=1
 
@@ -405,6 +402,8 @@ if (_sq_uid != 0)
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => vim-session plugin
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    set sessionoptions+=tabpages,globals
+    set sessionoptions-=help
     :let g:session_autoload = 'yes'
     :let g:session_autosave = 'yes'
 
@@ -466,6 +465,14 @@ if (_sq_uid != 0)
     " => toggle_words plugin
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     nmap <leader>t :ToggleWord<CR>
+
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " => taboo plugin
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    let g:taboo_tabline=0
+    let g:taboo_tab_format='[%N] %f%m'
+    let g:taboo_renamed_tab_format='[%N:%l] %f%m'
+
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
