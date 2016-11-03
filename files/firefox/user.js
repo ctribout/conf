@@ -543,7 +543,6 @@ user_pref("security.ssl.warn_missing_rfc5746",		1);
 
 // Don't try paste and open/load stuff via the middle click
 user_pref("middlemouse.contentLoadURL", false);
-user_pref("middlemouse.paste", false);
 
 
 /******************************************************************************
