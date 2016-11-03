@@ -25,9 +25,6 @@ setttitle() {
 # Disable STUPID non-breakable spaces when typing AltGr+Space
 test -z "${SSH_CONNECTION}" && setxkbmap -option "nbsp:none"
 
-# TODO: unclear how to correctly handle this and always have 256 colors...
-TERM=xterm-256color
-
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -39,13 +36,13 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
+alias tmux='tmux -2'
 alias ll='ls -al'
 alias l='ll'
 # personal aliases
 alias sks='ssh -nNTq -C -D 1080'
 alias k='kate -u'
 alias grep='grep --color --exclude-dir=.svn --exclude-dir=.git'  # show differences in colour and ignore .svn dirs
-alias irssi="screen -wipe; screen -A -U -x -R -S irssi bash -c 'TERM=xterm irssi'"
 wchat() {
     session="weechat"
     if tmux has-session -t ${session} >&/dev/null
