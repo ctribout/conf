@@ -42,10 +42,8 @@ if (_sq_uid != 0)
     if !&diff
         " Tag bar (quickly view the classes/functions/vars in a file, and jump there)
         NeoBundle 'majutsushi/tagbar'
-        " Show git diffs while editing (changes/removed/added lines), and stage/revert hunks
-        NeoBundle 'airblade/vim-gitgutter'
-        " Show svn diffs while editing (changes/removed/added lines)
-        NeoBundle 'vim-scripts/vim-svngutter'
+        " Show git diffs while editing (changes/removed/added lines)
+        NeoBundle 'mhinz/vim-signify'
         " Git wrapper, for integration with vim-airline (branch and commits in statusbar)
         NeoBundle 'tpope/vim-fugitive'
         " Quickly view open buffers and switch between them
@@ -434,31 +432,6 @@ if (_sq_uid != 0)
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => Vim-signature plugin
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " From https://gist.github.com/kshenoy/14f2c4ce7af28b54882b
-    " This function returns the highlight group used by git-gutter depending on how the line was edited (added/modified/deleted)
-    function! SignatureGitGutter(lnum)
-        let gg_line_state = filter(copy(gitgutter#diff#process_hunks(gitgutter#hunk#hunks())), 'v:val[0] == a:lnum')
-
-        if len(gg_line_state) == 0
-            return 'Exception'
-        endif
-
-        if gg_line_state[0][1] =~ 'added'
-            return 'GitGutterAdd'
-        elseif gg_line_state[0][1] =~ 'modified'
-            return 'GitGutterChange'
-        elseif gg_line_state[0][1] =~ 'removed'
-            return 'GitGutterDelete'
-        endif
-    endfunction
-
-    " Next, assign it to g:SignatureMarkTextHL
-    let g:SignatureMarkTextHL = 'SignatureGitGutter(a:lnum)'
-
-    " Now everytime Signature wants to place a sign, it calls this function and thus, we can dynamically assign a Highlight group g:SignatureMarkTextHL
-    " The advantage of doing it this way is that this decouples Signature from git-gutter. Both can remain unaware of the other.
-
-    " Plugin tuning
     let g:SignaturePurgeConfirmation = 1 " avoid loosing all marks on m<space>
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
