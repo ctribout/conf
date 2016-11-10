@@ -372,7 +372,7 @@ if (_sq_uid != 0)
     nmap <F9> :call _sq_bufexplorer_shortcut()<CR>
     let g:bufExplorerFindActive=1
     let g:bufExplorerReverseSort=0
-    let g:bufExplorerShowDirectories=1
+    let g:bufExplorerShowDirectories=0
     let g:bufExplorerShowNoName=0
     let g:bufExplorerShowRelativePath=0
     let g:bufExplorerShowTabBuffer=0
