@@ -227,6 +227,7 @@ set cursorline
 " Default split behaviour
 set splitbelow
 set splitright
+set diffopt+=vertical
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => File types
@@ -392,10 +393,20 @@ if (_sq_uid != 0)
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => vim-signify plugin
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    let g:signify_vcs_list = [ 'git', 'svn' ]
+    let g:signify_update_on_bufenter = 1
+    let g:signify_update_on_focusgained = 1
+
     " highlight signs in Sy
     highlight SignifySignAdd    cterm=bold ctermbg=none  ctermfg=119
     highlight SignifySignDelete cterm=bold ctermbg=none  ctermfg=167
     highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
+
+    " hunk text object
+    omap ic <plug>(signify-motion-inner-pending)
+    xmap ic <plug>(signify-motion-inner-visual)
+    omap ac <plug>(signify-motion-outer-pending)
+    xmap ac <plug>(signify-motion-outer-visual)
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => vim-session plugin
