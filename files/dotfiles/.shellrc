@@ -35,8 +35,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias less='less -r' # raw control characters
 fi
 
-# some more ls aliases
 alias tmux='tmux -2'
+alias crontab='crontab -i' # crontab -r is such an evil typo to make...
+# some more ls aliases
 alias ll='ls -al'
 alias l='ll'
 # personal aliases
