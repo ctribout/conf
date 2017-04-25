@@ -119,7 +119,8 @@ let g:mapleader = ","
 set colorcolumn=80
 
 " Automatically change window's cwd to file's dir
-set autochdir
+autocmd BufEnter * silent! lcd %:p:h
+" set autochdir
 
 " Disable folding when opening files
 set foldlevel=99
@@ -235,6 +236,7 @@ set diffopt+=vertical
 autocmd BufNewFile,BufRead *.ad set filetype=asciidoc
 autocmd BufNewFile,BufRead *.adoc set filetype=asciidoc
 autocmd BufNewFile,BufRead *.asciidoc set filetype=asciidoc
+autocmd FileType make setlocal noexpandtab
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -394,7 +396,7 @@ if (_sq_uid != 0)
     " => vim-signify plugin
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     let g:signify_vcs_list = [ 'git', 'svn' ]
-    let g:signify_update_on_bufenter = 1
+    let g:signify_update_on_bufenter = 0
     let g:signify_update_on_focusgained = 1
 
     " highlight signs in Sy
