@@ -12,7 +12,8 @@ let _sq_uid = system('id -u')
 if (_sq_uid != 0)
     " Install NeoBundle if not present yet
     if !isdirectory(expand('~')."/.vim/bundle/neobundle.vim")
-        !wget https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh --quiet -O - | /bin/bash
+        echom "Please install neobundle first. Use install.sh script."
+        exit 1
     endif
 
     if has('vim_starting')

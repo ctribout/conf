@@ -9,6 +9,10 @@ cd ${scriptDir}
 
 echo "Installing configuration files..."
 
+if [ ! -d ~/.vim/bundle/neobundle.vim ]; then
+    ./install_vim_neobundle.sh
+fi
+
 for conf_file_folder in $(find ${scriptDir}/files/ -mindepth 1 -maxdepth 1 -type d); do
     for target_folder in $(${conf_file_folder}/location.sh); do
         for conf_file in $(find ${conf_file_folder} -mindepth 1 -maxdepth 1 -not -name "location.sh"); do
