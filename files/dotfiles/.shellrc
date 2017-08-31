@@ -23,7 +23,7 @@ setttitle() {
 }
 
 # Disable STUPID non-breakable spaces when typing AltGr+Space
-test -z "${SSH_CONNECTION}" && setxkbmap -option "nbsp:none"
+test -n "${DISPLAY}" && setxkbmap -option "nbsp:none"
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
