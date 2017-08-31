@@ -117,7 +117,9 @@ let g:mapleader = ","
 :au CursorHold * if getcmdtype() == '' | checktime | endif
 
 " Hilight columns > 80 chars
-set colorcolumn=80
+if exists("&colorcolumn")
+    set colorcolumn=80
+endif
 
 " Automatically change window's cwd to file's dir
 autocmd BufEnter * silent! lcd %:p:h
