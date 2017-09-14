@@ -4,6 +4,9 @@ case $- in
       *) return;;
 esac
 
+# Reload GPG agent (prompt password in text mode, not via the windows maanger)
+gpg-connect-agent <<< RELOADAGENT 2>/dev/null
+
 # Default PATH
 export PATH=${PATH}:~/.local/bin:~/.local/usr/bin
 
