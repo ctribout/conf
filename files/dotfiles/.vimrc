@@ -293,6 +293,45 @@ set textwidth=0
 set autoindent
 set wrap " Wrap lines for display
 
+" From http://vim.wikia.com/wiki/Indent_text_object
+onoremap <silent>ai :<C-u>call IndTxtObj(0)<CR>
+onoremap <silent>ii :<C-u>call IndTxtObj(1)<CR>
+vnoremap <silent>ai <Esc>:call IndTxtObj(0)<CR><Esc>gv
+vnoremap <silent>ii <Esc>:call IndTxtObj(1)<CR><Esc>gv
+
+function! IndTxtObj(inner)
+  let curcol = col(".")
+  let curline = line(".")
+  let lastline = line("$")
+  let i = indent(line("."))
+  if getline(".") !~ "^\\s*$"
+    let p = line(".") - 1
+    let pp = line(".") - 2
+    let nextblank = getline(p) =~ "^\\s*$"
+    let nextnextblank = getline(pp) =~ "^\\s*$"
+    while p > 0 && ((i == 0 && (!nextblank || (pp > 0 && !nextnextblank))) || (i > 0 && ((indent(p) >= i && !(nextblank && a:inner)) || (nextblank && !a:inner))))
+      -
+      let p = line(".") - 1
+      let pp = line(".") - 2
+      let nextblank = getline(p) =~ "^\\s*$"
+      let nextnextblank = getline(pp) =~ "^\\s*$"
+    endwhile
+    normal! 0V
+    call cursor(curline, curcol)
+    let p = line(".") + 1
+    let pp = line(".") + 2
+    let nextblank = getline(p) =~ "^\\s*$"
+    let nextnextblank = getline(pp) =~ "^\\s*$"
+    while p <= lastline && ((i == 0 && (!nextblank || pp < lastline && !nextnextblank)) || (i > 0 && ((indent(p) >= i && !(nextblank && a:inner)) || (nextblank && !a:inner))))
+      +
+      let p = line(".") + 1
+      let pp = line(".") + 2
+      let nextblank = getline(p) =~ "^\\s*$"
+      let nextnextblank = getline(pp) =~ "^\\s*$"
+    endwhile
+    normal! $
+  endif
+endfunction
 
 if (_sq_uid != 0)
 
