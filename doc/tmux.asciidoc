@@ -49,8 +49,14 @@ C-a q
 // Switch pane zoom (normal <-> full window)
 C-a z
 
-// Swap panes
+// Select the next pane in the current window
 C-a o
+
+// Swap the current pane with the previous pane
+C-a {
+
+// Swap the current pane with the next pane
+C-a }
 
 // Go to adjacent pane (works with left/right arrows too, but not up/down)
 C-a h,j,k,l
