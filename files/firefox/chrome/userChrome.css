@@ -1,0 +1,23 @@
+/* From userstyle "Show Full Titles on Bookmarks"
+see https://userstyles.org/styles/484/show-full-titles-on-bookmarks */
+
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+#bookmarks-ptf toolbarbutton menupopup menuitem,
+#bookmarks-ptf toolbarbutton menupopup menu,
+#bookmarksBarContent toolbarbutton menupopup menuitem,
+#bookmarksBarContent toolbarbutton menupopup menu,
+#bookmarks-menu menupopup menuitem,
+#bookmarks-menu menupopup menu,
+#bookmarksMenu menupopup menuitem,
+#bookmarksMenu menupopup menu,
+#bookmarks-chevron menupopup menuitem,
+#bookmarks-chevron menupopup menu,
+#pof-menu menupopup menuitem,
+#pof-menu menupopup menu,
+#PlacesToolbarItems toolbarbutton menupopup menuitem,
+#bookmarks-menu-button menupopup menuitem
+{
+max-width: none !important;
+}
+
