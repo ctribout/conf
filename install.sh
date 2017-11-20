@@ -18,7 +18,7 @@ for conf_file_folder in $(find "${scriptDir}/files/" -mindepth 1 -maxdepth 1 -ty
     for target_folder in $(${conf_file_folder}/location.sh); do
         while IFS= read -r conf_file; do
             target_file=${target_folder}/${conf_file}
-            if [ $(readlink -f "${target_file}") = $(readlink -f "${conf_file_folder}/${conf_file}") ]; then
+            if [ ""$(readlink -f "${target_file}")"" = ""$(readlink -f "${conf_file_folder}/${conf_file}")"" ]; then
                 # Already installed
                 echo "  - $(readlink -f "${conf_file_folder}/${conf_file}") already installed"
                 continue
@@ -27,8 +27,8 @@ for conf_file_folder in $(find "${scriptDir}/files/" -mindepth 1 -maxdepth 1 -ty
                 # File already exists, save it just in case...
                 mv "${target_file}" "${target_file}.backup"
             fi
-            mkdir -p "$(dirname \"${target_file}\")"
-            ln -s ${conf_file_folder}/${conf_file} ${target_file}
+            mkdir -p ""$(dirname "${target_file}")""
+            ln -s "${conf_file_folder}/${conf_file}" "${target_file}"
             echo "  - $(readlink -f "${conf_file_folder}/${conf_file}") installed"
         done < <(cd "${conf_file_folder}" && find . -mindepth 1 -type f -a -not -name "location.sh")
     done
