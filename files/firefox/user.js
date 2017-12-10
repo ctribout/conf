@@ -373,6 +373,9 @@ user_pref("privacy.donottrackheader.enabled",		false); // useless anyway
 // Disable tracking trackingprotection feature : it can break site, and it is done manually via other extensions
 user_pref("privacy.trackingprotection.enabled",		false);
 
+// https://wiki.mozilla.org/Security/Fingerprinting
+user_pref("privacy.resistFingerprinting",		true);
+
 // http://kb.mozillazine.org/Network.http.sendRefererHeader#0
 // https://bugzilla.mozilla.org/show_bug.cgi?id=822869
 // Send a referer header with the target URI as the source

@@ -1,7 +1,7 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
 /* From userstyle "Show Full Titles on Bookmarks"
 see https://userstyles.org/styles/484/show-full-titles-on-bookmarks */
-
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 #bookmarks-ptf toolbarbutton menupopup menuitem,
 #bookmarks-ptf toolbarbutton menupopup menu,
@@ -21,3 +21,7 @@ see https://userstyles.org/styles/484/show-full-titles-on-bookmarks */
 max-width: none !important;
 }
 
+/* Disable the "close tab" buttons on each tab
+see https://support.mozilla.org/en-US/questions/1177825 */
+
+#tabbrowser-tabs .tabbrowser-tab .tab-close-button { display:none!important; }
