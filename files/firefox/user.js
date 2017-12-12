@@ -82,6 +82,8 @@ user_pref("browser.send_pings",		false);
 user_pref("browser.send_pings.require_same_host",		true);
 // Open any new tab at the end of the tabbar (not right to the current one)
 user_pref("browser.tabs.insertRelatedAfterCurrent",		false);
+// New tabs are blank, not the useless tiles
+user_pref("browser.newtab.url",		"about:blank");
 
 // https://developer.mozilla.org/en-US/docs/IndexedDB
 // https://wiki.mozilla.org/Security/Reviews/Firefox4/IndexedDB_Security_Review
@@ -256,6 +258,7 @@ user_pref("datareporting.healthreport.documentServerURI", "");
 // http://www.thewindowsclub.com/disable-remove-ad-tiles-from-firefox
 // http://forums.mozillazine.org/viewtopic.php?p=13876331#p13876331
 user_pref("browser.newtabpage.enhanced",		false);
+user_pref("browser.newtabpage.activity-stream.default.sites",		"");
 user_pref("browser.newtab.preload",		false);
 // https://wiki.mozilla.org/Tiles/Technical_Documentation#Ping
 user_pref("browser.newtabpage.directory.ping",		"");
