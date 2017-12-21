@@ -37,6 +37,11 @@ user_pref("media.peerconnection.enabled",		false);
 // https://developer.mozilla.org/en-US/docs/Web/API/Navigator
 user_pref("media.navigator.enabled",		false);
 // https://developer.mozilla.org/en-US/docs/Web/API/BatteryManager
+// Disable video autoplay
+user_pref("media.autoplay.enabled",		false);
+user_pref("media.block-autoplay-until-in-foreground",		true);
+
+
 user_pref("dom.battery.enabled",		false);
 // https://wiki.mozilla.org/WebAPI/Security/WebTelephony
 user_pref("dom.telephony.enabled",		false);
