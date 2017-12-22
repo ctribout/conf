@@ -89,6 +89,8 @@ user_pref("browser.send_pings.require_same_host",		true);
 user_pref("browser.tabs.insertRelatedAfterCurrent",		false);
 // New tabs are blank, not the useless tiles
 user_pref("browser.newtab.url",		"about:blank");
+user_pref("browser.newtabpage.activity-stream.enabled",		false);
+
 
 // https://developer.mozilla.org/en-US/docs/IndexedDB
 // https://wiki.mozilla.org/Security/Reviews/Firefox4/IndexedDB_Security_Review
