@@ -386,7 +386,8 @@ user_pref("privacy.donottrackheader.enabled",		false); // useless anyway
 user_pref("privacy.trackingprotection.enabled",		false);
 
 // https://wiki.mozilla.org/Security/Fingerprinting
-user_pref("privacy.resistFingerprinting",		true);
+// Disabled, as it is VERY inconvenient (forces the FF version to the last old ESR even for extensions that complain it's too old, floods with canvas authorizations, silently blocks some standard canvas function, etc.)
+// user_pref("privacy.resistFingerprinting",		true);
 
 // http://kb.mozillazine.org/Network.http.sendRefererHeader#0
 // https://bugzilla.mozilla.org/show_bug.cgi?id=822869
@@ -434,7 +435,7 @@ user_pref("privacy.clearOnShutdown.cookies",		false);
 user_pref("privacy.clearOnShutdown.downloads",		true);
 // user_pref("privacy.clearOnShutdown.formdata",		true);
 user_pref("privacy.clearOnShutdown.history",		true);
-// user_pref("privacy.clearOnShutdown.offlineApps",		true);
+user_pref("privacy.clearOnShutdown.offlineApps",		true);
 // user_pref("privacy.clearOnShutdown.passwords",		true);
 // user_pref("privacy.clearOnShutdown.sessions",		true);
 // user_pref("privacy.clearOnShutdown.siteSettings",		true);
