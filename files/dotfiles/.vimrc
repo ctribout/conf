@@ -63,7 +63,7 @@ if (_sq_uid != 0)
         " jinja2 syntax
         NeoBundle 'Glench/Vim-Jinja2-Syntax'
         " Utilities for tabs
-        NeoBundle 'gcmt/taboo.vim'
+        NeoBundle 'gcmt/taboo.vim', { 'rev' : '102564328829dbce56d34ac4c1e2367404b79f31' }
 
         " Autocompletion
         if (has('python')) && (v:version > 703 || (v:version == 703 && has('patch584')))
