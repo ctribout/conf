@@ -89,6 +89,8 @@ V [select lines]:s/a/b/
     ";" sets the "current line" to be the one found to be the start of the range, and not the cursor anymore
 [I
     Lists all lines in open buffers that contain the word under cursor
+:s/Copyright \zs2007\ze All Rights Reserved/2008/
+    Change 2007 to 2008 in this specific sentence, through the whole document
 
 === Global editing
 

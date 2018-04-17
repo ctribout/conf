@@ -48,7 +48,7 @@ if (_sq_uid != 0)
         " Git wrapper, for integration with vim-airline (branch and commits in statusbar)
         NeoBundle 'tpope/vim-fugitive'
         " Quickly view open buffers and switch between them
-        NeoBundle 'jlanzarotta/bufexplorer'
+        NeoBundle 'jlanzarotta/bufexplorer', { 'rev' : '7.4.13' }
         " Session management
         NeoBundle 'xolox/vim-misc'
         NeoBundle 'xolox/vim-session'
@@ -69,9 +69,8 @@ if (_sq_uid != 0)
         if (has('python')) && (v:version > 703 || (v:version == 703 && has('patch584')))
             let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is slow to get
             NeoBundle 'Valloric/YouCompleteMe', {
-                        \ 'build' : {
-                        \   'unix' : './install.py'
-                        \ },
+                        \ 'rev' : '4e08cde268d5154060e511b58eaf5de1b693f157',
+                        \ 'build' : { 'unix' : './install.py' },
                         \ }
         endif
     endif
