@@ -470,6 +470,7 @@ if (_sq_uid != 0)
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " Terrible performaces and RAM usage otherwise, on py files at least
     let g:ycm_collect_identifiers_from_tags_files = 0
+    nnoremap <C-]> :YcmCompleter GoTo<CR>
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => vim-indent-guides plugin
