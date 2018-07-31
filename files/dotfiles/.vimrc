@@ -66,7 +66,7 @@ if (_sq_uid != 0)
         NeoBundle 'gcmt/taboo.vim', { 'rev' : '102564328829dbce56d34ac4c1e2367404b79f31' }
 
         " Autocompletion
-        if (has('python')) && (v:version > 703 || (v:version == 703 && has('patch584')))
+        if (has('python') || has('python3')) && (v:version > 703 || (v:version == 703 && has('patch584')))
             let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is slow to get
             NeoBundle 'Valloric/YouCompleteMe', {
                         \ 'rev' : '4e08cde268d5154060e511b58eaf5de1b693f157',
