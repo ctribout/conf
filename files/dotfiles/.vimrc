@@ -35,7 +35,7 @@ if (_sq_uid != 0)
     NeoBundle 'vim-airline/vim-airline'
     NeoBundle 'vim-airline/vim-airline-themes'
     " Highlight cursor word
-    NeoBundle 'ihacklog/HiCursorWords'
+    NeoBundle 'reidHoruff/HiCursorWords', { 'rev' : 'f3cd03b35b9634e2e436079197c1a96184dfa73a' }
     " Highlight trailing whitespaces
     NeoBundle 'bronson/vim-trailing-whitespace'
     " Display Marks in the left margin
