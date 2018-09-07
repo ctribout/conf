@@ -44,6 +44,7 @@
 [pager]
     diff = true
     status = false
+    branch = false
 [pull]
     rebase = true
     # Only available starting from 1.8.5
