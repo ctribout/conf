@@ -29,9 +29,10 @@ setttitle() {
 test -n "${DISPLAY}" && setxkbmap -option "nbsp:none"
 
 # enable color support of ls and also add handy aliases
+alias ls='ls --show-control-chars --quoting-style=escape'
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+    alias ls='ls --color=auto --show-control-chars --quoting-style=escape'
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
