@@ -723,8 +723,8 @@ user_pref("security.ssl3.rsa_aes_256_sha",		true);
 user_pref("security.ssl3.rsa_aes_128_sha",		true);
 
 // Temporary for old websites, until they are fixed...
-user_pref("security.ssl3.dhe_rsa_aes_128_sha", True);
-user_pref("security.ssl3.dhe_rsa_aes_256_sha", True);
+user_pref("security.ssl3.dhe_rsa_aes_128_sha", true);
+user_pref("security.ssl3.dhe_rsa_aes_256_sha", true);
 
 
 /******************************************************************************
@@ -732,13 +732,13 @@ user_pref("security.ssl3.dhe_rsa_aes_256_sha", True);
  *                                                                            *
  ******************************************************************************/
 
-user_pref("extensions.foxyproxy.socks_remote_dns", True);
-user_pref("extensions.tabmix.tabs.closeButtons.enable", True);
-user_pref("extensions.tabmix.hideTabBarButton", False);
-user_pref("noscript.forbidWebGL", True);
-user_pref("noscript.global", True);
-user_pref("noscript.notify", False);
-user_pref("noscript.notify.bottom", False);
-user_pref("noscript.firstRunRedirection", False);
+user_pref("extensions.foxyproxy.socks_remote_dns", true);
+user_pref("extensions.tabmix.tabs.closeButtons.enable", true);
+user_pref("extensions.tabmix.hideTabBarButton", false);
+user_pref("noscript.forbidWebGL", true);
+user_pref("noscript.global", true);
+user_pref("noscript.notify", false);
+user_pref("noscript.notify.bottom", false);
+user_pref("noscript.firstRunRedirection", false);
 user_pref("extensions.referrercontrol.defaultPolicy", 2);
 
