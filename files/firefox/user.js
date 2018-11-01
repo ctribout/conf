@@ -38,6 +38,7 @@ user_pref("media.peerconnection.enabled",		false);
 user_pref("media.navigator.enabled",		false);
 // https://developer.mozilla.org/en-US/docs/Web/API/BatteryManager
 // Disable video autoplay
+user_pref("media.autoplay.default",		1); // 0 = yes, 1 = no, 2 = ask per domain
 user_pref("media.autoplay.enabled",		false);
 user_pref("media.block-autoplay-until-in-foreground",		true);
 
