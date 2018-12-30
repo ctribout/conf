@@ -120,6 +120,17 @@ user_pref("webgl.disabled",		true);
 // https://developer.mozilla.org/en-US/docs/Web/API/Network_Information_API
 user_pref("dom.netinfo.enabled", false);
 
+// Prevent websites from opening new windows with reduced set of stuff (missing toolbar, non resizable, etc.)
+user_pref("dom.disable_window_open_feature.close", true);
+user_pref("dom.disable_window_open_feature.location", true);
+user_pref("dom.disable_window_open_feature.menubar", true);
+user_pref("dom.disable_window_open_feature.minimizable", true);
+user_pref("dom.disable_window_open_feature.personalbar", true);
+user_pref("dom.disable_window_open_feature.resizable", true);
+user_pref("dom.disable_window_open_feature.status", true);
+user_pref("dom.disable_window_open_feature.titlebar", true);
+user_pref("dom.disable_window_open_feature.toolbar", true);
+
 /******************************************************************************
  * Misc                                                                       *
  *                                                                            *
