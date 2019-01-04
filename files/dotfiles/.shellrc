@@ -4,8 +4,8 @@ case $- in
       *) return;;
 esac
 
-# Reload GPG agent (prompt password in text mode, not via the windows maanger)
-gpg-connect-agent <<< RELOADAGENT 1>/dev/null 2>&1 &
+# Reload GPG agent (prompt password in text mode, not via the windows manager)
+# gpg-connect-agent <<< RELOADAGENT 1>/dev/null 2>&1 &
 
 # Default PATH
 export PATH=${PATH}:~/.local/bin:~/.local/usr/bin
@@ -83,7 +83,7 @@ set_prompt() {
 if [ -n "${TMUX}" ]; then
     refresh() {
         dispcmd=$(tmux show-environment DISPLAY 2>/dev/null)
-        test -z "${dispcmd}" && export ${dispcmd}
+        test -n "${dispcmd}" && export ${dispcmd}
     }
 fi
 
