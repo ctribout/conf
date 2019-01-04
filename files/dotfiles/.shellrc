@@ -56,7 +56,7 @@ wchat() {
             return
     fi
     tmux new-session -s ${session} /usr/bin/weechat
-    tmux set-option -t ${session} status off
+    # tmux set-option -t ${session} status off
     tmux attach -t ${session}
 }
 alias vims='vim --servername vim'
