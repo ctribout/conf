@@ -38,6 +38,8 @@ if (_sq_uid != 0)
     NeoBundle 'reidHoruff/HiCursorWords', { 'rev' : 'f3cd03b35b9634e2e436079197c1a96184dfa73a' }
     " Highlight trailing whitespaces
     NeoBundle 'bronson/vim-trailing-whitespace'
+    " Navigate through indent levels
+    NeoBundle 'kamou/vim-indentwise'
     " Display Marks in the left margin
     NeoBundle 'kshenoy/vim-signature'
     if !&diff
@@ -470,6 +472,7 @@ if (_sq_uid != 0)
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " Terrible performaces and RAM usage otherwise, on py files at least
     let g:ycm_collect_identifiers_from_tags_files = 0
+    let g:ycm_autoclose_preview_window_after_completion = 1
     nnoremap <C-]> :YcmCompleter GoTo<CR>
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
