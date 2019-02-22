@@ -64,6 +64,8 @@ if (_sq_uid != 0)
         NeoBundle 'vim-scripts/toggle_words.vim'
         " jinja2 syntax
         NeoBundle 'Glench/Vim-Jinja2-Syntax'
+        " Markdown syntax
+        NeoBundle 'gabrielelana/vim-markdown'
         " Utilities for tabs
         NeoBundle 'gcmt/taboo.vim', { 'rev' : '102564328829dbce56d34ac4c1e2367404b79f31' }
 
