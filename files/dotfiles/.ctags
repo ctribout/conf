@@ -1,14 +1,19 @@
 --langdef=asciidoc
 --langmap=asciidoc:.ad.adoc.asciidoc
---regex-asciidoc=/^=[ \t]+(.*)/# \1/h/
---regex-asciidoc=/^==[ \t]+(.*)/. \1/h/
---regex-asciidoc=/^===[ \t]+(.*)/. . \1/h/
---regex-asciidoc=/^====[ \t]+(.*)/. . . \1/h/
---regex-asciidoc=/^=====[ \t]+(.*)/. . . . \1/h/
---regex-asciidoc=/^======[ \t]+(.*)/. . . . \1/h/
---regex-asciidoc=/^=======[ \t]+(.*)/. . . . \1/h/
+--regex-asciidoc=/^=[ \t]+(.*)/# \1/h,title/
+--regex-asciidoc=/^==[ \t]+(.*)/. \1/h,chapter/
+--regex-asciidoc=/^===[ \t]+(.*)/. . \1/h,section/
+--regex-asciidoc=/^====[ \t]+(.*)/. . . \1/h,subsection/
+--regex-asciidoc=/^=====[ \t]+(.*)/. . . . \1/h,subsubsection/
 --regex-asciidoc=/\[\[([^]]+)\]\]/\1/a/
 --regex-asciidoc=/^\.([^ \t].+)/\1/t/
 --regex-asciidoc=/image::([^\[]+)/\1/i/
 --regex-asciidoc=/image:([^:][^\[]+)/\1/I/
 --regex-asciidoc=/include::([^\[]+)/\1/n/
+--langdef=markdown
+--langmap=markdown:.mkd.md
+--regex-markdown=/^#[ \t]+(.*)/# \1/h,title/
+--regex-markdown=/^##[ \t]+(.*)/. \1/h,chapter/
+--regex-markdown=/^###[ \t]+(.*)/. . \1/h,section/
+--regex-markdown=/^####[ \t]+(.*)/. . . \1/h,subsection/
+--regex-markdown=/^#####[ \t]+(.*)/. . . . \1/h,subsubsection/

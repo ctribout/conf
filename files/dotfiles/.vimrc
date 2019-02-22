@@ -64,8 +64,6 @@ if (_sq_uid != 0)
         NeoBundle 'vim-scripts/toggle_words.vim'
         " jinja2 syntax
         NeoBundle 'Glench/Vim-Jinja2-Syntax'
-        " Markdown syntax
-        NeoBundle 'gabrielelana/vim-markdown'
         " Utilities for tabs
         NeoBundle 'gcmt/taboo.vim', { 'rev' : '102564328829dbce56d34ac4c1e2367404b79f31' }
 
@@ -389,7 +387,14 @@ if (_sq_uid != 0)
             \ 'I:inline images:1'
         \ ],
         \ 'sort' : 0
-        \ }
+    \ }
+    let g:tagbar_type_markdown = {
+        \ 'ctagstype' : 'markdown',
+        \ 'kinds' : [
+            \ 'h:table of contents',
+        \ ],
+        \ 'sort' : 0
+    \ }
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => bufexplorer plugin
