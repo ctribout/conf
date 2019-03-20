@@ -40,7 +40,8 @@ user_pref("media.navigator.enabled",		false);
 // Disable video autoplay
 user_pref("media.autoplay.default",		1); // 0 = yes, 1 = no, 2 = ask per domain
 user_pref("media.block-autoplay-until-in-foreground",		true);
-
+user_pref("media.autoplay.allow-muted",		false);
+user_pref("media.autoplay.blackList-override-default",		false);
 
 user_pref("dom.battery.enabled",		false);
 // https://wiki.mozilla.org/WebAPI/Security/WebTelephony
