@@ -88,6 +88,8 @@ user_pref("browser.send_pings",		false);
 user_pref("browser.send_pings.require_same_host",		true);
 // Open any new tab at the end of the tabbar (not right to the current one)
 user_pref("browser.tabs.insertRelatedAfterCurrent",		false);
+// Force title bar display (mandatory to move the windows from a virtual desktop to another, or just to easily see the page title...)
+user_pref("browser.tabs.drawInTitlebar",		false);
 // New tabs are blank, not the useless tiles
 user_pref("browser.newtab.url",		"about:blank");
 user_pref("browser.newtabpage.activity-stream.enabled",		false);
