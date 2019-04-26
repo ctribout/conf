@@ -51,7 +51,7 @@ user_pref("beacon.enabled",		false);
 // https://developer.mozilla.org/en-US/docs/Mozilla/Preferences/Preference_reference/dom.event.clipboardevents.enabled
 // user_pref("dom.event.clipboardevents.enabled",		false);
 // https://wiki.mozilla.org/Security/Reviews/Firefox/NavigationTimingAPI
-user_pref("dom.enable_performance",		false);
+user_pref("dom.enable_performance",		true); // breaks sites like linkedin
 // Disable User Timing API - https://trac.torproject.org/projects/tor/ticket/16336
 user_pref("dom.enable_user_timing", false);
 // Disable resource/navigation timing
