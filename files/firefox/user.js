@@ -257,6 +257,7 @@ user_pref("experiments.enabled", false);
 user_pref("experiments.manifest.uri", "");
 user_pref("experiments.supported", false);
 user_pref("experiments.activeExperiment", false);
+user_pref("app.normandy.enabled", false); // allows to have remote stuff being transparently downloaded/set locally (by Mozilla)
 
 // https://wiki.mozilla.org/Polaris#Tracking_protection
 // https://support.mozilla.org/en-US/kb/tracking-protection-firefox
