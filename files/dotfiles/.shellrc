@@ -83,7 +83,9 @@ set_prompt() {
 if [ -n "${TMUX}" ]; then
     refresh() {
         dispcmd=$(tmux show-environment DISPLAY 2>/dev/null)
-        test -n "${dispcmd}" && export ${dispcmd}
+        if [ -n "${dispcmd}" -a "${dispcmd}" != "-DISPLAY" ]; then
+            export ${dispcmd}
+        fi
     }
 fi
 
