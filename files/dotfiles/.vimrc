@@ -105,6 +105,10 @@ set autoread
 " like <leader>w saves the current file
 let g:mapleader = ","
 
+" Disable modeline feature, not useful and possibly a security risk
+set modelines=0
+set nomodeline
+
 " " Default copy buffer is the system clipboard
 " set clipboard=unnamed
 " if has('unnamedplus')
