@@ -470,7 +470,7 @@ user_pref("privacy.clearOnShutdown.offlineApps",		true);
 
 // CIS Version 1.2.0 October 21st, 2011 2.5.8 Disable Caching of SSL Pages
 // http://kb.mozillazine.org/Browser.cache.disk_cache_ssl
-user_pref("browser.cache.disk_cache_ssl",		false);
+// user_pref("browser.cache.disk_cache_ssl",		false);
 
 // CIS Version 1.2.0 October 21st, 2011 2.5.2 Disallow Credential Storage
 // user_pref("signon.rememberSignons",		false);
