@@ -185,6 +185,10 @@ user_pref("dom.webnotifications.enabled", false);
 // user_pref("javascript.options.methodjit.chrome",		false);
 // user_pref("javascript.options.methodjit.content",		false);
 
+// Allows "enterprise" MITM: disable that
+user_pref("security.certerrors.mitm.auto_enable_enterprise_roots",		false);
+user_pref("security.enterprise_roots.enabled",		false);
+
 // CIS Mozilla Firefox 24 ESR v1.0.0 - 3.7 Disable JAR from opening Unsafe File Types
 // http://kb.mozillazine.org/Network.jar.open-unsafe-types
 user_pref("network.jar.open-unsafe-types",		false);
