@@ -247,6 +247,9 @@ user_pref("extensions.getAddons.cache.enabled", false);
 // Don't leak plugins installed
 user_pref("plugins.enumerable_names", "");
 
+// Remove noise (recommended extensions)
+user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
+
 /******************************************************************************
  * firefox features / components                                              *
  *                                                                            *
