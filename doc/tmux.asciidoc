@@ -16,6 +16,17 @@ tmux ls
 // Detach session
 C-a d
 
+// To copy and paste some buffer content:
+// - enter copy mode with
+C-a ESC
+// - navigate to the start of the text to copy, then
+Space
+// - navigate to the end of the text, then
+Enter
+// - the text is now copied (internal to the tmux session only) and the copy
+//   mode is exited automatically. To copy the content, in normal mode:
+C-a ]
+
 == Windows (= tabs)
 
 // Create a window
