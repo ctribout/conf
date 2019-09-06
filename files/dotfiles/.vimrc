@@ -46,7 +46,8 @@ if (_sq_uid != 0)
         " Tag bar (quickly view the classes/functions/vars in a file, and jump there)
         NeoBundle 'majutsushi/tagbar'
         " Show git diffs while editing (changes/removed/added lines)
-        NeoBundle 'mhinz/vim-signify'
+        " NeoBundle 'mhinz/vim-signify'
+        NeoBundle 'airblade/vim-gitgutter'
         " Git wrapper, for integration with vim-airline (branch and commits in statusbar)
         NeoBundle 'tpope/vim-fugitive'
         " Quickly view open buffers and switch between them
@@ -66,15 +67,19 @@ if (_sq_uid != 0)
         NeoBundle 'Glench/Vim-Jinja2-Syntax'
         " Utilities for tabs
         NeoBundle 'gcmt/taboo.vim', { 'rev' : '102564328829dbce56d34ac4c1e2367404b79f31' }
+        " Syntax check
+        NeoBundle 'dense-analysis/ale'
+        " Rust support
+        NeoBundle 'rust-lang/rust.vim'
 
         " Autocompletion
-        if (has('python') || has('python3')) && (v:version > 703 || (v:version == 703 && has('patch584')))
-            let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is slow to get
-            NeoBundle 'Valloric/YouCompleteMe', {
-                        \ 'rev' : '4e08cde268d5154060e511b58eaf5de1b693f157',
-                        \ 'build' : { 'unix' : './install.py' },
-                        \ }
-        endif
+        " if (has('python') || has('python3')) && (v:version > 703 || (v:version == 703 && has('patch584')))
+        "     let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is slow to get
+        "     NeoBundle 'Valloric/YouCompleteMe', {
+        "                 \ 'rev' : '4e08cde268d5154060e511b58eaf5de1b693f157',
+        "                 \ 'build' : { 'unix' : './install.py' },
+        "                 \ }
+        " endif
     endif
 
     " Required:
@@ -447,13 +452,26 @@ if (_sq_uid != 0)
     augroup END
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " => gitgutter plugin
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    let g:gitgutter_sign_added = '+'
+    let g:gitgutter_sign_modified = '~'
+    let g:gitgutter_sign_removed = '_'
+    let g:gitgutter_sign_removed_first_line = '‾'
+    let g:gitgutter_sign_modified_removed = '~'
+    highlight GitGutterAdd cterm=bold ctermbg=none ctermfg=119 gui=bold
+    highlight GitGutterDelete cterm=bold ctermbg=none ctermfg=197 gui=bold
+    highlight GitGutterChange cterm=bold ctermbg=none ctermfg=227 gui=bold
+    highlight GitGutterChangeDelete cterm=bold ctermbg=none ctermfg=215 gui=bold
+
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => vim-signify plugin
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     let g:signify_vcs_list = [ 'git', 'svn' ]
     let g:signify_update_on_bufenter = 0
     let g:signify_update_on_focusgained = 1
 
-    " highlight signs in Sy
+    " highlight signs in Signify
     highlight SignifySignAdd    cterm=bold ctermbg=none  ctermfg=119
     highlight SignifySignDelete cterm=bold ctermbg=none  ctermfg=167
     highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
@@ -468,7 +486,8 @@ if (_sq_uid != 0)
     " => vim-session plugin
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     set sessionoptions+=tabpages,globals
-    set sessionoptions-=help
+    set sessionoptions-=help,blank
+
     :let g:session_autoload = 'yes'
     :let g:session_autosave = 'yes'
 
@@ -514,6 +533,20 @@ if (_sq_uid != 0)
     let g:taboo_tabline=0
     let g:taboo_tab_format='[%N] %f%m'
     let g:taboo_renamed_tab_format='[%N:%l] %f%m'
+
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " => ale plugin
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    let g:ale_set_highlights=0
+    let g:ale_sign_error='E>'
+    let g:ale_sign_warning='W>'
+    let g:ale_sign_style_error='e>'
+    let g:ale_sign_style_warning='w>'
+    let g:ale_sign_info='I>'
+    let g:airline#extensions#ale#enabled = 1
+    let g:ale_set_signs = 0 " for now, because it alwas messes with the gitgutter signs display, more important to me
+    nmap <silent> ]l :ALENext<cr>
+    nmap <silent> [l :ALEPrevious<cr>
 
 endif
 
