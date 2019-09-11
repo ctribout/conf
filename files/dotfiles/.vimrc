@@ -71,6 +71,8 @@ if (_sq_uid != 0)
         NeoBundle 'dense-analysis/ale'
         " Rust support
         NeoBundle 'rust-lang/rust.vim'
+        " Markdown support
+        NeoBundle 'vim-pandoc/vim-pandoc-syntax'
 
         " Autocompletion
         " if (has('python') || has('python3')) && (v:version > 703 || (v:version == 703 && has('patch584')))
@@ -547,6 +549,17 @@ if (_sq_uid != 0)
     let g:ale_set_signs = 0 " for now, because it alwas messes with the gitgutter signs display, more important to me
     nmap <silent> ]l :ALENext<cr>
     nmap <silent> [l :ALEPrevious<cr>
+
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " => vim-pandoc plugin
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    augroup pandoc_syntax
+        au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+    augroup END
+    let g:pandoc#syntax#conceal#use=0
+    let g:pandoc#syntax#style#emphases=0
+    let g:pandoc#syntax#roman_lists=0
+    let g:pandoc#syntax#style#underline_special=0
 
 endif
 
