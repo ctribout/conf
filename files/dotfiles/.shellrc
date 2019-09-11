@@ -64,6 +64,9 @@ alias vimr='vim --servername vim --remote'
 
 set_prompt() {
     # Retrieve data for prompt
+    local _p_user=$(whoami)
+    local _p_hostname=$(uname -n)
+    test -n "${LOCAL_HOSTNAME}" && _p_hostname=${LOCAL_HOSTNAME}
     local _p_ssh=0
     test -n "${SSH_CLIENT}${SSH_CONNECTION}${SSH_TTY}" && _p_ssh=1
     local _p_screen=0
@@ -72,12 +75,15 @@ set_prompt() {
     test -n "${VIMRUNTIME}${MYVIMRC}${VIM}" && _p_vim=1
     local _p_has_x=0
     test -n "${DISPLAY}" && _p_has_x=1
+    local _p_container=0
+    if [ -n "${SCHROOT_CHROOT_NAME}" ]; then
+        test -z "${_p_user}" && _p_user="${SCHROOT_USER}"
+        _p_hostname="${_p_hostname}#${SCHROOT_CHROOT_NAME}"
+        _p_container=1
+    fi
     local _p_root=0
     test $(id -u) -eq 0 && _p_root=1
-    local _p_user=$(whoami)
-    local _p_hostname=$(uname -n)
-    test -n "${LOCAL_HOSTNAME}" && _p_hostname=${LOCAL_HOSTNAME}
-    set_prompt_spe ${_p_ssh} ${_p_screen} ${_p_vim} ${_p_has_x} ${_p_root} ${_p_user} ${_p_hostname}
+    set_prompt_spe ${_p_ssh} ${_p_container} ${_p_screen} ${_p_vim} ${_p_has_x} ${_p_root} ${_p_user} ${_p_hostname}
 }
 
 if [ -n "${TMUX}" ]; then

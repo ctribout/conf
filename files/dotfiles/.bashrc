@@ -3,14 +3,15 @@ test -f ~/.bashrc.local && source ~/.bashrc.local
 
 set_prompt_spe() {
     local is_ssh=$1
+    local is_container=$2
 
-    local is_screen=$2
-    local is_vim=$3
-    local has_x=$4
+    local is_screen=$3
+    local is_vim=$4
+    local has_x=$5
 
-    local is_user_root=$5
-    local user=$6
-    local hostname=$7
+    local is_user_root=$6
+    local user=$7
+    local hostname=$8
 
     local C_NC="\["$(echo -n '\e[0m')"\]" # No Color
     local C_BOLD="\["$(echo -n '\e[1m')"\]"
@@ -50,7 +51,7 @@ set_prompt_spe() {
         PS1="${PS1}${C_GREEN}"
     fi
     PS1="${PS1}${user}${C_NC}${C_BROWN}@${C_NC}"
-    if [ ${is_ssh} -eq 1 ]; then
+    if [ ${is_ssh} -eq 1 -o ${is_container} -eq 1 ]; then
         prompt_hostname="${C_LIGHT_CYAN}${hostname}${C_NC}"
     else
         prompt_hostname="${C_LIGHT_GREEN}${hostname}${C_NC}"

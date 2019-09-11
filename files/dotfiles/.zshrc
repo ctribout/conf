@@ -12,14 +12,15 @@ autoload -U colors && colors
 
 set_prompt_spe() {
     local is_ssh=$1
+    local is_container=$2
 
-    local is_screen=$2
-    local is_vim=$3
-    local has_x=$4
+    local is_screen=$3
+    local is_vim=$4
+    local has_x=$5
 
-    local is_user_root=$5
-    local user=$6
-    local hostname=$7
+    local is_user_root=$6
+    local user=$7
+    local hostname=$8
 
     local prompt_sfx=
     local prompt_symb=
@@ -40,10 +41,12 @@ set_prompt_spe() {
         prompt_symb='$'
         PROMPT="${PROMPT}%{%F{green}%}"
     fi
-    PROMPT="${PROMPT}%n%{%f%}%{%F{yellow}%}@%{%f%}"
+    prompt_username="%f"
+    test -n "${prompt_username}" && prompt_username=${user}
+    PROMPT="${PROMPT}%n%{${prompt_username}%}%{%F{yellow}%}@%{%f%}"
     prompt_hostname="%m"
     test -n "${hostname}" && prompt_hostname=${hostname}
-    if [ ${is_ssh} -eq 1 ]; then
+    if [ ${is_ssh} -eq 1 -o ${is_container} -eq 1 ]; then
         prompt_hostname="%{%F{cyan}%}%B${prompt_hostname}%b%{%f%}"
     else
         prompt_hostname="%{%F{green}%}%B${prompt_hostname}%b%{%f%}"
