@@ -71,6 +71,8 @@ V [select lines]>   Indent selection
 V [select lines]<   Un-indent selection
 [C-t]               Indent current line in insert mode
 [C-d]               Unindent current line in insert mode
+gq                  In visual mode, re-format current selection
+gwip                Re-format current paragraph
 
 ===  Search and replace
 

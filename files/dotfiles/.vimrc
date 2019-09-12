@@ -209,6 +209,9 @@ set ignorecase
 " When searching try to be smart about cases
 set smartcase
 
+" Don't use two spaces when joining lines
+set nojoinspaces
+
 " Highlight search results
 set hlsearch
 
