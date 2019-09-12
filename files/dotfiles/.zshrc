@@ -25,6 +25,7 @@ set_prompt_spe() {
     local prompt_sfx=
     local prompt_symb=
     local prompt_hostname=
+    local prompt_username=
 
     PROMPT=
 
@@ -41,9 +42,9 @@ set_prompt_spe() {
         prompt_symb='$'
         PROMPT="${PROMPT}%{%F{green}%}"
     fi
-    prompt_username="%f"
-    test -n "${prompt_username}" && prompt_username=${user}
-    PROMPT="${PROMPT}%n%{${prompt_username}%}%{%F{yellow}%}@%{%f%}"
+    prompt_username="${user}"
+    test -z "${prompt_username}" && prompt_username="%f"
+    PROMPT="${PROMPT}${prompt_username}%{%f%}%{%F{yellow}%}@%{%f%}"
     prompt_hostname="%m"
     test -n "${hostname}" && prompt_hostname=${hostname}
     if [ ${is_ssh} -eq 1 -o ${is_container} -eq 1 ]; then
