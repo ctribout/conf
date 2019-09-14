@@ -423,6 +423,9 @@ user_pref("network.http.sendSecureXSiteReferrer",		false);
 // http://kb.mozillazine.org/Network.cookie.cookieBehavior#1
 user_pref("network.cookie.cookieBehavior",		0); // was set to 1, but this might break a few websites (PSN...) ; cookies handled via an extension anyway to block all but 1st parties by default
 
+// No DNS over HTTPS for now (same as "0" but means "this is my choice to deactivate it")
+user_pref("network.trr.mode", 5);
+
 // user-agent
 //user_pref("general.useragent.override", "Mozilla/5.0 (Windows NT 6.1; rv:31.0) Gecko/20100101 Firefox/31.0");
 
