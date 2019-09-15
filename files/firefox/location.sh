@@ -1,2 +1,2 @@
 #! /bin/sh
-find  ~/.mozilla/firefox/*.default/ -maxdepth 0
+find  ~/.mozilla/firefox/*.default*/ -maxdepth 0
