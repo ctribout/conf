@@ -42,6 +42,9 @@ user_pref("media.autoplay.default",		1); // 0 = yes, 1 = no, 2 = ask per domain
 user_pref("media.block-autoplay-until-in-foreground",		true);
 user_pref("media.autoplay.allow-muted",		false);
 user_pref("media.autoplay.blackList-override-default",		false);
+user_pref("media.autoplay.block-webaudio",		true);
+user_pref("media.allowed-to-play.enabled",		false);
+user_pref("media.autoplay.enabled.user-gestures-needed",		false);
 
 user_pref("dom.battery.enabled",		false);
 // https://wiki.mozilla.org/WebAPI/Security/WebTelephony
