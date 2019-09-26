@@ -38,7 +38,7 @@ user_pref("media.peerconnection.enabled",		false);
 user_pref("media.navigator.enabled",		false);
 // https://developer.mozilla.org/en-US/docs/Web/API/BatteryManager
 // Disable video autoplay
-user_pref("media.autoplay.default",		1); // 0 = yes, 1 = no, 2 = ask per domain
+user_pref("media.autoplay.default",		5); // 5 seems to be "block audio and video" now
 user_pref("media.block-autoplay-until-in-foreground",		true);
 user_pref("media.autoplay.allow-muted",		false);
 user_pref("media.autoplay.blackList-override-default",		false);
