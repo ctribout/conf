@@ -408,6 +408,7 @@ user_pref("security.csp.enable",		true);
 user_pref("privacy.donottrackheader.enabled",		false); // useless anyway
 
 // Disable built-in tracking protection features : it can break sites, and it is done manually (and more strictly) via other extensions
+user_pref("browser.contentblocking.category",		"custom");
 user_pref("privacy.trackingprotection.enabled",		false);
 user_pref("privacy.trackingprotection.cryptomining.enabled",		false);
 user_pref("privacy.trackingprotection.pbmode.enabled",		false);
