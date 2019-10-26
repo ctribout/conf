@@ -407,8 +407,13 @@ user_pref("security.csp.enable",		true);
 // https://github.com/pyllyukko/user.js/issues/11
 user_pref("privacy.donottrackheader.enabled",		false); // useless anyway
 
-// Disable tracking trackingprotection feature : it can break site, and it is done manually via other extensions
+// Disable built-in tracking protection features : it can break sites, and it is done manually (and more strictly) via other extensions
 user_pref("privacy.trackingprotection.enabled",		false);
+user_pref("privacy.trackingprotection.cryptomining.enabled",		false);
+user_pref("privacy.trackingprotection.pbmode.enabled",		false);
+user_pref("privacy.trackingprotection.fingerprinting.enabled",		false);
+user_pref("privacy.trackingprotection.socialtracking.enabled",		false);
+user_pref("privacy.trackingprotection.origin_telemetry.enabled",		false);
 
 // https://wiki.mozilla.org/Security/Fingerprinting
 // Disabled, as it is VERY inconvenient (forces the FF version to the last old ESR even for extensions that complain it's too old, floods with canvas authorizations, silently blocks some standard canvas function, etc.)
