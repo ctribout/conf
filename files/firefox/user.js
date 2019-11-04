@@ -14,6 +14,9 @@ and was modified sligthlty
  * https://github.com/pyllyukko/user.js                                       *
  ******************************************************************************/
 
+// Starting from FF 69, the user css it not loaded by default, to "improve performance"
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets",		true);
+
 /******************************************************************************
  * HTML5 / APIs / DOM                                                         *
  *                                                                            *
@@ -767,12 +770,9 @@ user_pref("security.ssl3.dhe_rsa_aes_256_sha", true);
  ******************************************************************************/
 
 user_pref("extensions.foxyproxy.socks_remote_dns", true);
-user_pref("extensions.tabmix.tabs.closeButtons.enable", true);
-user_pref("extensions.tabmix.hideTabBarButton", false);
 user_pref("noscript.forbidWebGL", true);
 user_pref("noscript.global", true);
 user_pref("noscript.notify", false);
 user_pref("noscript.notify.bottom", false);
 user_pref("noscript.firstRunRedirection", false);
-user_pref("extensions.referrercontrol.defaultPolicy", 2);
 
