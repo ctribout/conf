@@ -587,6 +587,9 @@ user_pref("browser.urlbar.autocomplete.enabled",		true);
 // https://www.torproject.org/projects/torbrowser/design/#identifier-linkability
 user_pref("signon.autofillForms",		false);
 
+// Stop displaying all other subdomains' passwords everywhere
+user_pref("signon.includeOtherSubdomainsInLookup",		false);
+
 // do not check if firefox is the default browser
 user_pref("browser.shell.checkDefaultBrowser",		false);
 
