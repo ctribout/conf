@@ -75,13 +75,12 @@ if (_sq_uid != 0)
         NeoBundle 'vim-pandoc/vim-pandoc-syntax'
 
         " Autocompletion
-        " if (has('python') || has('python3')) && (v:version > 703 || (v:version == 703 && has('patch584')))
-        "     let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is slow to get
-        "     NeoBundle 'Valloric/YouCompleteMe', {
-        "                 \ 'rev' : '4e08cde268d5154060e511b58eaf5de1b693f157',
-        "                 \ 'build' : { 'unix' : './install.py' },
-        "                 \ }
-        " endif
+        if (has('python') || has('python3')) && (v:version > 703 || (v:version == 703 && has('patch584')))
+            let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is slow to get
+            NeoBundle 'Valloric/YouCompleteMe', {
+                        \ 'build' : { 'unix' : './install.py' },
+                        \ }
+        endif
     endif
 
     " Required:
