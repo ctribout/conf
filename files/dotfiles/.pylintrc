@@ -70,7 +70,7 @@ confidence=
 #disable=E1608,W1627,E1601,E1603,E1602,E1605,E1604,E1607,E1606,W1621,W1620,W1623,W1622,W1625,W1624,W1609,W1608,W1607,W1606,W1605,W1604,W1603,W1602,W1601,W1639,W1640,I0021,W1638,I0020,W1618,W1619,W1630,W1626,W1637,W1634,W1635,W1610,W1611,W1612,W1613,W1614,W1615,W1616,W1617,W1632,W1633,W0704,W1628,W1629,W1636
 
 # List of disabled elements:
-# - Because too much subjective:
+# - Because too much subjective
 #    too-few-public-methods, too-many-public-methods, too-many-instance-attributes, too-many-nested-blocks
 # - Because it can't be reliable and triggers too many false positives
 #    undefined-loop-variable
@@ -78,6 +78,8 @@ confidence=
 #    bad-option-value,wrong-import-order,redefined-variable-type
 #   * complains when handling python2 vs python3 in the imports with if blocks
 #     wrong-import-position
+# - Because it's not worth it
+#    logging-fstring-interpolation,logging-format-interpolation
 
 disable=too-few-public-methods,
         too-many-public-methods,
@@ -89,7 +91,9 @@ disable=too-few-public-methods,
         bad-option-value,
         wrong-import-order,
         wrong-import-position,
-        too-many-nested-blocks
+        too-many-nested-blocks,
+        logging-format-interpolation,
+        logging-fstring-interpolation
 
 [REPORTS]
 
