@@ -25,3 +25,7 @@ max-width: none !important;
 see https://support.mozilla.org/en-US/questions/1177825 */
 
 #tabbrowser-tabs .tabbrowser-tab .tab-close-button { display:none!important; }
+
+/* Hide the "What's new?" button */
+#appMenu-whatsnew-button { display:none !important; }
+
