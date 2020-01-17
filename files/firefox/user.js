@@ -173,6 +173,9 @@ user_pref("network.proxy.socks_remote_dns",		true);
 // Disable notifications
 user_pref("dom.webnotifications.enabled", false);
 
+// Disable "what's new" stuff
+user_pref("browser.messaging-system.whatsNewPanel.enabled", false);
+
 // http://kb.mozillazine.org/Network.proxy.type
 // the default in Firefox for Linux is to use system proxy settings.
 // We change it to direct connection
