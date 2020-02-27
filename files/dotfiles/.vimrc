@@ -66,13 +66,15 @@ if (_sq_uid != 0)
         " jinja2 syntax
         NeoBundle 'Glench/Vim-Jinja2-Syntax'
         " Utilities for tabs
-        NeoBundle 'gcmt/taboo.vim', { 'rev' : '102564328829dbce56d34ac4c1e2367404b79f31' }
+        NeoBundle 'gcmt/taboo.vim'
         " Syntax check
         NeoBundle 'dense-analysis/ale'
         " Rust support
         NeoBundle 'rust-lang/rust.vim'
         " Markdown support
         NeoBundle 'vim-pandoc/vim-pandoc-syntax'
+        " Grep utilities
+        NeoBundle 'yegappan/grep'
 
         " Autocompletion
         if (has('python') || has('python3')) && (v:version > 703 || (v:version == 703 && has('patch584')))
@@ -562,6 +564,13 @@ if (_sq_uid != 0)
     let g:pandoc#syntax#style#emphases=0
     let g:pandoc#syntax#roman_lists=0
     let g:pandoc#syntax#style#underline_special=0
+
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " => grep plugin
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    :let Grep_Skip_Files = '*.bak *~ *.pyc *.so *.o *.a *.lib *.bin'
+    nnoremap <silent> <F3> :Rgrep<CR>
+    vnoremap <F3> "hy:Rgrep <C-r>h
 
 endif
 
