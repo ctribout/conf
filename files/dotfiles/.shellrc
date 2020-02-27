@@ -46,7 +46,7 @@ alias ll='ls -al'
 alias l='ll'
 # personal aliases
 alias sks='ssh -nNTq -C -D 1080'
-alias k='kate -u'
+alias cmake='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=Y'
 alias grep='grep --color --exclude-dir=.svn --exclude-dir=.git'  # show differences in colour and ignore .svn dirs
 wchat() {
     session="weechat"
