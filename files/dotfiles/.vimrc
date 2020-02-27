@@ -390,6 +390,7 @@ if (_sq_uid != 0)
     nmap <F8> :TagbarToggle<CR>
     let g:tagbar_autofocus = 1
     let g:tagbar_show_linenumbers = 1
+    let g:airline#extensions#tagbar#enabled = 0
 
     let g:tagbar_type_asciidoc = {
         \ 'ctagstype' : 'asciidoc',
