@@ -35,7 +35,7 @@ if (_sq_uid != 0)
     NeoBundle 'vim-airline/vim-airline'
     NeoBundle 'vim-airline/vim-airline-themes'
     " Highlight cursor word
-    NeoBundle 'reidHoruff/HiCursorWords', { 'rev' : 'f3cd03b35b9634e2e436079197c1a96184dfa73a' }
+    NeoBundle 'reidHoruff/HiCursorWords'
     " Highlight trailing whitespaces
     NeoBundle 'bronson/vim-trailing-whitespace'
     " Navigate through indent levels
@@ -51,7 +51,7 @@ if (_sq_uid != 0)
         " Git wrapper, for integration with vim-airline (branch and commits in statusbar)
         NeoBundle 'tpope/vim-fugitive'
         " Quickly view open buffers and switch between them
-        NeoBundle 'jlanzarotta/bufexplorer', { 'rev' : '7.4.13' }
+        NeoBundle 'jlanzarotta/bufexplorer'
         " Session management
         NeoBundle 'xolox/vim-misc'
         NeoBundle 'xolox/vim-session'
