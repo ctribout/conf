@@ -167,18 +167,6 @@ vnoremap <silent> # :<C-U>
 " In visual mode, replace selected text
 vnoremap <C-r> "hy:%s@<C-r>h@@gc<left><left><left>
 
-" In visual mode, search for selected text, forwards or backwards.
-vnoremap <silent> * :<C-U>
-    \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-    \gvy/<C-R><C-R>=substitute(
-    \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-    \gV:call setreg('"', old_reg, old_regtype)<CR>
-vnoremap <silent> # :<C-U>
-    \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-    \gvy?<C-R><C-R>=substitute(
-    \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-    \gV:call setreg('"', old_reg, old_regtype)<CR>
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -571,7 +559,12 @@ if (_sq_uid != 0)
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     :let Grep_Skip_Files = '*.bak *~ *.pyc *.so *.o *.a *.lib *.bin'
     nnoremap <silent> <F3> :Rgrep<CR>
-    vnoremap <F3> "hy:Rgrep <C-r>h
+    vnoremap <F3> :<C-U>
+        \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+        \gvy:
+        \let patt=substitute(escape(getreg('"'),'?\.*$^~['),'\_s\+','\\s\\+','g')<CR>
+        \gV:call setreg('"', old_reg, old_regtype)<CR>
+        \:Rgrep <C-r>=patt<CR>
 
 endif
 
