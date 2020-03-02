@@ -79,6 +79,7 @@ if (_sq_uid != 0)
         " Autocompletion
         if (has('python') || has('python3')) && (v:version > 703 || (v:version == 703 && has('patch584')))
             let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is slow to get
+            " add '--clang-completer --rust-completer' if need be
             NeoBundle 'Valloric/YouCompleteMe', {
                         \ 'build' : { 'unix' : './install.py' },
                         \ }
@@ -495,10 +496,19 @@ if (_sq_uid != 0)
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => YouCompleteMe plugin
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    let g:ycm_autoclose_preview_window_after_completion = 1
+    let g:ycm_global_ycm_extra_conf = '$HOME/.ycm_extra_conf.py'
+    let g:ycm_confirm_extra_conf = 0
+    let g:ycm_complete_in_comments = 1
+    let g:ycm_always_populate_location_list = 1
+    let g:ycm_max_diagnostics_to_display = 60
+    nnoremap <C-]> :YcmCompleter GoTo<CR>
+    nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+    " Disable clangd support because it is not usable with .ycm_extra_conf.py yet (AttributeError: module 'ycm_core' has no attribute 'CompilationDatabase')
+    " .ycm_extra_conf.py is mandatory to be able to customize the location search for json files
+    let g:ycm_use_clangd = 0
     " Terrible performaces and RAM usage otherwise, on py files at least
     let g:ycm_collect_identifiers_from_tags_files = 0
-    let g:ycm_autoclose_preview_window_after_completion = 1
-    nnoremap <C-]> :YcmCompleter GoTo<CR>
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => vim-indent-guides plugin
@@ -538,8 +548,15 @@ if (_sq_uid != 0)
     let g:ale_sign_style_error='e>'
     let g:ale_sign_style_warning='w>'
     let g:ale_sign_info='I>'
-    let g:airline#extensions#ale#enabled = 1
-    let g:ale_set_signs = 0 " for now, because it alwas messes with the gitgutter signs display, more important to me
+    let g:airline#extensions#ale#enabled=1
+    let g:ale_set_signs=0 " for now, because it alwas messes with the gitgutter signs display, more important to me
+    let g:ale_linters_explicit=1
+    " Disable c/cpp checks for now (irrelevant results due to unknown flags, and redundant with YCM anyway)
+    let g:ale_linters={
+    \ 'c': [],
+    \ 'cpp': [],
+    \}
+
     nmap <silent> ]l :ALENext<cr>
     nmap <silent> [l :ALEPrevious<cr>
 
