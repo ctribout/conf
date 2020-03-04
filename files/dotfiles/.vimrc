@@ -75,6 +75,13 @@ if (_sq_uid != 0)
         NeoBundle 'vim-pandoc/vim-pandoc-syntax'
         " Grep utilities
         NeoBundle 'yegappan/grep'
+        " The NERD tree allows you to explore your filesystem and to open files and
+        " directories
+        NeoBundle 'scrooloose/nerdtree'
+        " Man
+        NeoBundle 'jez/vim-superman'
+        " CMake syntax color
+        NeoBundle 'pboettch/vim-cmake-syntax'
 
         " Autocompletion
         if (has('python') || has('python3')) && (v:version > 703 || (v:version == 703 && has('patch584')))
@@ -582,6 +589,13 @@ if (_sq_uid != 0)
         \let patt=substitute(escape(getreg('"'),'?\.*$^~['),'\_s\+','\\s\\+','g')<CR>
         \gV:call setreg('"', old_reg, old_regtype)<CR>
         \:Rgrep <C-r>=patt<CR>
+
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " => NERDTree
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    map <C-n> :NERDTreeToggle<CR>
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
 
 endif
 
