@@ -1,5 +1,6 @@
 *.pyc
 *.[oa]
-_obj
-_log
-.bundle
+_obj/
+_log/
+.bundle/
+.build.cmake/
