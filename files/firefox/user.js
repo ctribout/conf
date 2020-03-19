@@ -259,6 +259,10 @@ user_pref("plugins.enumerable_names", "");
 // Remove noise (recommended extensions)
 user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 
+// Disable recommandations (CFr, Contextual Feature Recommender)
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
+
 /******************************************************************************
  * firefox features / components                                              *
  *                                                                            *
