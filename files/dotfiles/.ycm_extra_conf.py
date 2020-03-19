@@ -279,7 +279,7 @@ def Settings(**kwargs):
             # 'sys_path': [] # paths to append to sys.path
         }
 
-    elif language == "cfamily":
+    elif language in ["cfamily", "c", "cpp"]:
 
         filename = os.path.abspath(filename)
         compile_info_dir = find_compilation_info(os.path.dirname(filename))

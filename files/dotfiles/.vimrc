@@ -69,6 +69,8 @@ if (_sq_uid != 0)
         NeoBundle 'gcmt/taboo.vim'
         " Syntax check
         NeoBundle 'dense-analysis/ale'
+        " Switch between header and implementation files
+        NeoBundle 'derekwyatt/vim-fswitch'
         " Rust support
         NeoBundle 'rust-lang/rust.vim'
         " Markdown support
@@ -457,6 +459,7 @@ if (_sq_uid != 0)
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => gitgutter plugin
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    let g:gitgutter_sign_priority = 0
     let g:gitgutter_sign_added = '+'
     let g:gitgutter_sign_modified = '~'
     let g:gitgutter_sign_removed = '_'
@@ -509,6 +512,9 @@ if (_sq_uid != 0)
     let g:ycm_complete_in_comments = 1
     let g:ycm_always_populate_location_list = 1
     let g:ycm_max_diagnostics_to_display = 60
+    let g:ycm_enable_diagnostic_highlighting = 1
+    let g:ycm_enable_diagnostic_signs = 1
+    let g:ycm_echo_current_diagnostic = 1
     nnoremap <C-]> :YcmCompleter GoTo<CR>
     nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
     " Disable clangd support because it is not usable with .ycm_extra_conf.py yet (AttributeError: module 'ycm_core' has no attribute 'CompilationDatabase')
@@ -516,6 +522,12 @@ if (_sq_uid != 0)
     let g:ycm_use_clangd = 0
     " Terrible performaces and RAM usage otherwise, on py files at least
     let g:ycm_collect_identifiers_from_tags_files = 0
+    highlight YcmErrorSign cterm=bold ctermbg=none ctermfg=9 gui=bold
+    highlight YcmErrorLine ctermbg=174 ctermfg=0
+    highlight YcmErrorSection ctermbg=9
+    highlight YcmWarningSign ctermbg=none ctermfg=208 gui=bold
+    highlight YcmWarningLine ctermbg=223 ctermfg=0
+    highlight YcmWarningSection ctermbg=208
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => vim-indent-guides plugin
@@ -545,6 +557,14 @@ if (_sq_uid != 0)
     let g:taboo_tabline=0
     let g:taboo_tab_format='[%N] %f%m'
     let g:taboo_renamed_tab_format='[%N:%l] %f%m'
+
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " => vim-fswitch plugin
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    let g:fsnonewfiles='off'
+    au! BufEnter *.cpp,*.cc,*.c let b:fswitchdst = 'h,hpp' | let b:fswitchlocs = 'reg:/src/include/,reg:/src/api/,reg:/src/inc/,rel:../include/,rel:../../include/,rel:../inc,rel:../../inc,rel:../api/,rel:../../api/,rel:./,rel:../,rel:../../'
+    au! BufEnter *.h,*.hpp let b:fswitchdst = 'cpp,cc,c' | let b:fswitchlocs = 'reg:/include/src/,reg:/inc/src/,reg:/api/src/,rel:../src,rel:../../src,rel:./,rel:../,rel:../../'
+    nmap <silent> <Leader>s :FSHere<cr>
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " => ale plugin
@@ -595,7 +615,6 @@ if (_sq_uid != 0)
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     map <C-n> :NERDTreeToggle<CR>
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
 
 endif
 
