@@ -34,11 +34,11 @@ user_pref("geo.wifi.uri", "");
 
 // Don't reveal internal IPs
 // http://net.ipcalf.com/
-user_pref("media.peerconnection.enabled",		false);
+// user_pref("media.peerconnection.enabled",		false);
 // getUserMedia
 // https://wiki.mozilla.org/Media/getUserMedia
 // https://developer.mozilla.org/en-US/docs/Web/API/Navigator
-user_pref("media.navigator.enabled",		false);
+// user_pref("media.navigator.enabled",		false);
 // https://developer.mozilla.org/en-US/docs/Web/API/BatteryManager
 // Disable video autoplay
 user_pref("media.autoplay.default",		5); // 5 seems to be "block audio and video" now
@@ -120,7 +120,7 @@ user_pref("dom.vr.enabled",		false);
 
 // disable webGL
 // http://www.contextis.com/resources/blog/webgl-new-dimension-browser-exploitation/
-user_pref("webgl.disabled",		true);
+// user_pref("webgl.disabled",		true);
 // somewhat related...
 //user_pref("pdfjs.enableWebGL",		false);
 
@@ -287,7 +287,7 @@ user_pref("app.normandy.enabled", false); // allows to have remote stuff being t
 
 // Disable the built-in PDF viewer (CVE-2015-2743)
 // https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-2743
-user_pref("pdfjs.disabled",		true);
+// user_pref("pdfjs.disabled",		true);
 
 // Disable sending of the health report
 // https://support.mozilla.org/en-US/kb/firefox-health-report-understand-your-browser-perf
