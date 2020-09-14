@@ -41,3 +41,6 @@ if [ ! -d fonts ]; then
     echo "Done."
 fi
 
+if [ ! -d tools/diff-so-fancy ]; then
+    git clone https://github.com/so-fancy/diff-so-fancy tools/diff-so-fancy
+fi

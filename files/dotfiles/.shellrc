@@ -8,7 +8,7 @@ esac
 # gpg-connect-agent <<< RELOADAGENT 1>/dev/null 2>&1 &
 
 # Default PATH
-export PATH=${PATH}:~/.local/bin:~/.local/usr/bin
+export PATH=${PATH}:~/.local/bin:~/.local/usr/bin:~/conf/tools/diff-so-fancy
 
 # setting shell shitory
 HISTFILE=~/.shell_history

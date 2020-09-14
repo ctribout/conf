@@ -15,13 +15,13 @@
     autosetuprebase = always
 [color]
     interactive = auto
-    ui = auto
+	ui = true
 [color "branch"]
     upstream = cyan
 [core]
     editor = vim
     excludesfile = ~/.gitignore
-    pager = less -R -+X -+F
+	pager = diff-so-fancy | less --tabs=4 --quit-if-one-screen --RAW-CONTROL-CHARS --no-init
     whitespace = -trailing-space
 [diff]
     mnemonicPrefix = true
@@ -63,4 +63,21 @@
 [include]
     # Set there a [user] section for instance, or machine specific config
     path=~/.gitconfig.local
-
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = 11
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[diff-so-fancy]
+	markEmptyLines = true
+	changeHunkIndicators = true
+	stripLeadingSymbols = true
+	useUnicodeRuler = false
+	rulerWidth =
