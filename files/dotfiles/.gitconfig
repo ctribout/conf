@@ -65,7 +65,7 @@
 	newnormal = 34
 	newhighlight = 157 22
 [color "diff"]
-	meta = yellow bold
+	meta = magenta bold
 	frag = 146 bold
     func = magenta
 	commit = yellow bold
