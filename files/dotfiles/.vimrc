@@ -89,9 +89,15 @@ if (_sq_uid != 0)
         if (has('python') || has('python3')) && (v:version > 703 || (v:version == 703 && has('patch584')))
             let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is slow to get
             " add '--clang-completer --rust-completer' if need be
-            NeoBundle 'Valloric/YouCompleteMe', {
-                        \ 'build' : { 'unix' : './install.py' },
-                        \ }
+            if has('patch-8.1.2269')
+                NeoBundle 'Valloric/YouCompleteMe', {
+                            \ 'build' : { 'unix' : './install.py' },
+                            \ }
+            else
+                NeoBundle 'Valloric/YouCompleteMe', {
+                            \ 'build' : { 'unix' : './install.py' }, 'rev': 'd98f896'
+                            \ }
+            endif
         endif
     endif
 
