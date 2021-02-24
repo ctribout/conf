@@ -183,6 +183,14 @@ vnoremap <silent> # :<C-U>
 " In visual mode, replace selected text
 vnoremap <C-r> "hy:%s@<C-r>h@@gc<left><left><left>
 
+" Screen update (force syntax hilighting sync from start too)
+nnoremap <silent> <C-l> :nohlsearch<CR>:setl nolist nospell<CR>:diffupdate<CR>:syntax sync fromstart<CR><C-l>
+
+augroup basic
+    autocmd!
+    autocmd BufEnter * syntax sync fromstart
+augroup end
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -381,6 +389,9 @@ if (_sq_uid != 0)
         let g:airline_symbols.modified = '⚑'
         let g:airline_symbols.space = ' '
     endif
+    let g:airline_section_c = '%<%F' " display full path in middle airline bar, but truncate on the left if too long
+    let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+    "let g:airline_section_x = '' " disable file format info
     " Always display status bar
     set laststatus=2
     " Use nicer symbols in the bars
