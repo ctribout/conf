@@ -95,7 +95,7 @@ if (_sq_uid != 0)
                             \ }
             else
                 NeoBundle 'Valloric/YouCompleteMe', {
-                            \ 'build' : { 'unix' : './install.py' }, 'rev': 'd98f896'
+                            \ 'build' : { 'unix' : 'git submodule update --init --recursive && python3 ./install.py' }, 'rev': 'd98f896ada495c3687007313374b2f945a2f2fb4',
                             \ }
             endif
         endif
