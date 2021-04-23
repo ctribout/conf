@@ -532,6 +532,8 @@ if (_sq_uid != 0)
     let g:ycm_enable_diagnostic_highlighting = 1
     let g:ycm_enable_diagnostic_signs = 1
     let g:ycm_echo_current_diagnostic = 1
+    let g:ycm_auto_hover = ''
+    nmap <leader>h <Plug>(YCMHover)
     nnoremap <C-]> :YcmCompleter GoTo<CR>
     nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
     " Disable clangd support because it is not usable with .ycm_extra_conf.py yet (AttributeError: module 'ycm_core' has no attribute 'CompilationDatabase')
