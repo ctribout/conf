@@ -316,7 +316,10 @@ set tabstop=4
 
 " No automatic linebreak
 set nolinebreak
-set textwidth=0
+set formatoptions-=t
+" Set lines length to 88 when using "gq"
+set formatoptions+=q
+set textwidth=88
 
 set autoindent
 set wrap " Wrap lines for display
