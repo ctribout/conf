@@ -145,9 +145,9 @@ set nomodeline
 " Force checking for modifications from the outside world
 :au CursorHold * if getcmdtype() == '' | checktime | endif
 
-" Hilight columns > 80 chars
+" Hilight columns > 88 chars
 if exists("&colorcolumn")
-    set colorcolumn=80
+    set colorcolumn=88
 endif
 
 " Automatically change window's cwd to file's dir
