@@ -99,6 +99,7 @@ user_pref("browser.tabs.drawInTitlebar",		false);
 // New tabs are blank, not the useless tiles
 user_pref("browser.newtab.url",		"about:blank");
 user_pref("browser.newtabpage.activity-stream.enabled",		false);
+user_pref("browser.uidensity",		1);
 
 
 // https://developer.mozilla.org/en-US/docs/IndexedDB
