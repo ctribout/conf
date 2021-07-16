@@ -319,6 +319,7 @@ set nolinebreak
 set formatoptions-=t
 " Set lines length to 88 when using "gq"
 set formatoptions+=q
+set comments=s1:/*,mb:*,ex:*/,://,b:#,:%
 set textwidth=88
 
 set autoindent
