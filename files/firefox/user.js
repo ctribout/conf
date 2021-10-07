@@ -567,10 +567,14 @@ user_pref("security.warn_entering_weak",		true);
 user_pref("network.IDN_show_punycode",		true);
 
 user_pref("browser.urlbar.suggest.bookmark", true);
+user_pref("browser.urlbar.suggest.engines", false);
 user_pref("browser.urlbar.suggest.history", false);
 user_pref("browser.urlbar.suggest.history.onlyTyped", false);
 user_pref("browser.urlbar.suggest.openpage", false);
+user_pref("browser.urlbar.suggest.quicksuggest", false);
+user_pref("browser.urlbar.suggest.quicksuggest.sponsored", false);
 user_pref("browser.urlbar.suggest.searches", false);
+user_pref("browser.urlbar.suggest.topsites", false);
 
 // http://kb.mozillazine.org/About:config_entries#Browser
 // http://kb.mozillazine.org/Inline_autocomplete
