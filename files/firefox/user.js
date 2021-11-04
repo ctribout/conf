@@ -96,6 +96,8 @@ user_pref("browser.send_pings.require_same_host",		true);
 user_pref("browser.tabs.insertRelatedAfterCurrent",		false);
 // Force title bar display (mandatory to move the windows from a virtual desktop to another, or just to easily see the page title...)
 user_pref("browser.tabs.drawInTitlebar",		false);
+// Off by default starting from FF94
+user_pref("browser.tabs.warnOnClose",		true);
 // New tabs are blank, not the useless tiles
 user_pref("browser.newtab.url",		"about:blank");
 user_pref("browser.newtabpage.activity-stream.enabled",		false);
