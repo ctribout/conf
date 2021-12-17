@@ -441,6 +441,15 @@ user_pref("privacy.trackingprotection.origin_telemetry.enabled",		false);
 // CIS Version 1.2.0 October 21st, 2011 2.4.3 Disable Referer from an SSL Website
 user_pref("network.http.sendSecureXSiteReferrer",		false);
 
+// Only send the origin in the referer (no path or query parameters)
+user_pref("network.http.referer.defaultPolicy",		2);
+user_pref("network.http.referer.defaultPolicy.pbmode",		2);
+user_pref("network.http.referer.XOriginPolicy",		2);
+user_pref("network.http.referer.XOriginTrimmingPolicy",		2);
+// Don't allow websites to set their own preferences for the referer strategies
+user_pref("network.http.referer.disallowCrossSiteRelaxingDefault",		true);
+user_pref("network.http.referer.disallowCrossSiteRelaxingDefault.pbmode",		true);
+
 // CIS 2.5.1 Accept Only 1st Party Cookies (modified: accept all now...)
 // http://kb.mozillazine.org/Network.cookie.cookieBehavior#1
 user_pref("network.cookie.cookieBehavior",		0); // was set to 1, but this might break a few websites (PSN...) ; cookies handled via an extension anyway to block all but 1st parties by default
