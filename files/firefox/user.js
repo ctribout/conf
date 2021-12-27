@@ -396,6 +396,9 @@ user_pref("browser.aboutHomeSnippets.updateUrl",		"");
 // https://support.mozilla.org/en-US/kb/how-stop-firefox-making-automatic-connections#w_auto-update-checking
 user_pref("browser.search.update",		false);
 
+// Don't ask to associate webmails (zimbra) for mailto links, adding an annoying header bar
+user_pref("network.protocol-handler.external.mailto",		false);
+
 /******************************************************************************
  * HTTP                                                                       *
  *                                                                            *
