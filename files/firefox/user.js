@@ -486,18 +486,19 @@ user_pref("browser.cache.offline.enable",		false);
 // user_pref("browser.privatebrowsing.autostart",		true);
 // user_pref("extensions.ghostery.privateBrowsing",		true);
 
-// Clear history when Firefox closes
-// https://support.mozilla.org/en-US/kb/Clear%20Recent%20History#w_how-do-i-make-firefox-clear-my-history-automatically
+// Clear stuff when Firefox closes (mostly handled by extensions though, so not enabled
+// much here)
 user_pref("privacy.sanitize.sanitizeOnShutdown",		true);
-user_pref("privacy.clearOnShutdown.cache",		true);
+user_pref("privacy.clearOnShutdown.cache",		false);
 user_pref("privacy.clearOnShutdown.cookies",		false);
 user_pref("privacy.clearOnShutdown.downloads",		true);
-// user_pref("privacy.clearOnShutdown.formdata",		true);
+user_pref("privacy.clearOnShutdown.formdata",		false);
 user_pref("privacy.clearOnShutdown.history",		true);
-user_pref("privacy.clearOnShutdown.offlineApps",		true);
-// user_pref("privacy.clearOnShutdown.passwords",		true);
-// user_pref("privacy.clearOnShutdown.sessions",		true);
-// user_pref("privacy.clearOnShutdown.siteSettings",		true);
+user_pref("privacy.clearOnShutdown.offlineApps",		false);
+user_pref("privacy.clearOnShutdown.openWindows",		false);
+user_pref("privacy.clearOnShutdown.passwords",		false);
+user_pref("privacy.clearOnShutdown.sessions",		false);
+user_pref("privacy.clearOnShutdown.siteSettings",		false);
 
 // don't remember browsing history
 // user_pref("places.history.enabled",		false);
@@ -615,6 +616,9 @@ user_pref("signon.autofillForms",		false);
 
 // Stop displaying all other subdomains' passwords everywhere
 user_pref("signon.includeOtherSubdomainsInLookup",		false);
+
+// Don't autogenerate new passwords (done externally)
+user_pref("signon.generation.enabled",		false);
 
 // do not check if firefox is the default browser
 user_pref("browser.shell.checkDefaultBrowser",		false);
