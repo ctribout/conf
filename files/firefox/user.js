@@ -447,7 +447,7 @@ user_pref("network.http.sendSecureXSiteReferrer",		false);
 // Only send the origin in the referer (no path or query parameters)
 user_pref("network.http.referer.defaultPolicy",		2);
 user_pref("network.http.referer.defaultPolicy.pbmode",		2);
-user_pref("network.http.referer.XOriginPolicy",		1);
+user_pref("network.http.referer.XOriginPolicy",		0);
 user_pref("network.http.referer.XOriginTrimmingPolicy",		2);
 // Don't allow websites to set their own preferences for the referer strategies
 user_pref("network.http.referer.disallowCrossSiteRelaxingDefault",		true);
