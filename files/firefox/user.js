@@ -94,6 +94,10 @@ user_pref("browser.send_pings",		false);
 user_pref("browser.send_pings.require_same_host",		true);
 // Open any new tab at the end of the tabbar (not right to the current one)
 user_pref("browser.tabs.insertRelatedAfterCurrent",		false);
+// Don't go back to the latest tab when closing one (hazardous when closing multiple tabs)
+user_pref("browser.tabs.selectOwnerOnClose",		false);
+// Keep Firefox open even with the last tab closed
+user_pref("browser.tabs.closeWindowWithLastTab",		false);
 // Force title bar display (mandatory to move the windows from a virtual desktop to another, or just to easily see the page title...)
 user_pref("browser.tabs.drawInTitlebar",		false);
 // Off by default starting from FF94
