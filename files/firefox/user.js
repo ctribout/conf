@@ -152,7 +152,7 @@ user_pref("dom.disable_window_open_feature.toolbar", true);
  ******************************************************************************/
 
 // Home page
-user_pref("browser.startup.homepage", "https://www.google.com"); // Haha...
+user_pref("browser.startup.homepage", "https://duckduckgo.com");
 // Default search engine
 //user_pref("browser.search.defaultenginename",		"DuckDuckGo");
 
