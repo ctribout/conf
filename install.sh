@@ -10,9 +10,7 @@ cd "${scriptDir}"
 
 echo "Installing configuration files..."
 
-if [ ! -d ~/.vim/bundle/neobundle.vim ]; then
-    ./install_vim_neobundle.sh
-fi
+./install_vim_plugin_manager.sh
 
 for conf_file_folder in $(find "${scriptDir}/files/" -mindepth 1 -maxdepth 1 -type d); do
     for target_folder in $(${conf_file_folder}/location.sh); do
@@ -27,7 +25,7 @@ for conf_file_folder in $(find "${scriptDir}/files/" -mindepth 1 -maxdepth 1 -ty
                 # File already exists, save it just in case...
                 mv "${target_file}" "${target_file}.backup"
             fi
-            mkdir -p ""$(dirname "${target_file}")""
+            mkdir -p "$(dirname "${target_file}")"
             ln -s "${conf_file_folder}/${conf_file}" "${target_file}"
             echo "  - $(readlink -f "${conf_file_folder}/${conf_file}") installed"
         done < <(cd "${conf_file_folder}" && find . -mindepth 1 -type f -a -not -name "location.sh")

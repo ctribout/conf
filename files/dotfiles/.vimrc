@@ -1,120 +1,243 @@
-"NeoBundle Scripts-----------------------------
+""" Plugin manager (dein.vim)
 
-" Required:
 filetype plugin indent on
-if has('vim_starting')
-    if &compatible
-        set nocompatible               " Be iMproved
-    endif
+syntax enable
+
+if &compatible
+  set nocompatible " Be iMproved
 endif
 
-let _sq_uid = system('id -u')
-if (_sq_uid != 0)
-    " Install NeoBundle if not present yet
-    if !isdirectory(expand('~')."/.vim/bundle/neobundle.vim")
-        echom "Please install neobundle first. Use install.sh script."
+let s:_session_is_root = system('id -u') == 0
+let s:_dein_vim_path = expand('~')."/.vim/plugin_manager/dein.vim"
+let s:_plugins_path = expand('~')."/.vim/bundles"
+let s:_debug_lsp = v:false
+
+" Helpers
+
+function! s:prefix(str, args) abort
+    return map(a:args, {_, s -> a:str . s})
+endfunction
+
+function! s:suffix(str, args) abort
+    return map(a:args, {_, s -> s . a:str})
+endfunction
+
+" Plugins
+
+function s:install_plugins()
+    if !isdirectory(s:_dein_vim_path)
+        echom "Please install the plugins manager first. Use the install.sh script."
         exit 1
     endif
-
-    if has('vim_starting')
-        " Required:
-        set runtimepath+=~/.vim/bundle/neobundle.vim/
+    execute "set runtimepath+=".s:_dein_vim_path
+    call dein#begin(s:_plugins_path)
+    if !has('nvim')
+        call dein#add('roxma/nvim-yarp')
+        call dein#add('roxma/vim-hug-neovim-rpc')
     endif
 
-    " Required:
-    call neobundle#begin(expand('~/.vim/bundle'))
+    """ General management
 
-    " Let NeoBundle manage NeoBundle
-    " Required:
-    NeoBundleFetch 'Shougo/neobundle.vim'
+    " Let dein manage itself
+    call dein#add(s:_dein_vim_path)
+    " Manage dein plugins with commands
+    call dein#add('haya14busa/dein-command.vim', {
+        \ 'lazy': v:true,
+        \ 'on_cmd': 'Dein',
+    \ })
+    " Vim buffers session management
+    call dein#add('xolox/vim-misc', {
+        \ 'if': !&diff,
+    \ })
+    call dein#add('xolox/vim-session', {
+        \ 'if': !&diff,
+    \ })
 
-    " Dark color scheme
-    NeoBundle 'sjl/badwolf'
-    NeoBundle 'nanotech/jellybeans.vim'
+    """ Visual mods: display, themes, windows, panes
+
+    " Dark theme, standard
+    call dein#add('sjl/badwolf', {
+        \ 'if': !&diff,
+    \ })
+
+    " Dark theme with arguably 'better' colors for diff panes
+    call dein#add('nanotech/jellybeans.vim', {
+        \ 'if': &diff,
+    \ })
     " Title and Status bar tuning
-    NeoBundle 'vim-airline/vim-airline'
-    NeoBundle 'vim-airline/vim-airline-themes'
-    " Highlight cursor word
-    NeoBundle 'reidHoruff/HiCursorWords'
+    call dein#add('vim-airline/vim-airline')
+    call dein#add('vim-airline/vim-airline-themes')
     " Highlight trailing whitespaces
-    NeoBundle 'bronson/vim-trailing-whitespace'
-    " Navigate through indent levels
-    NeoBundle 'kamou/vim-indentwise'
-    " Display Marks in the left margin
-    NeoBundle 'kshenoy/vim-signature'
-    if !&diff
-        " Tag bar (quickly view the classes/functions/vars in a file, and jump there)
-        NeoBundle 'majutsushi/tagbar'
-        " Show git diffs while editing (changes/removed/added lines)
-        " NeoBundle 'mhinz/vim-signify'
-        NeoBundle 'airblade/vim-gitgutter'
-        " Git wrapper, for integration with vim-airline (branch and commits in statusbar)
-        NeoBundle 'tpope/vim-fugitive'
-        " Quickly view open buffers and switch between them
-        NeoBundle 'jlanzarotta/bufexplorer'
-        " Session management
-        NeoBundle 'xolox/vim-misc'
-        NeoBundle 'xolox/vim-session'
-        " Code comments
-        NeoBundle 'tomtom/tcomment_vim'
-        " Diff blocks instead of full files
-        NeoBundle 'AndrewRadev/linediff.vim'
-        " Indent guides
-        NeoBundle 'nathanaelkane/vim-indent-guides'
-        " Toggle words
-        NeoBundle 'vim-scripts/toggle_words.vim'
-        " jinja2 syntax
-        NeoBundle 'Glench/Vim-Jinja2-Syntax'
-        " Utilities for tabs
-        NeoBundle 'gcmt/taboo.vim'
-        " Syntax check
-        NeoBundle 'dense-analysis/ale'
-        " Switch between header and implementation files
-        NeoBundle 'derekwyatt/vim-fswitch'
-        " Rust support
-        NeoBundle 'rust-lang/rust.vim'
-        " Markdown support
-        NeoBundle 'vim-pandoc/vim-pandoc-syntax'
-        " Grep utilities
-        NeoBundle 'yegappan/grep'
-        " The NERD tree allows you to explore your filesystem and to open files and
-        " directories
-        NeoBundle 'scrooloose/nerdtree'
-        " Man
-        NeoBundle 'jez/vim-superman'
-        " CMake syntax color
-        NeoBundle 'pboettch/vim-cmake-syntax'
+    call dein#add('bronson/vim-trailing-whitespace')
+    " Display vim marks in the left margin
+    call dein#add('kshenoy/vim-signature', {
+        \ 'if': has('signs'),
+    \ })
+    " Tag bar (quickly view the classes/functions/vars in a file, and jump there)
+    call dein#add('majutsushi/tagbar', {
+        \ 'if': !&diff && executable('ctags'),
+        \ 'lazy' : v:true,
+        \ 'on_cmd' : 'TagbarToggle',
+    \ })
+    " Indentation vertical visual guides
+    call dein#add('nathanaelkane/vim-indent-guides', {
+        \ 'if': !&diff,
+    \ })
+    " Utilities for tabs
+    call dein#add('gcmt/taboo.vim', {
+        \ 'if': !&diff,
+    \ })
+    " Display colors on color names/codes
+    call dein#add('chrisbra/Colorizer', {
+        \ 'if': !&diff,
+        \ 'lazy' : v:true,
+        \ 'on_cmd': s:prefix('Color', ['Highlight', 'Toggle']) + ['RGB2Term', ],
+    \ })
 
-        " Autocompletion
-        if (has('python') || has('python3')) && (v:version > 703 || (v:version == 703 && has('patch584')))
-            let g:neobundle#install_process_timeout = 1800 "YouCompleteMe is slow to get
-            " add '--clang-completer --rust-completer' if need be
-            if has('patch-8.1.2269')
-                NeoBundle 'Valloric/YouCompleteMe', {
-                            \ 'build' : { 'unix' : './install.py' },
-                            \ }
-            else
-                NeoBundle 'Valloric/YouCompleteMe', {
-                            \ 'build' : { 'unix' : 'git submodule update --init --recursive && python3 ./install.py' }, 'rev': 'd98f896ada495c3687007313374b2f945a2f2fb4',
-                            \ }
-            endif
-        endif
+    """ Navigation and buffers management
+
+    " Quickly view open buffers and switch between them
+    call dein#add('jlanzarotta/bufexplorer', {
+        \ 'if': !&diff,
+        \ 'lazy' : v:true,
+        \ 'on_cmd': s:prefix('BufExplorer', ['', 'HorizontalSplit', 'VerticalSplit']),
+    \ })
+    " The NERD tree allows to explore the filesystem and to open files and directories
+    call dein#add('scrooloose/nerdtree', {
+        \ 'if': !&diff,
+        \ 'lazy' : v:true,
+        \ 'on_cmd': s:prefix('NERDTree', ['', 'Toggle', 'Find', 'Focus']),
+    \ })
+    " Grep utilities
+    call dein#add('yegappan/grep', {
+        \ 'if': !&diff,
+        \ 'lazy' : v:true,
+        \ 'on_cmd': s:prefix('Grep', ['', 'Add', 'Args', 'ArgsAdd', 'Buffer', 'BufferAdd']),
+    \ })
+    " Diff blocks instead of full files
+    call dein#add('AndrewRadev/linediff.vim', {
+        \ 'if': !&diff,
+        \ 'lazy' : v:true,
+        \ 'on_cmd': s:prefix('Linediff', ['', 'Add', 'Last', 'Merge', 'Pick', 'Reset', 'Show']),
+    \ })
+
+    """ Editor helpers
+
+    " Toggle words (change 'True' to 'False', ...)
+    call dein#add('vim-scripts/toggle_words.vim', {
+        \ 'if': !&diff,
+        \ 'lazy' : v:true,
+        \ 'on_cmd': 'ToggleWord',
+    \ })
+    " Code comments
+    call dein#add('tomtom/tcomment_vim', {
+        \ 'if': !&diff,
+    \ })
+    " Highlight the word currently on the cursor
+    call dein#add('reidHoruff/HiCursorWords')
+    " Navigate through indent levels
+    call dein#add('kamou/vim-indentwise', {
+        \ 'if': !&diff,
+    \ })
+    " New text objects based on indentation levels
+    call dein#add('michaeljsmith/vim-indent-object', {
+        \ 'if': !&diff,
+        \ 'on_ft': ['ledger', 'moon', 'nim', 'python'],
+        \ 'on_map': {'ov': ['aI', 'ai', 'iI', 'ii']},
+    \ })
+    " Inner-line text object
+    call dein#add('vim-utils/vim-line', {
+        \ 'if': !&diff,
+        \ 'lazy' : v:true,
+        \ 'on_map': {'ov': '_'},
+    \ })
+    " Even more text objects
+    call dein#add('wellle/targets.vim')
+
+    """ Git-related plugins
+
+    " Better commit message window
+    call dein#add('rhysd/committia.vim', {
+        \ 'if': !&diff,
+    \ })
+    " Show git diffs while editing (changes/removed/added lines)
+    " call dein#add('mhinz/vim-signify')
+    call dein#add('airblade/vim-gitgutter', {
+        \ 'if': !&diff,
+    \ })
+    " Git wrapper, for integration with vim-airline (branch and commits in statusbar)
+    call dein#add('tpope/vim-fugitive', {
+        \ 'if': !&diff,
+    \ })
+    " Git history for the line under the cursor
+    call dein#add('rhysd/git-messenger.vim', {
+        \ 'if': !&diff,
+        \ 'lazy' : v:true,
+        \ 'on_cmd' : 'GitMessenger',
+        \ 'on_map' : '<Plug>(git-messenger',
+    \ })
+
+    """ Syntax or language-specific support
+
+    " jinja2 syntax
+    call dein#add('Glench/Vim-Jinja2-Syntax', {
+        \ 'if': !&diff,
+    \ })
+    " Markdown support
+    call dein#add('vim-pandoc/vim-pandoc-syntax', {
+        \ 'if': !&diff,
+    \ })
+    " CMake syntax color
+    call dein#add('pboettch/vim-cmake-syntax', {
+        \ 'if': !&diff,
+        \ 'lazy' : v:true,
+        \ 'on_ft': 'cmake',
+    \ })
+    " Rust support
+    " call dein#add('rust-lang/rust.vim', {
+    "     \ 'if': !&diff,
+    " \ })
+
+    """ LSP (language server protocol)
+
+    call dein#add('prabirshrestha/vim-lsp', {
+        \ 'if': !&diff,
+    \ })
+    call dein#add('prabirshrestha/asyncomplete.vim', {
+        \ 'if': !&diff,
+    \ })
+    call dein#add('prabirshrestha/asyncomplete-lsp.vim', {
+        \ 'if': !&diff,
+    \ })
+    " Note: the needed software is installed locally, but they should be installed in
+    " projects' virtual environments so that they work with their correct project
+    " configuration files too (vim must be launched in that venv)
+    call dein#add('mattn/vim-lsp-settings', {
+        \ 'if': !&diff,
+        \ 'build': 'pip --quiet install --user --upgrade pip && pip --quiet install --upgrade --user cmake-language-server "python-lsp-server[pylint]" pyls-isort python-lsp-black',
+    \ })
+
+    call dein#end()
+
+    " Install missing plugins at startup
+    if dein#check_install()
+        call dein#install()
     endif
 
-    " Required:
-    call neobundle#end()
+endfunction
 
-    " If there are uninstalled bundles found on startup,
-    " this will conveniently prompt you to install them.
-    NeoBundleCheck
-    "End NeoBundle Scripts-------------------------
+if ! s:_session_is_root
+    " Note that the test should be useless as dein.vim should prevent loading plugins in
+    " root mode but for the ones with 'trusted' = v:true
+    call s:install_plugins()
 endif
-
-" Mostly from http://amix.dk/vim/vimrc.html
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Some plugins could change that at load time, so set it again
+filetype plugin indent on
+
 " 256-colors support
 set t_Co=256
 
@@ -251,7 +374,7 @@ set timeoutlen=500 ttimeoutlen=10
 
 " Show line numbers
 set number
-" show command in bottom bar
+" show command in bottom bar (slows down the interface with pg up/down)
 set showcmd
 " highlight current line
 set cursorline
@@ -275,14 +398,11 @@ autocmd FileType make setlocal noexpandtab
 " Enable syntax highlighting
 syntax enable
 
-" set background=dark " Can help other plugins find correct colors
-if (_sq_uid != 0)
-    " colorscheme badwolf
-    if &diff
-        colorscheme jellybeans
-    else
-        colorscheme badwolf
-    endif
+" Theme
+if &diff && dein#is_available('jellybeans.vim')
+    colorscheme jellybeans
+elseif !&diff && dein#is_available('badwolf')
+    colorscheme badwolf
 else
     colorscheme slate
 endif
@@ -365,20 +485,34 @@ function! IndTxtObj(inner)
   endif
 endfunction
 
-if (_sq_uid != 0)
+" Enable syntax highlighting when buffers are displayed in a window through
+" :argdo and :bufdo, which disable the Syntax autocmd event to speed up
+" processing.
+" from https://stackoverflow.com/questions/12485981/syntax-highlighting-is-not-turned-on-in-vim-when-opening-multiple-files-using-ar
+augroup EnableSyntaxHighlighting
+    autocmd! BufWinEnter,WinEnter * nested if exists('syntax_on') && ! exists('b:current_syntax') && ! empty(&l:filetype) && index(split(&eventignore, ','), 'Syntax') == -1 | syntax enable | endif
+    autocmd! BufRead * if exists('syntax_on') && exists('b:current_syntax') && ! empty(&l:filetype) && index(split(&eventignore, ','), 'Syntax') != -1 | unlet! b:current_syntax | endif
+augroup END
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => vim-airline plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline#extensions#tabline#fnamemod = ':t'
-    let g:airline#extensions#taboo#enabled = 1
-    let g:airline#extensions#hunks#non_zero_only = 1
+if !empty(glob(expand('~')."/.fonts/*Powerline*")) || !empty(glob(expand('~')."/.local/share/fonts/*Powerline*"))
+    let s:airline_powerline_fonts = v:true
+else
+    let s:airline_powerline_fonts = v:false
+endif
+
+""" Plugins setting
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-airline plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('vim-airline')
+    let g:airline_skip_empty_sections = v:true
+    let g:airline_section_c = '%<%F' " display full path in middle airline bar, but truncate on the left if too long
+    "let g:airline_section_x = '' " disable file format info
+    let g:airline#parts#ffenc#skip_expected_string = 'utf-8[unix]' " Only show unusual encodings
+
     let g:airline_theme = 'light'
-    if !empty(glob(expand('~')."/.fonts/*Powerline*")) || !empty(glob(expand('~')."/.local/share/fonts/*Powerline*"))
-        let g:airline_powerline_fonts=1
-    else
-        let g:airline_powerline_fonts=0
+    if s:airline_powerline_fonts
         " unicode symbols
         if !exists('g:airline_symbols')
           let g:airline_symbols = {}
@@ -386,26 +520,36 @@ if (_sq_uid != 0)
         let g:airline_left_sep = '▶'
         let g:airline_right_sep = '◀'
         let g:airline_symbols.paste = '▽'
-        let g:airline_symbols.readonly = '❎'
+        let g:airline_symbols.readonly = ''
         let g:airline_symbols.whitespace = 'Ξ'
         let g:airline_symbols.linenr = '¶'
         let g:airline_symbols.branch = '⎇'
         let g:airline_symbols.modified = '⚑'
         let g:airline_symbols.space = ' '
     endif
-    let g:airline_section_c = '%<%F' " display full path in middle airline bar, but truncate on the left if too long
-    let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-    "let g:airline_section_x = '' " disable file format info
     " Always display status bar
     set laststatus=2
     " Use nicer symbols in the bars
     set guifont=PowerlineSymbols
     " Force command bar height to be 1 (often set otherwise by plugins)
     set cmdheight=1
+    " Extensions
+    let g:airline#extensions#tabline#enabled = v:true
+    let g:airline#extensions#tabline#fnamemod = ':t'
+    let g:airline#extensions#tabline#buffer_min_count = 2
+    let g:airline#extensions#tabline#overflow_marker = '…'
+    let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+    let g:airline#extensions#taboo#enabled = v:true
+    let g:airline#extensions#hunks#non_zero_only = v:true
+    " when set, displays the virtualenv based on VIRTUAL_ENV, even if the poet-v
+    " specific extension is not installed
+    let g:airline#extensions#poetv#enabled = v:true
+endif
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => tagbar plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => tagbar plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('tagbar')
     nmap <F8> :TagbarToggle<CR>
     let g:tagbar_autofocus = 1
     let g:tagbar_show_linenumbers = 1
@@ -430,18 +574,38 @@ if (_sq_uid != 0)
         \ ],
         \ 'sort' : 0
     \ }
+endif
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => bufexplorer plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    let g:_sq_buffers_startup_reloaded = 0
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => commitia plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('committia.vim')
+    " Can trigger issue with vim-fugitive otherwise
+    let g:committia_open_only_vim_starting = 1
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => git-messenger plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('git-messenger.vim')
+    nmap <Leader>gm <Plug>(git-messenger)
+    let g:git_messenger_always_into_popup = v:true
+    let g:git_messenger_include_diff = 'all'
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => bufexplorer plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('bufexplorer')
+    let g:_buffers_startup_reloaded = 0
     function _sq_bufexplorer_shortcut()
-        " Display the bufexplorer windows, but reloads all buffers at first attempt.
-        "  Useful because bufexplorer doesn't know about buffers at startup when
-        "  a session was restored via vim-restored, and doesn't display much in that
-        "  case...
-        if g:_sq_buffers_startup_reloaded == 0
-            let g:_sq_buffers_startup_reloaded = 1
+        " Display the bufexplorer windows, but reload all buffers at first attempt.
+        " Necessary because bufexplorer doesn't know about buffers at startup when a
+        " session was restored via vim-restored, and doesn't display much in that case
+        if g:_buffers_startup_reloaded == 0
+            let g:_buffers_startup_reloaded = 1
             if exists('g:session_default_name') " only needed if vim-session is used
                 :bfirst
                 let l:current = 1
@@ -467,19 +631,12 @@ if (_sq_uid != 0)
     let g:bufExplorerShowUnlisted=0
     let g:bufExplorerSortBy='fullpath'
     let g:bufExplorerSplitOutPathName=1
+endif
 
-    " Enable syntax highlighting when buffers are displayed in a window through
-    " :argdo and :bufdo, which disable the Syntax autocmd event to speed up
-    " processing.
-    " from https://stackoverflow.com/questions/12485981/syntax-highlighting-is-not-turned-on-in-vim-when-opening-multiple-files-using-ar
-    augroup EnableSyntaxHighlighting
-        autocmd! BufWinEnter,WinEnter * nested if exists('syntax_on') && ! exists('b:current_syntax') && ! empty(&l:filetype) && index(split(&eventignore, ','), 'Syntax') == -1 | syntax enable | endif
-        autocmd! BufRead * if exists('syntax_on') && exists('b:current_syntax') && ! empty(&l:filetype) && index(split(&eventignore, ','), 'Syntax') != -1 | unlet! b:current_syntax | endif
-    augroup END
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => gitgutter plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => gitgutter plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('vim-gitgutter')
     let g:gitgutter_sign_priority = 0
     let g:gitgutter_sign_added = '+'
     let g:gitgutter_sign_modified = '~'
@@ -490,10 +647,12 @@ if (_sq_uid != 0)
     highlight GitGutterDelete cterm=bold ctermbg=none ctermfg=197 gui=bold
     highlight GitGutterChange cterm=bold ctermbg=none ctermfg=227 gui=bold
     highlight GitGutterChangeDelete cterm=bold ctermbg=none ctermfg=215 gui=bold
+endif
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => vim-signify plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-signify plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('vim-signify')
     let g:signify_vcs_list = [ 'git', 'svn' ]
     let g:signify_update_on_bufenter = 0
     let g:signify_update_on_focusgained = 1
@@ -508,53 +667,31 @@ if (_sq_uid != 0)
     xmap ic <plug>(signify-motion-inner-visual)
     omap ac <plug>(signify-motion-outer-pending)
     xmap ac <plug>(signify-motion-outer-visual)
+endif
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => vim-session plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-session plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('vim-session')
     set sessionoptions+=tabpages,globals
     set sessionoptions-=help,blank
 
-    :let g:session_autoload = 'yes'
-    :let g:session_autosave = 'yes'
+    let g:session_autoload = 'yes'
+    let g:session_autosave = 'yes'
+endif
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => HiCursorWords plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => HiCursorWords plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('HiCursorWords')
     " Don't hilight unless the cursor doesn't move for 1 second
     let g:HiCursorWords_delay = 1000
+endif
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => YouCompleteMe plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    let g:ycm_autoclose_preview_window_after_completion = 1
-    let g:ycm_global_ycm_extra_conf = '$HOME/.ycm_extra_conf.py'
-    let g:ycm_confirm_extra_conf = 0
-    let g:ycm_complete_in_comments = 1
-    let g:ycm_always_populate_location_list = 1
-    let g:ycm_max_diagnostics_to_display = 60
-    let g:ycm_enable_diagnostic_highlighting = 1
-    let g:ycm_enable_diagnostic_signs = 1
-    let g:ycm_echo_current_diagnostic = 1
-    let g:ycm_auto_hover = ''
-    nmap <leader>h <Plug>(YCMHover)
-    nnoremap <C-]> :YcmCompleter GoTo<CR>
-    nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-    " Disable clangd support because it is not usable with .ycm_extra_conf.py yet (AttributeError: module 'ycm_core' has no attribute 'CompilationDatabase')
-    " .ycm_extra_conf.py is mandatory to be able to customize the location search for json files
-    let g:ycm_use_clangd = 0
-    " Terrible performaces and RAM usage otherwise, on py files at least
-    let g:ycm_collect_identifiers_from_tags_files = 0
-    highlight YcmErrorSign cterm=bold ctermbg=none ctermfg=9 gui=bold
-    highlight YcmErrorLine ctermbg=174 ctermfg=0
-    highlight YcmErrorSection ctermbg=9
-    highlight YcmWarningSign ctermbg=none ctermfg=208 gui=bold
-    highlight YcmWarningLine ctermbg=223 ctermfg=0
-    highlight YcmWarningSection ctermbg=208
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => vim-indent-guides plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-indent-guides plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('vim-indent-guides')
     let g:indent_guides_start_level = 2
     let g:indent_guides_guide_size = 4
     let g:indent_guides_enable_on_vim_startup = 1
@@ -563,56 +700,45 @@ if (_sq_uid != 0)
     hi IndentGuidesOdd  ctermbg=233
     hi IndentGuidesEven ctermbg=234
     let g:indent_guides_color_change_percent=100
+endif
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => Vim-signature plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-signature plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('vim-signature')
     let g:SignaturePurgeConfirmation = 1 " avoid loosing all marks on m<space>
+endif
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => toggle_words plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => toggle_words plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('toggle_words.vim')
     nmap <leader>t :ToggleWord<CR>
+endif
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => taboo plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => taboo plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('taboo.vim')
     let g:taboo_tabline=0
     let g:taboo_tab_format='[%N] %f%m'
     let g:taboo_renamed_tab_format='[%N:%l] %f%m'
+endif
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => vim-fswitch plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-fswitch plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('derekwyatt/vim-fswitch')
     let g:fsnonewfiles='off'
     au! BufEnter *.cpp,*.cc,*.c let b:fswitchdst = 'h,hpp' | let b:fswitchlocs = 'reg:/src/include/,reg:/src/api/,reg:/src/inc/,rel:../include/,rel:../../include/,rel:../inc,rel:../../inc,rel:../api/,rel:../../api/,rel:./,rel:../,rel:../../'
     au! BufEnter *.h,*.hpp let b:fswitchdst = 'cpp,cc,c' | let b:fswitchlocs = 'reg:/include/src/,reg:/inc/src/,reg:/api/src/,rel:../src,rel:../../src,rel:./,rel:../,rel:../../'
     nmap <silent> <Leader>s :FSHere<cr>
+endif
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => ale plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    let g:ale_set_highlights=0
-    let g:ale_sign_error='E>'
-    let g:ale_sign_warning='W>'
-    let g:ale_sign_style_error='e>'
-    let g:ale_sign_style_warning='w>'
-    let g:ale_sign_info='I>'
-    let g:airline#extensions#ale#enabled=1
-    let g:ale_set_signs=0 " for now, because it alwas messes with the gitgutter signs display, more important to me
-    let g:ale_linters_explicit=1
-    " Disable c/cpp checks for now (irrelevant results due to unknown flags, and redundant with YCM anyway)
-    let g:ale_linters={
-    \ 'c': [],
-    \ 'cpp': [],
-    \}
-
-    nmap <silent> ]l :ALENext<cr>
-    nmap <silent> [l :ALEPrevious<cr>
-
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => vim-pandoc plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-pandoc plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('vim-pandoc-syntax')
     augroup pandoc_syntax
         au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
     augroup END
@@ -620,10 +746,12 @@ if (_sq_uid != 0)
     let g:pandoc#syntax#style#emphases=0
     let g:pandoc#syntax#roman_lists=0
     let g:pandoc#syntax#style#underline_special=0
+endif
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => grep plugin
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => grep plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('grep')
     :let Grep_Skip_Files = '*.bak *~ *.pyc *.so *.o *.a *.lib *.bin'
     nnoremap <silent> <F3> :Rgrep<CR>
     vnoremap <F3> :<C-U>
@@ -632,17 +760,125 @@ if (_sq_uid != 0)
         \let patt=substitute(escape(getreg('"'),'?\.*$^~['),'\_s\+','\\s\\+','g')<CR>
         \gV:call setreg('"', old_reg, old_regtype)<CR>
         \:Rgrep <C-r>=patt<CR>
+endif
 
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " => NERDTree
-    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => NERDTree
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('nerdtree')
     map <C-n> :NERDTreeToggle<CR>
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+endif
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => asyncomplete.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('asyncomplete.vim')
+    let g:asyncomplete_auto_popup = 1
+    let g:asyncomplete_auto_completeopt = 1
+    set completeopt=menuone,noinsert,noselect,preview
+    " Auto close preview when completion is done
+    autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+    " Use tab completion
+    inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-lsp-settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('vim-lsp-settings')
+    " https://opensourcelibs.com/lib/vim-lsp-settings
+    let g:lsp_settings_servers_dir = expand('~').'/.vim/vim-lsp-settings/servers'
+    let g:lsp_settings_filetype_python = 'pylsp'
+    let g:lsp_settings_filetype_cmake = 'cmake-language-server'
+    " pylsp settings available:
+    " https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md
+    let g:lsp_settings = {
+        \ 'bash-language-server': {'disabled': v:true},
+        \ 'vim-language-server': {'disabled': v:true},
+        \ 'clangd': {
+            \ 'args': [],
+        \ },
+        \ 'pylsp': {'workspace_config': {'pylsp': {
+            \ 'plugins': {
+                \ 'pylint': {'enabled': v:true},
+                \ 'jedi': {'use_pyenv_environment': v:true},
+                \ 'flake8': {'enabled': v:false},
+                \ 'mccabe': {'enabled': v:false},
+                \ 'pycodestyle': {'enabled': v:false},
+                \ 'pydocstyle': {'enabled': v:false},
+                \ 'pyflakes': {'enabled': v:false},
+                \ 'yapf': {'enabled': v:false},
+            \ },
+        \ }}},
+    \ }
+    " note for later: clangd option --all-scopes-completion for version >= 10
+    if s:_debug_lsp
+        let g:lsp_settings.clangd.args += ['--log=verbose']
+        let g:lsp_settings.pylsp.args = ['-v', '-v', '--log-file', expand('~/.vim/pylsp.log')]
+    endif
 
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" Use local .vimrc
+" => vim-lsp-settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('vim-lsp')
+    let g:lsp_fold_enabled = 0
+    let g:lsp_diagnostics_enabled = 1
+    " TODO: redundant with hilightcursor?
+    let g:lsp_document_highlight_enabled = 1
+    let g:lsp_preview_float = 1
+    let g:lsp_completion_documentation_enabled = 1
+    let g:lsp_completion_documentation_delay = 120
+    let g:lsp_diagnostics_enabled = 1
+    let g:lsp_diagnostics_signs_priority = 9
+    let g:lsp_diagnostics_echo_cursor = 1
+    let g:lsp_diagnostics_highlights_enabled = 0
+    let g:lsp_diagnostics_highlights_insert_mode_enabled = 0
+    let g:lsp_diagnostics_float_cursor = 0
+    let g:lsp_diagnostics_highlights_delay = 1000
+    let g:lsp_diagnostics_signs_enabled = 1
+    if s:airline_powerline_fonts
+        let g:lsp_diagnostics_signs_error = {'text': '✗'}
+        let g:lsp_diagnostics_signs_warning = {'text': '⚠'}
+        let g:lsp_diagnostics_signs_information = {'text': '♺'}
+        let g:lsp_diagnostics_signs_hint = {'text': '♺'}
+    endif
+    let g:lsp_signature_help_enabled = 1
+    let g:lsp_signature_help_delay = 500
+    let g:lsp_hover_conceal = 0
+    let g:lsp_format_sync_timeout = 1000
+    if s:_debug_lsp
+        let g:lsp_log_verbose = 1
+        let g:lsp_log_file = expand('~/.vim/vim-lsp.log')
+        let g:asyncomplete_log_file = expand('~/.vim/asyncomplete.log')
+    endif
+
+    nmap gd <plug>(lsp-definition)
+    nmap gr <plug>(lsp-references)
+    " nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    " nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap gi <plug>(lsp-implementation)
+    nmap gt <plug>(lsp-type-definition)
+    nmap gh <plug>(lsp-switch-source-header)
+    nmap <Leader>lf <Plug>(lsp-document-format)
+    vmap <Leader>lf <Plug>(lsp-document-range-format)
+    nmap [g <plug>(lsp-previous-diagnostic)
+    nmap ]g <plug>(lsp-next-diagnostic)
+    nmap K <plug>(lsp-hover)
+    " https://github.com/prabirshrestha/vim-lsp/issues/1263#issuecomment-1011892059
+    nmap <plug>() <Plug>(lsp-float-close)
+    nnoremap <expr><c-f> lsp#scroll(+4)
+    nnoremap <expr><c-d> lsp#scroll(-4)
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" Also load local .vimrc if available
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
