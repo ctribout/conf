@@ -63,6 +63,7 @@ user_pref("dom.enable_user_timing", false);
 // Disable resource/navigation timing
 user_pref("dom.enable_resource_timing", false);
 
+user_pref("dom.webgpu.enabled", false);
 // Disable shaking the screen
 user_pref("dom.vibrator.enabled", false);
 // Max popups from a single non-click event - default is 20!
