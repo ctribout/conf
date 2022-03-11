@@ -235,8 +235,8 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Some plugins could change that at load time, so set it again
-filetype plugin indent on
+" Auto indent was needed somehow for dein.vim, but that's a pain (for yaml, python, ...) so disable it
+filetype indent off
 
 " 256-colors support
 set t_Co=256
@@ -831,7 +831,6 @@ if dein#is_available('vim-lsp')
     let g:lsp_diagnostics_enabled = 1
     " TODO: redundant with hilightcursor?
     let g:lsp_document_highlight_enabled = 1
-    let g:lsp_preview_float = 1
     let g:lsp_completion_documentation_enabled = 1
     let g:lsp_completion_documentation_delay = 120
     let g:lsp_diagnostics_enabled = 1
@@ -848,8 +847,12 @@ if dein#is_available('vim-lsp')
         let g:lsp_diagnostics_signs_information = {'text': '♺'}
         let g:lsp_diagnostics_signs_hint = {'text': '♺'}
     endif
-    let g:lsp_signature_help_enabled = 1
-    let g:lsp_signature_help_delay = 500
+    if has('patch-8.1.1517')
+        " Support for float windows
+        let g:lsp_preview_float = 1
+        let g:lsp_preview_autoclose = 1
+        let g:lsp_signature_help_enabled = 0
+    endif
     let g:lsp_hover_conceal = 0
     let g:lsp_format_sync_timeout = 1000
     if s:_debug_lsp
