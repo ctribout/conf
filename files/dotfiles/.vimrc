@@ -851,6 +851,9 @@ if dein#is_available('vim-lsp')
         " Support for float windows
         let g:lsp_preview_float = 1
         let g:lsp_preview_autoclose = 1
+        let g:lsp_signature_help_enabled = 1
+    else
+        let g:lsp_preview_float = 0
         let g:lsp_signature_help_enabled = 0
     endif
     let g:lsp_hover_conceal = 0
