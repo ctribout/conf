@@ -112,7 +112,7 @@ function s:install_plugins()
     call dein#add('yegappan/grep', {
         \ 'if': !&diff,
         \ 'lazy' : v:true,
-        \ 'on_cmd': s:prefix('Grep', ['', 'Add', 'Args', 'ArgsAdd', 'Buffer', 'BufferAdd']),
+        \ 'on_cmd': s:prefix('Grep', ['', 'Add', 'Args', 'ArgsAdd', 'Buffer', 'BufferAdd']) + ['Rgrep', 'RgrepAdd', 'Bgrep', 'BgrepAdd', 'Rg', 'RgAdd'],
     \ })
     " Diff blocks instead of full files
     call dein#add('AndrewRadev/linediff.vim', {
@@ -865,8 +865,8 @@ if dein#is_available('vim-lsp')
     nmap gr <plug>(lsp-references)
     " nmap <buffer> gs <plug>(lsp-document-symbol-search)
     " nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-    nmap gi <plug>(lsp-implementation)
-    nmap gt <plug>(lsp-type-definition)
+    " nmap gi <plug>(lsp-implementation)
+    " nmap gy <plug>(lsp-type-definition)
     nmap gh <plug>(lsp-switch-source-header)
     nmap <Leader>lf <Plug>(lsp-document-format)
     vmap <Leader>lf <Plug>(lsp-document-range-format)
