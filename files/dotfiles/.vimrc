@@ -73,6 +73,8 @@ function s:install_plugins()
     call dein#add('kshenoy/vim-signature', {
         \ 'if': has('signs'),
     \ })
+    " Add glyphs support for other plugins
+    call dein#add('ryanoasis/vim-devicons')
     " Tag bar (quickly view the classes/functions/vars in a file, and jump there)
     call dein#add('majutsushi/tagbar', {
         \ 'if': !&diff && executable('ctags'),
@@ -413,6 +415,14 @@ set encoding=utf8
 " Use Unix as the standard file type and don't keep dos/mac ones
 set fileformats=unix
 
+if !empty(glob(expand('~')."/.fonts/*Literation*Nerd*")) || !empty(glob(expand('~')."/.local/share/fonts/*Literation*Nerd*"))
+    let s:airline_powerline_fonts = v:true
+    set guifont=LiterationMono\ Nerd\ Font\ Book
+else
+    let s:airline_powerline_fonts = v:false
+endif
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -494,12 +504,6 @@ augroup EnableSyntaxHighlighting
     autocmd! BufRead * if exists('syntax_on') && exists('b:current_syntax') && ! empty(&l:filetype) && index(split(&eventignore, ','), 'Syntax') != -1 | unlet! b:current_syntax | endif
 augroup END
 
-if !empty(glob(expand('~')."/.fonts/*Powerline*")) || !empty(glob(expand('~')."/.local/share/fonts/*Powerline*"))
-    let s:airline_powerline_fonts = v:true
-else
-    let s:airline_powerline_fonts = v:false
-endif
-
 """ Plugins setting
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -517,20 +521,22 @@ if dein#is_available('vim-airline')
         if !exists('g:airline_symbols')
           let g:airline_symbols = {}
         endif
-        let g:airline_left_sep = '▶'
-        let g:airline_right_sep = '◀'
+        let g:airline_left_sep = "\uE0B0"
+        let g:airline_left_alt_sep = "\uE0B1"
+        let g:airline_right_sep = "\uE0B2"
+        let g:airline_right_alt_sep = "\uE0B3"
         let g:airline_symbols.paste = '▽'
-        let g:airline_symbols.readonly = ''
+        let g:airline_symbols.readonly = ''
         let g:airline_symbols.whitespace = 'Ξ'
-        let g:airline_symbols.linenr = '¶'
+        let g:airline_symbols.linenr = "\uE0A1"
+        let g:airline_symbols.maxlinenr = ''
+        let g:airline_symbols.colnr = "\uE0A3"
         let g:airline_symbols.branch = '⎇'
         let g:airline_symbols.modified = '⚑'
         let g:airline_symbols.space = ' '
     endif
     " Always display status bar
     set laststatus=2
-    " Use nicer symbols in the bars
-    set guifont=PowerlineSymbols
     " Force command bar height to be 1 (often set otherwise by plugins)
     set cmdheight=1
     " Extensions

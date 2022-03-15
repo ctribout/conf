@@ -32,10 +32,17 @@ for conf_file_folder in $(find "${scriptDir}/files/" -mindepth 1 -maxdepth 1 -ty
     done
 done
 
-if [ ! -d fonts ]; then
+fonts_dir=~/.local/share/fonts/
+my_font=${fonts_dir}/LiterationMonoNerdFontComplete.ttf
+if [ ! -e "${my_font}" ]; then
     echo "Installing fonts..."
-    git clone https://github.com/powerline/fonts
-    ./fonts/install.sh
+    mkdir -p ~/.local/share/fonts
+    set -x
+    curl --silent "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/LiberationMono/complete/Literation%20Mono%20Nerd%20Font%20Complete.ttf" > "${my_font}"
+    if which fc-cache >/dev/null 2>&1; then
+        echo "Resetting font cache, this may take a moment..."
+        fc-cache -f ~/.local/share/fonts
+    fi
     echo "Done."
 fi
 
