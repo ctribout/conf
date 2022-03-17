@@ -417,7 +417,7 @@ set fileformats=unix
 
 if !empty(glob(expand('~')."/.fonts/*Literation*Nerd*")) || !empty(glob(expand('~')."/.local/share/fonts/*Literation*Nerd*"))
     let s:airline_powerline_fonts = v:true
-    set guifont=LiterationMono\ Nerd\ Font\ Book
+    set guifont=LiterationMono\ Nerd\ Font\ Book\ 11
 else
     let s:airline_powerline_fonts = v:false
 endif
@@ -850,8 +850,8 @@ if dein#is_available('vim-lsp')
     if s:airline_powerline_fonts
         let g:lsp_diagnostics_signs_error = {'text': '✗'}
         let g:lsp_diagnostics_signs_warning = {'text': '⚠'}
-        let g:lsp_diagnostics_signs_information = {'text': '♺'}
-        let g:lsp_diagnostics_signs_hint = {'text': '♺'}
+        let g:lsp_diagnostics_signs_information = {'text': "\uF7FC"}
+        let g:lsp_diagnostics_signs_hint = {'text': "\uF835"}
     endif
     if has('patch-8.1.1517')
         " Support for float windows
