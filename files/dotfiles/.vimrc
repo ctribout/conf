@@ -216,7 +216,6 @@ function s:install_plugins()
     " configuration files too (vim must be launched in that venv)
     call dein#add('mattn/vim-lsp-settings', {
         \ 'if': !&diff,
-        \ 'build': 'pip --quiet install --user --upgrade pip && pip --quiet install --upgrade --user cmake-language-server "python-lsp-server[pylint]" pyls-isort python-lsp-black',
     \ })
 
     call dein#end()
@@ -800,6 +799,7 @@ if dein#is_available('vim-lsp-settings')
     let g:lsp_settings_servers_dir = expand('~').'/.vim/vim-lsp-settings/servers'
     let g:lsp_settings_filetype_python = 'pylsp'
     let g:lsp_settings_filetype_cmake = 'cmake-language-server'
+    let g:lsp_settings_filetype_tex = 'texlab'
     " pylsp settings available:
     " https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md
     let g:lsp_settings = {

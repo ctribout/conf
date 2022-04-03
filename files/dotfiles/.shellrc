@@ -10,7 +10,7 @@ set -o pipefail
 # gpg-connect-agent <<< RELOADAGENT 1>/dev/null 2>&1 &
 
 # Default PATH
-export PATH=${PATH}:~/.local/bin:~/.local/usr/bin:~/conf/tools/diff-so-fancy
+export PATH=${PATH}:~/.local/bin:~/.local/usr/bin:~/conf/tools/diff-so-fancy:~/.cargo/bin
 
 # setting shell shitory
 HISTFILE=~/.shell_history
