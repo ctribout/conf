@@ -797,29 +797,45 @@ endif
 if dein#is_available('vim-lsp-settings')
     " https://opensourcelibs.com/lib/vim-lsp-settings
     let g:lsp_settings_servers_dir = expand('~').'/.vim/vim-lsp-settings/servers'
-    let g:lsp_settings_filetype_python = 'pylsp'
     let g:lsp_settings_filetype_cmake = 'cmake-language-server'
+    let g:lsp_settings_filetype_python = 'pylsp'
+    let g:lsp_settings_filetype_sh = 'bash-language-server'
     let g:lsp_settings_filetype_tex = 'texlab'
+    let g:lsp_settings_filetype_vim = 'vim-language-server'
     " pylsp settings available:
     " https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md
     let g:lsp_settings = {
-        \ 'bash-language-server': {'disabled': v:true},
-        \ 'vim-language-server': {'disabled': v:true},
+        \ 'bash-language-server': {
+            \ 'disabled': ! executable('bash-language-server'),
+        \ },
         \ 'clangd': {
+            \ 'disable': ! executable('clangd'),
             \ 'args': [],
         \ },
-        \ 'pylsp': {'workspace_config': {'pylsp': {
-            \ 'plugins': {
-                \ 'pylint': {'enabled': v:true},
-                \ 'jedi': {'use_pyenv_environment': v:true},
-                \ 'flake8': {'enabled': v:false},
-                \ 'mccabe': {'enabled': v:false},
-                \ 'pycodestyle': {'enabled': v:false},
-                \ 'pydocstyle': {'enabled': v:false},
-                \ 'pyflakes': {'enabled': v:false},
-                \ 'yapf': {'enabled': v:false},
-            \ },
-        \ }}},
+        \ 'cmake-language-server': {
+            \ 'disabled': ! executable('cmake-language-server'),
+        \ },
+        \ 'pylsp': {
+            \ 'disable': ! executable('pylsp'),
+            \ 'workspace_config': {'pylsp': {
+                \ 'plugins': {
+                    \ 'pylint': {'enabled': v:true},
+                    \ 'jedi': {'use_pyenv_environment': v:true},
+                    \ 'flake8': {'enabled': v:false},
+                    \ 'mccabe': {'enabled': v:false},
+                    \ 'pycodestyle': {'enabled': v:false},
+                    \ 'pydocstyle': {'enabled': v:false},
+                    \ 'pyflakes': {'enabled': v:false},
+                    \ 'yapf': {'enabled': v:false},
+                \ },
+            \ }},
+        \ },
+        \ 'texlab': {
+            \ 'disabled': ! executable('texlab'),
+        \ },
+        \ 'vim-language-server': {
+            \ 'disabled': ! executable('vim-language-server'),
+        \ },
     \ }
     " note for later: clangd option --all-scopes-completion for version >= 10
     if s:_debug_lsp
