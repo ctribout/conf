@@ -798,7 +798,6 @@ if dein#is_available('vim-lsp-settings')
     " https://opensourcelibs.com/lib/vim-lsp-settings
     let g:lsp_settings_servers_dir = expand('~').'/.vim/vim-lsp-settings/servers'
     let g:lsp_settings_filetype_cmake = 'cmake-language-server'
-    let g:lsp_settings_filetype_markdown = 'remark-language-server'
     let g:lsp_settings_filetype_python = 'pylsp'
     let g:lsp_settings_filetype_sh = 'bash-language-server'
     let g:lsp_settings_filetype_tex = 'texlab'
@@ -830,9 +829,6 @@ if dein#is_available('vim-lsp-settings')
                     \ 'yapf': {'enabled': v:false},
                 \ },
             \ }},
-        \ },
-        \ 'remark-language-server': {
-            \ 'disabled': ! executable('remark-language-server'),
         \ },
         \ 'texlab': {
             \ 'disabled': ! executable('texlab'),

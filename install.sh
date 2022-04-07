@@ -274,24 +274,6 @@ install_vim_utilities() {
     echo "Installing vim tools..."
 }
 
-install_markdown_utilities() {
-    local lsp_path="${npm_bin_folder}/remark-language-server"
-
-    if [ ${force_reinstall} -eq 0 -a -e "${lsp_path}" ]; then return 0; fi
-    if ! yes_no "Install markdown tools?" "N"; then return 0; fi
-    if [ ! -f "${npm_path}" ]; then
-      echo 'Please install npm using this script'
-      return 1
-    fi
-    if [ ${force_reinstall} -ne 0 ]; then
-        rm -rf "${lsp_path}"
-    fi
-
-    echo "Installing markdown tools..."
-    "${npm_path}" install --global remark-language-server
-    echo "Installing markdown tools..."
-}
-
 parse_command_line "$@"
 
 install_conf_files
@@ -304,4 +286,3 @@ install_latex_tools
 install_nodejs
 install_bash_utilities
 install_vim_utilities
-install_markdown_utilities
