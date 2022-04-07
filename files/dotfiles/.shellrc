@@ -10,7 +10,7 @@ set -o pipefail
 # gpg-connect-agent <<< RELOADAGENT 1>/dev/null 2>&1 &
 
 # Default PATH
-export PATH=${PATH}:~/.local/bin:~/.local/usr/bin:~/conf/tools/diff-so-fancy:~/.cargo/bin:~/.nodejs/bin
+export PATH=~/conf/tools/diff-so-fancy:~/.cargo/bin:~/.nodejs/bin:~/.local/bin:~/.local/usr/bin:${PATH}
 export NODE_PATH=~/.nodejs/lib/node_modules
 
 # setting shell shitory

@@ -226,9 +226,9 @@ install_nodejs() {
     echo "Installing nodejs tools..."
     mkdir -p "${nodejs_top_folder}"
     if type curl 2>&1 1>/dev/null; then
-        curl --proto '=https' --tlsv1.2 -LsSf https://nodejs.org/dist/v16.14.2/node-v16.14.2-linux-x64.tar.xz | tar -JxC "${nodejs_top_folder}"
+        curl --proto '=https' --tlsv1.2 -LsSf https://nodejs.org/dist/v17.8.0/node-v17.8.0-linux-x64.tar.xz | tar -JxC "${nodejs_top_folder}"
     elif type wget 2>&1 1>/dev/null; then
-        wget -qO - https://github.com/latex-lsp/texlab/releases/latest/download/texlab-x86_64-linux.tar.gz | tar -JxC "${nodejs_top_folder}"
+        wget -qO - https://nodejs.org/dist/v17.8.0/node-v17.8.0-linux-x64.tar.xz | tar -JxC "${nodejs_top_folder}"
     else
         echo "Couldn't download nodejs binaries: please install curl or wget"
     fi
