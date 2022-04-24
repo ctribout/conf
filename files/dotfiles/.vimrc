@@ -830,6 +830,9 @@ if dein#is_available('vim-lsp-settings')
                 \ },
             \ }},
         \ },
+        \ 'remark-language-server': {
+            \ 'disabled': v:true,
+        \ },
         \ 'texlab': {
             \ 'disabled': ! executable('texlab'),
         \ },
