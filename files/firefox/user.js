@@ -266,6 +266,10 @@ user_pref("plugins.enumerable_names", "");
 
 // Remove noise (recommended extensions)
 user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
+// Never ask to save payment data
+user_pref("dom.payments.defaults.saveCreditCard", false);
+user_pref("extensions.formautofill.creditCards.available", false);
+user_pref("extensions.formautofill.creditCards.enabled", false);
 
 // Disable recommandations (CFr, Contextual Feature Recommender)
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
