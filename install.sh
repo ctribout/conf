@@ -159,7 +159,7 @@ install_python_tools() {
     if ! yes_no "Install Python tools?" "N"; then return 0; fi
 
     echo "Installing Python tools..."
-    pip --quiet install --user --upgrade pip
+    pip --quiet install --user --upgrade pip || pip3 --quiet install --user --upgrade pip
     pip --quiet install --user --upgrade cmake-language-server pylint black poetry "python-lsp-server[pylint]" pyls-isort python-lsp-black
     echo "Installed Python tools."
 }
