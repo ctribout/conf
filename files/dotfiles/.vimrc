@@ -99,7 +99,7 @@ function s:install_plugins()
     """ Navigation and buffers management
 
     " Quickly view open buffers and switch between them
-    call dein#add('jlanzarotta/bufexplorer', {
+    call dein#add('ctribout/bufexplorer', {
         \ 'if': !&diff,
         \ 'lazy' : v:true,
         \ 'on_cmd': s:prefix('BufExplorer', ['', 'HorizontalSplit', 'VerticalSplit']),
