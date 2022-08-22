@@ -858,12 +858,10 @@ if dein#is_available('vim-lsp')
     let g:lsp_document_highlight_enabled = 1
     let g:lsp_completion_documentation_enabled = 1
     let g:lsp_completion_documentation_delay = 120
-    let g:lsp_diagnostics_enabled = 1
     let g:lsp_diagnostics_signs_priority = 9
     let g:lsp_diagnostics_echo_cursor = 1
     let g:lsp_diagnostics_highlights_enabled = 0
     let g:lsp_diagnostics_highlights_insert_mode_enabled = 0
-    let g:lsp_diagnostics_float_cursor = 0
     let g:lsp_diagnostics_highlights_delay = 1000
     let g:lsp_diagnostics_signs_enabled = 1
     if s:airline_powerline_fonts
@@ -872,15 +870,19 @@ if dein#is_available('vim-lsp')
         let g:lsp_diagnostics_signs_information = {'text': "\uF7FC"}
         let g:lsp_diagnostics_signs_hint = {'text': "\uF835"}
     endif
-    if has('patch-8.1.1517')
+    if has('patch-8.1.1517') || has('nvim')
         " Support for float windows
         let g:lsp_preview_float = 1
         let g:lsp_preview_autoclose = 1
         let g:lsp_signature_help_enabled = 1
+        let g:lsp_diagnostics_float_cursor = 1
     else
         let g:lsp_preview_float = 0
+        let g:lsp_diagnostics_float_cursor = 0
         let g:lsp_signature_help_enabled = 0
     endif
+    let g:lsp_diagnostics_virtual_text_enabled = 0
+    let g:lsp_diagnostics_virtual_text_insert_mode_enabled = 0
     let g:lsp_hover_conceal = 0
     let g:lsp_format_sync_timeout = 1000
     if s:_debug_lsp

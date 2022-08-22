@@ -1,6 +1,5 @@
 #! /bin/bash
 set -euo pipefail
-# set -x
 
 scriptDir=$(dirname "$0" | xargs -i readlink -f "{}")
 cd "${scriptDir}"
@@ -84,11 +83,37 @@ install_conf_files() {
                 mkdir -p "$(dirname "${target_file}")"
                 ln -s "${conf_file_folder}/${conf_file}" "${target_file}"
                 echo "  - $(readlink -f "${conf_file_folder}/${conf_file}") installed"
-            done < <(cd "${conf_file_folder}" && find . -mindepth 1 -type f -a -not -name "location.sh")
+            done < <(cd "${conf_file_folder}" && find . -mindepth 1 \( -type f -o -type l \) -a -not -name "location.sh")
         done
     done
 
-    echo "Configuration files installed."
+    echo "Installed configuration files."
+}
+
+install_neovim() {
+    local url=https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
+    local target_exe=~/.local/bin/nvim
+    local app_folder=~/.local/app/nvim-linux64
+
+    if [ ${force_reinstall} -eq 0 -a -e "${target_exe}" ]; then return 0; fi
+    if ! yes_no "Install neovim?" "Y"; then return 0; fi
+    if [ ${force_reinstall} -ne 0 ]; then
+        rm -f "${app_folder}" "${target_exe}"
+    fi
+
+    echo "Installing neovim..."
+
+    mkdir -p "$(dirname "${app_folder}")" "(dirname "${target_exe}")"
+
+    if type curl 2>&1 1>/dev/null; then
+        curl --proto '=https' --tlsv1.2 -LsSf "${url}" | tar -zxC "$(dirname "${app_folder}")"
+    elif type wget 2>&1 1>/dev/null; then
+        wget -qO - "${url}" > "${my_font}" | tar -zxC "$(dirname "${app_folder}")"
+    else
+        echo "Couldn't download neovim: please install curl or wget"
+    fi
+    ln -s "${app_folder}/bin/nvim" "${target_exe}"
+    echo "Installed neovim."
 }
 
 install_vim_plugins() {
@@ -118,8 +143,15 @@ install_vim_plugins() {
     mkdir -p "${bundles_dir}"
 
     echo "date=$(date) - plugin_manager_hash=$(git -C "${dein_dir}" rev-parse HEAD)" > "${marker_install_done}"
-    vim +q "$0"
-    echo "Vim plugins installed"
+    if [ -f ~/.local/bin/nvim ]; then
+        vim=~/.local/bin/nvim
+    elif type nvim 2>&1 1>/dev/null; then
+        vim=nvim
+    elif type vim 2>&1 1>/dev/null; then
+        vim=vim
+    fi
+    "${vim}" +qall "$0"
+    echo "Installed vim plugins"
 }
 
 install_fonts() {
@@ -133,12 +165,19 @@ install_fonts() {
 
     echo "Installing fonts..."
     mkdir -p "$(dirname "${my_font}")"
-    curl --silent "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/LiberationMono/complete/Literation%20Mono%20Nerd%20Font%20Complete.ttf" > "${my_font}"
+
+    if type curl 2>&1 1>/dev/null; then
+        curl --proto '=https' --tlsv1.2 -sSf "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/LiberationMono/complete/Literation%20Mono%20Nerd%20Font%20Complete.ttf" > "${my_font}"
+    elif type wget 2>&1 1>/dev/null; then
+        wget -qO - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/LiberationMono/complete/Literation%20Mono%20Nerd%20Font%20Complete.ttf" > "${my_font}"
+    else
+        echo "Couldn't download fonts: please install curl or wget"
+    fi
     if which fc-cache >/dev/null 2>&1; then
         echo "Resetting font cache, this may take a moment..."
         fc-cache -f "$(dirname "${my_font}")"
     fi
-    echo "Fonts installed"
+    echo "Installed fonts."
 }
 
 install_diff_so_fancy() {
@@ -152,7 +191,7 @@ install_diff_so_fancy() {
 
     echo "Installing diff-so-fancy..."
     git clone --quiet https://github.com/so-fancy/diff-so-fancy "${install_path}"
-    echo "diff-so-fancy installed."
+    echo "Installed diff-so-fancy."
 }
 
 install_python_tools() {
@@ -253,7 +292,7 @@ install_bash_utilities() {
 
     echo "Installing bash tools..."
     "${npm_path}" install --global bash-language-server
-    echo "Installing bash tools..."
+    echo "Installing bash tools."
 }
 
 install_vim_utilities() {
@@ -271,12 +310,13 @@ install_vim_utilities() {
 
     echo "Installing vim tools..."
     "${npm_path}" install --global vim-language-server
-    echo "Installing vim tools..."
+    echo "Installed vim tools."
 }
 
 parse_command_line "$@"
 
 install_conf_files
+install_neovim
 install_vim_plugins
 install_fonts
 install_diff_so_fancy
