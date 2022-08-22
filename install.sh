@@ -103,7 +103,7 @@ install_neovim() {
 
     echo "Installing neovim..."
 
-    mkdir -p "$(dirname "${app_folder}")" "(dirname "${target_exe}")"
+    mkdir -p "$(dirname "${app_folder}")" "$(dirname "${target_exe}")"
 
     if type curl 2>&1 1>/dev/null; then
         curl --proto '=https' --tlsv1.2 -LsSf "${url}" | tar -zxC "$(dirname "${app_folder}")"
