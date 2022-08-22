@@ -41,6 +41,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
     alias less='less -r' # raw control characters
 fi
+if [ -e ~/.local/bin/nvim ]; then
+    alias vim=~/.local/bin/nvim
+fi
 
 alias tmux='tmux -2'
 alias crontab='crontab -i' # crontab -r is such an evil typo to make...
