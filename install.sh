@@ -98,7 +98,7 @@ install_neovim() {
     if [ ${force_reinstall} -eq 0 -a -e "${target_exe}" ]; then return 0; fi
     if ! yes_no "Install neovim?" "Y"; then return 0; fi
     if [ ${force_reinstall} -ne 0 ]; then
-        rm -f "${app_folder}" "${target_exe}"
+        rm -rf "${app_folder}" "${target_exe}"
     fi
 
     echo "Installing neovim..."
