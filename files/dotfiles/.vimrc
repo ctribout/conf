@@ -315,6 +315,18 @@ augroup basic
     autocmd BufEnter * syntax sync fromstart
 augroup end
 
+if has('nvim')
+    autocmd TermOpen * startinsert
+    " neovim removed the ":shell" for some reason, so let's create a user command trying
+    " to mimick it, in a new split. This is still much less useful that the :shell
+    " command from vim, ie to launch a few commands directly in the folder of the
+    " current buffer, in a full window, not touching anything in vim like :terminal
+    " does (it replaces the current buffer and then kills it, thus the need for the
+    " split first...)
+    command! Shell split +:terminal
+    nmap <F10> :Shell<CR>
+endif
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
