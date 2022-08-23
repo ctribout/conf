@@ -93,12 +93,13 @@ install_conf_files() {
 install_neovim() {
     local url=https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
     local target_exe=~/.local/bin/nvim
+    local fallback_exe=~/.local/bin/vim
     local app_folder=~/.local/app/nvim-linux64
 
     if [ ${force_reinstall} -eq 0 -a -e "${target_exe}" ]; then return 0; fi
     if ! yes_no "Install neovim?" "Y"; then return 0; fi
     if [ ${force_reinstall} -ne 0 ]; then
-        rm -rf "${app_folder}" "${target_exe}"
+        rm -rf "${app_folder}" "${target_exe}" "${fallback_exe}"
     fi
 
     echo "Installing neovim..."
@@ -113,6 +114,7 @@ install_neovim() {
         echo "Couldn't download neovim: please install curl or wget"
     fi
     ln -s "${app_folder}/bin/nvim" "${target_exe}"
+    ln -s "nvim" "${fallback_exe}"
     echo "Installed neovim."
 }
 
