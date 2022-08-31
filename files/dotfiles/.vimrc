@@ -317,6 +317,8 @@ augroup end
 
 if has('nvim')
     autocmd TermOpen * startinsert
+    autocmd TermOpen * setlocal nonumber norelativenumber nospell
+    tmap <C-w> <C-\><C-N><C-W>
     " neovim removed the ":shell" for some reason, so let's create a user command trying
     " to mimick it, in a new split. This is still much less useful that the :shell
     " command from vim, ie to launch a few commands directly in the folder of the
