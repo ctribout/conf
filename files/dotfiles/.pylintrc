@@ -78,8 +78,6 @@ disable=locally-disabled,
         duplicate-code,
         # Because if conflicts with pydantic models concept
         too-few-public-methods,
-        # Because it conflicts with black, and black is right by definition/choice
-        bad-continuation,
         # Because it's not always a bad thing ("fail fast" approach), though it might
         # also indicate a potential refactoring needed
         too-many-return-statements,
