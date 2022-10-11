@@ -68,7 +68,7 @@ function s:install_plugins()
     call dein#add('vim-airline/vim-airline')
     call dein#add('vim-airline/vim-airline-themes')
     " Highlight trailing whitespaces
-    call dein#add('bronson/vim-trailing-whitespace')
+    call dein#add('ntpeters/vim-better-whitespace')
     " Display vim marks in the left margin
     call dein#add('kshenoy/vim-signature', {
         \ 'if': has('signs'),
@@ -163,7 +163,6 @@ function s:install_plugins()
         \ 'if': !&diff,
     \ })
     " Show git diffs while editing (changes/removed/added lines)
-    " call dein#add('mhinz/vim-signify')
     call dein#add('airblade/vim-gitgutter', {
         \ 'if': !&diff,
     \ })
@@ -569,6 +568,15 @@ if dein#is_available('vim-airline')
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-better-whitespace plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#is_available('vim-better-whitespace')
+    let g:strip_whitespace_on_save = v:false
+    highlight ExtraWhitespace ctermbg=197
+    autocmd TermOpen * DisableWhitespace
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => tagbar plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if dein#is_available('tagbar')
@@ -597,8 +605,6 @@ if dein#is_available('tagbar')
         \ 'sort' : 0
     \ }
 endif
-
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => commitia plugin
@@ -669,26 +675,6 @@ if dein#is_available('vim-gitgutter')
     highlight GitGutterDelete cterm=bold ctermbg=none ctermfg=197 gui=bold
     highlight GitGutterChange cterm=bold ctermbg=none ctermfg=227 gui=bold
     highlight GitGutterChangeDelete cterm=bold ctermbg=none ctermfg=215 gui=bold
-endif
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-signify plugin
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if dein#is_available('vim-signify')
-    let g:signify_vcs_list = [ 'git', 'svn' ]
-    let g:signify_update_on_bufenter = 0
-    let g:signify_update_on_focusgained = 1
-
-    " highlight signs in Signify
-    highlight SignifySignAdd    cterm=bold ctermbg=none  ctermfg=119
-    highlight SignifySignDelete cterm=bold ctermbg=none  ctermfg=167
-    highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
-
-    " hunk text object
-    omap ic <plug>(signify-motion-inner-pending)
-    xmap ic <plug>(signify-motion-inner-visual)
-    omap ac <plug>(signify-motion-outer-pending)
-    xmap ac <plug>(signify-motion-outer-visual)
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
