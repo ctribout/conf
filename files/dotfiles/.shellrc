@@ -71,7 +71,7 @@ alias vimr='vim --servername vim --remote'
 set_prompt() {
     # Retrieve data for prompt
     local _p_user=$(whoami)
-    local _p_hostname=$(uname -n)
+    local _p_hostname=$(hostname -s)
     test -n "${LOCAL_HOSTNAME}" && _p_hostname=${LOCAL_HOSTNAME}
     local _p_ssh=0
     test -n "${SSH_CLIENT}${SSH_CONNECTION}${SSH_TTY}" && _p_ssh=1

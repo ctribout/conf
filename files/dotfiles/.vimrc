@@ -242,6 +242,9 @@ filetype indent off
 " 256-colors support
 set t_Co=256
 
+" No mouse support!
+set mouse=
+
 " Sets how many lines of history VIM has to remember
 set history=1000
 set undolevels=1000
@@ -833,9 +836,9 @@ if dein#is_available('vim-lsp-settings')
             \ 'disable': ! executable('pylsp'),
             \ 'workspace_config': {'pylsp': {
                 \ 'plugins': {
-                    \ 'pylint': {'enabled': v:true},
+                    \ 'pylint': {'enabled': v:false},
                     \ 'jedi': {'use_pyenv_environment': v:true},
-                    \ 'flake8': {'enabled': v:false},
+                    \ 'flake8': {'enabled': v:true},
                     \ 'mccabe': {'enabled': v:false},
                     \ 'pycodestyle': {'enabled': v:false},
                     \ 'pydocstyle': {'enabled': v:false},

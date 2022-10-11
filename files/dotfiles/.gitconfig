@@ -78,7 +78,6 @@
 	stripLeadingSymbols = true
 	useUnicodeRuler = false
 	rulerWidth =
-
 [include]
     # Set there a [user] section for instance, or machine specific config
     path=~/.gitconfig.local
