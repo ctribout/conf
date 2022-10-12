@@ -108,7 +108,7 @@ function s:install_plugins()
     call dein#add('scrooloose/nerdtree', {
         \ 'if': !&diff,
         \ 'lazy' : v:true,
-        \ 'on_cmd': s:prefix('NERDTree', ['', 'Toggle', 'Find', 'Focus']),
+        \ 'on_cmd': s:prefix('NERDTree', ['', 'Toggle', 'Find', 'Focus']) + ['NERDTreeToggleVCS'],
     \ })
     " Grep utilities
     call dein#add('yegappan/grep', {
@@ -774,8 +774,9 @@ endif
 " => NERDTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if dein#is_available('nerdtree')
-    map <C-n> :NERDTreeToggle<CR>
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+    map <C-n> :NERDTreeToggleVCS<CR>
+    autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+    autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
 endif
 
 
