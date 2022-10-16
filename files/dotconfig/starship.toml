@@ -10,7 +10,7 @@ style_user = "green"
 ssh_only = false
 format = "@[$hostname$ssh_symbol:]($style)"
 style = "bold green"
-ssh_symbol = ""
+ssh_symbol = "\\(:\\)"
 
 [character]
 success_symbol = "[❯](bold green) "
