@@ -64,3 +64,5 @@ if [ -n "${TMUX}" ]; then
     }
 fi
 
+# Initialize starship prompt
+which starship &> /dev/null && eval "$(starship init zsh)"

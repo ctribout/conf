@@ -118,6 +118,30 @@ install_neovim() {
     echo "Installed neovim."
 }
 
+install_startship() {
+    local url=https://github.com/starship/starship/releases/latest/download/starship-x86_64-unknown-linux-gnu.tar.gz
+    local target_exe=~/.local/bin/starship
+
+    if [ ${force_reinstall} -eq 0 -a -e "${target_exe}" ]; then return 0; fi
+    if ! yes_no "Install starship?" "Y"; then return 0; fi
+    if [ ${force_reinstall} -ne 0 ]; then
+        rm -rf "${target_exe}"
+    fi
+
+    echo "Installing starship..."
+
+    mkdir -p "$(dirname "${target_exe}")"
+
+    if type curl 2>&1 1>/dev/null; then
+        curl --proto '=https' --tlsv1.2 -LsSf "${url}" | tar -zxC "$(dirname "${target_exe}")"
+    elif type wget 2>&1 1>/dev/null; then
+        wget -qO - "${url}" > "${my_font}" | tar -zxC "$(dirname "${target_exe}")"
+    else
+        echo "Couldn't download starship: please install curl or wget"
+    fi
+    echo "Installed starship."
+}
+
 install_vim_plugins() {
     local dein_repo=https://github.com/Shougo/dein.vim
     local pm_dir=~/.vim/plugin_manager
@@ -320,6 +344,7 @@ parse_command_line "$@"
 install_conf_files
 install_neovim
 install_vim_plugins
+install_startship
 install_fonts
 install_diff_so_fancy
 install_python_tools
