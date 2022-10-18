@@ -109,7 +109,7 @@ install_neovim() {
     if type curl 2>&1 1>/dev/null; then
         curl --proto '=https' --tlsv1.2 -LsSf "${url}" | tar -zxC "$(dirname "${app_folder}")"
     elif type wget 2>&1 1>/dev/null; then
-        wget -qO - "${url}" > "${my_font}" | tar -zxC "$(dirname "${app_folder}")"
+        wget -qO - "${url}" | tar -zxC "$(dirname "${app_folder}")"
     else
         echo "Couldn't download neovim: please install curl or wget"
     fi
@@ -135,7 +135,7 @@ install_startship() {
     if type curl 2>&1 1>/dev/null; then
         curl --proto '=https' --tlsv1.2 -LsSf "${url}" | tar -zxC "$(dirname "${target_exe}")"
     elif type wget 2>&1 1>/dev/null; then
-        wget -qO - "${url}" > "${my_font}" | tar -zxC "$(dirname "${target_exe}")"
+        wget -qO - "${url}" | tar -zxC "$(dirname "${target_exe}")"
     else
         echo "Couldn't download starship: please install curl or wget"
     fi
