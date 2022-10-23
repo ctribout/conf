@@ -572,7 +572,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if dein#is_available('vim-better-whitespace')
     let g:strip_whitespace_on_save = v:false
-    highlight ExtraWhitespace ctermbg=197
+    highlight ExtraWhitespace ctermbg=160
     autocmd TermOpen * DisableWhitespace
 endif
 
