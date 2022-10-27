@@ -81,6 +81,11 @@ disable=locally-disabled,
         # Because it's not always a bad thing ("fail fast" approach), though it might
         # also indicate a potential refactoring needed
         too-many-return-statements,
+        # Not relevant 99% of the time (only if __str__ does some intensive processing)
+        logging-fstring-interpolation,
+        # Too early to enable those
+        deprecated-typing-alias,
+        consider-alternative-union-syntax,
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option

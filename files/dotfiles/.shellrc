@@ -67,6 +67,7 @@ wchat() {
 }
 alias vims='vim --servername vim'
 alias vimr='vim --servername vim --remote'
+alias vimdiff='nvim -d'
 
 set_prompt() {
     # Retrieve data for prompt
