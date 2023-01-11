@@ -10,18 +10,19 @@
     st = status
     rdiff = !git diff $(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)) HEAD
     wdiff = !git diff --word-diff
+    wt = worktree
 [branch]
     autosetupmerge = always
     autosetuprebase = always
 [color]
     interactive = auto
-	ui = true
+    ui = true
 [color "branch"]
     upstream = cyan
 [core]
     editor = vim
     excludesfile = ~/.gitignore
-	pager = diff-so-fancy | less --tabs=4 --RAW-CONTROL-CHARS -+X -+F
+    pager = diff-so-fancy | less --tabs=4 --RAW-CONTROL-CHARS -+X -+F
     whitespace = -trailing-space
 [diff]
     mnemonicPrefix = true
@@ -29,6 +30,7 @@
     wordRegex = .
 [fetch]
     recurseSubmodules = on-demand
+    prune = true
 [grep]
     extendedRegexp = true
 [log]
@@ -45,6 +47,7 @@
     diff = true
     status = false
     branch = false
+    config = false
 [pull]
     rebase = true
     # Only available starting from 1.8.5
@@ -60,24 +63,24 @@
 [tag]
     sort = version:refname
 [color "diff-highlight"]
-	oldnormal = 160
-	oldhighlight = 181 88
-	newnormal = 34
-	newhighlight = 157 22
+    oldnormal = 160
+    oldhighlight = 181 88
+    newnormal = 34
+    newhighlight = 157 22
 [color "diff"]
-	meta = magenta bold
-	frag = 146 bold
+    meta = magenta bold
+    frag = 146 bold
     func = magenta
-	commit = yellow bold
-	old = 160
-	new = 34
-	whitespace = red reverse
+    commit = yellow bold
+    old = 160
+    new = 34
+    whitespace = red reverse
 [diff-so-fancy]
-	markEmptyLines = false
-	changeHunkIndicators = true
-	stripLeadingSymbols = true
-	useUnicodeRuler = false
-	rulerWidth =
+    markEmptyLines = false
+    changeHunkIndicators = true
+    stripLeadingSymbols = true
+    useUnicodeRuler = false
+    rulerWidth =
 [include]
     # Set there a [user] section for instance, or machine specific config
     path=~/.gitconfig.local

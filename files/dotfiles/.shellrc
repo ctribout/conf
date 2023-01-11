@@ -45,7 +45,8 @@ if [ -e ~/.local/bin/nvim ]; then
     alias vim=~/.local/bin/nvim
 fi
 
-alias tmux='tmux -2'
+alias rg='rg -uuu'  # equivalent to --no-ignore --hidden --binary (same search as as 'grep -r')
+alias tmux='tmux -2 -u'
 alias crontab='crontab -i' # crontab -r is such an evil typo to make...
 # some more ls aliases
 alias ll='ls -al'
@@ -108,3 +109,6 @@ test -f ~/.shellrc.local && source ~/.shellrc.local
 set_prompt
 unset -f set_prompt set_prompt_spe
 
+if direnv version &> /dev/null; then
+    eval "$(direnv hook bash)"
+fi

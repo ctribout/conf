@@ -66,3 +66,7 @@ fi
 
 # Initialize starship prompt
 which starship &> /dev/null && eval "$(starship init zsh)"
+
+if direnv version &> /dev/null; then
+    eval "$(direnv hook zsh)"
+fi
