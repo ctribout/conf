@@ -118,7 +118,7 @@ install_neovim() {
     echo "Installed neovim."
 }
 
-install_startship() {
+install_starship() {
     local url=https://github.com/starship/starship/releases/latest/download/starship-x86_64-unknown-linux-gnu.tar.gz
     local target_exe=~/.local/bin/starship
 
@@ -344,7 +344,7 @@ parse_command_line "$@"
 install_conf_files
 install_neovim
 install_vim_plugins
-install_startship
+install_starship
 install_fonts
 install_diff_so_fancy
 install_python_tools
