@@ -45,7 +45,7 @@ if [ -e ~/.local/bin/nvim ]; then
     alias vim=~/.local/bin/nvim
 fi
 
-alias rg='rg -uuu'  # equivalent to --no-ignore --hidden --binary (same search as as 'grep -r')
+alias rg="rg -uuu -g '!.mypy_cache*' -g '!.pytest_cache' -g '!.venv*' -g '!__pycache__' -g '!.git'"
 alias tmux='tmux -2 -u'
 alias crontab='crontab -i' # crontab -r is such an evil typo to make...
 # some more ls aliases

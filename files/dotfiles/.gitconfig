@@ -11,6 +11,7 @@
     rdiff = !git diff $(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)) HEAD
     wdiff = !git diff --word-diff
     wt = worktree
+    subup = !git submodule sync && git submodule update --recursive --init
 [branch]
     autosetupmerge = always
     autosetuprebase = always
