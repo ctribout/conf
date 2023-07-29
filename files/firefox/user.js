@@ -61,7 +61,7 @@ user_pref("dom.enable_performance",		true); // breaks sites like linkedin
 // Disable User Timing API - https://trac.torproject.org/projects/tor/ticket/16336
 user_pref("dom.enable_user_timing", false);
 // Disable resource/navigation timing
-user_pref("dom.enable_resource_timing", false);
+// user_pref("dom.enable_resource_timing", false);
 
 user_pref("dom.webgpu.enabled", false);
 // Disable shaking the screen
