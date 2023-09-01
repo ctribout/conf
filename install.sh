@@ -181,27 +181,23 @@ install_vim_plugins() {
 }
 
 install_fonts() {
-    local my_font=~/.local/share/fonts/LiterationMonoNerdFontComplete.ttf
+    local my_font=~/.local/share/fonts/LiterationMonoNerdFont-Regular.ttf
+    local target=${scriptDir}/files/fonts/LiterationMonoNerdFont-Regular.ttf
 
     if [ ${force_reinstall} -eq 0 -a -e "${my_font}" ]; then return 0; fi
     if ! yes_no "Install Nerd font?" "Y"; then return 0; fi
-    if [ ${force_reinstall} -ne 0 ]; then
-        rm -f "${my_font}"
-    fi
 
     echo "Installing fonts..."
     mkdir -p "$(dirname "${my_font}")"
+    cp -f "${target}" "${my_font}"
 
-    if type curl 2>&1 1>/dev/null; then
-        curl --proto '=https' --tlsv1.2 -sSf "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/LiberationMono/complete/Literation%20Mono%20Nerd%20Font%20Complete.ttf" > "${my_font}"
-    elif type wget 2>&1 1>/dev/null; then
-        wget -qO - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/LiberationMono/complete/Literation%20Mono%20Nerd%20Font%20Complete.ttf" > "${my_font}"
-    else
-        echo "Couldn't download fonts: please install curl or wget"
-    fi
     if which fc-cache >/dev/null 2>&1; then
         echo "Resetting font cache, this may take a moment..."
+        mkdir "${scriptDir}/.buildfonts"
+        cd "${scriptDir}/.buildfonts"
         fc-cache -f "$(dirname "${my_font}")"
+        cd "${scriptDir}"
+        rm -rf "${scriptDir}/.buildfonts"
     fi
     echo "Installed fonts."
 }
