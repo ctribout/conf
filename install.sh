@@ -68,6 +68,9 @@ install_conf_files() {
     #  - if yes: backup (move)
     # Then, create a symlink to our file
     for conf_file_folder in $(find "${scriptDir}/files/" -mindepth 1 -maxdepth 1 -type d); do
+        if [ ! -e "${conf_file_folder}/location.sh" ]; then
+            continue
+        fi
         for target_folder in $(${conf_file_folder}/location.sh); do
             while IFS= read -r conf_file; do
                 target_file=${target_folder}/${conf_file}
@@ -95,6 +98,7 @@ install_neovim() {
     local target_exe=~/.local/bin/nvim
     local fallback_exe=~/.local/bin/vim
     local app_folder=~/.local/app/nvim-linux64
+    local target_conf_folder=~/.config/nvim
 
     if [ ${force_reinstall} -eq 0 -a -e "${target_exe}" ]; then return 0; fi
     if ! yes_no "Install neovim?" "Y"; then return 0; fi
@@ -115,6 +119,17 @@ install_neovim() {
     fi
     ln -s "${app_folder}/bin/nvim" "${target_exe}"
     ln -s "nvim" "${fallback_exe}"
+
+    if [ -d "${target_conf_folder}" ]; then
+        if [ -L "${target_conf_folder}.backup" ]; then
+            rm -f "${target_conf_folder}.backup"
+        elif [ -d "${target_conf_folder}.backup" ]; then
+            rm -rf "${target_conf_folder}.backup"
+        fi
+        mv "${target_conf_folder}" "${target_conf_folder}.backup"
+    fi
+    ln -sf "${scriptDir}/files/neovim" "${target_conf_folder}"
+
     echo "Installed neovim."
 }
 
@@ -140,44 +155,6 @@ install_starship() {
         echo "Couldn't download starship: please install curl or wget"
     fi
     echo "Installed starship."
-}
-
-install_vim_plugins() {
-    local dein_repo=https://github.com/Shougo/dein.vim
-    local pm_dir=~/.vim/plugin_manager
-    local bundles_dir=~/.vim/bundles
-    local dein_dir=${pm_dir}/dein.vim
-    local marker_install_done=${pm_dir}/.installation_ok
-
-    if [ ${force_reinstall} -eq 0 -a -f "${marker_install_done}" ]; then return 0; fi
-    if ! yes_no "Install vim plugins?" "Y"; then return 0; fi
-    type git 2>&1 1>/dev/null || {
-      echo 'Please install git or update your PATH to include the git executable'
-      return 1
-    }
-    if [ ${force_reinstall} -ne 0 ]; then
-        rm -rf "${pm_dir}" "${bundles_dir}"
-    fi
-
-    echo "Installing vim's plugins manager"
-
-    rm -rf "${pm_dir}"
-    mkdir -p "${pm_dir}"
-
-    git clone --quiet "${dein_repo}" "${dein_dir}"
-
-    mkdir -p "${bundles_dir}"
-
-    echo "date=$(date) - plugin_manager_hash=$(git -C "${dein_dir}" rev-parse HEAD)" > "${marker_install_done}"
-    if [ -f ~/.local/bin/nvim ]; then
-        vim=~/.local/bin/nvim
-    elif type nvim 2>&1 1>/dev/null; then
-        vim=nvim
-    elif type vim 2>&1 1>/dev/null; then
-        vim=vim
-    fi
-    "${vim}" +qall "$0"
-    echo "Installed vim plugins"
 }
 
 install_fonts() {
@@ -221,7 +198,6 @@ install_python_tools() {
 
     echo "Installing Python tools..."
     pip --quiet install --user --upgrade pip || pip3 --quiet install --user --upgrade pip
-    pip --quiet install --user --upgrade cmake-language-server pylint black poetry "python-lsp-server[pylint]" pyls-isort python-lsp-black
     echo "Installed Python tools."
 }
 
@@ -272,80 +248,13 @@ install_latex_tools() {
     echo "Installed LaTeX tools."
 }
 
-nodejs_top_folder=~/.nodejs
-npm_bin_folder="${nodejs_top_folder}/bin"
-npm_path="${npm_bin_folder}/npm"
-
-install_nodejs() {
-    if [ ${force_reinstall} -eq 0 -a -e "${npm_path}" ]; then return 0; fi
-
-    if ! yes_no "Install nodejs tools?" "N"; then return 0; fi
-    if [ ${force_reinstall} -ne 0 ]; then
-        rm -rf "${nodejs_top_folder}"
-    fi
-
-    echo "Installing nodejs tools..."
-    mkdir -p "${nodejs_top_folder}"
-    if type curl 2>&1 1>/dev/null; then
-        curl --proto '=https' --tlsv1.2 -LsSf https://nodejs.org/dist/v17.8.0/node-v17.8.0-linux-x64.tar.xz | tar -JxC "${nodejs_top_folder}"
-    elif type wget 2>&1 1>/dev/null; then
-        wget -qO - https://nodejs.org/dist/v17.8.0/node-v17.8.0-linux-x64.tar.xz | tar -JxC "${nodejs_top_folder}"
-    else
-        echo "Couldn't download nodejs binaries: please install curl or wget"
-    fi
-    mv "${nodejs_top_folder}"/node-*/* "${nodejs_top_folder}"
-    rm -rf "${nodejs_top_folder}"/node-*
-    "${npm_path}" install --global npm
-    echo "Installed nodejs tools."
-}
-
-install_bash_utilities() {
-    local lsp_path="${npm_bin_folder}/bash-language-server"
-
-    if [ ${force_reinstall} -eq 0 -a -e "${lsp_path}" ]; then return 0; fi
-    if ! yes_no "Install bash tools?" "N"; then return 0; fi
-    if [ ! -f "${npm_path}" ]; then
-      echo 'Please install npm using this script'
-      return 1
-    fi
-    if [ ${force_reinstall} -ne 0 ]; then
-        rm -rf "${lsp_path}"
-    fi
-
-    echo "Installing bash tools..."
-    "${npm_path}" install --global bash-language-server
-    echo "Installing bash tools."
-}
-
-install_vim_utilities() {
-    local lsp_path="${npm_bin_folder}/vim-language-server"
-
-    if [ ${force_reinstall} -eq 0 -a -e "${lsp_path}" ]; then return 0; fi
-    if ! yes_no "Install vim tools?" "N"; then return 0; fi
-    if [ ! -f "${npm_path}" ]; then
-      echo 'Please install npm using this script'
-      return 1
-    fi
-    if [ ${force_reinstall} -ne 0 ]; then
-        rm -rf "${lsp_path}"
-    fi
-
-    echo "Installing vim tools..."
-    "${npm_path}" install --global vim-language-server
-    echo "Installed vim tools."
-}
-
 parse_command_line "$@"
 
 install_conf_files
 install_neovim
-install_vim_plugins
 install_starship
 install_fonts
 install_diff_so_fancy
 install_python_tools
 install_rust_tools
 install_latex_tools
-install_nodejs
-install_bash_utilities
-install_vim_utilities
