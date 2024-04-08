@@ -1,11 +1,13 @@
 [alias]
     br = branch -v
-    ci = commit
+    ci = commit -v
     co = checkout
     cp = cherry-pick
     fp = format-patch
     last = log -1 -p --stat HEAD
     lg = log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ar)%Creset'
+    rb = rebase -i
+    rba = rebase -i --autosquash
     mt = mergetool
     st = status
     rdiff = !git diff $(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)) HEAD
