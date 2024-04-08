@@ -60,8 +60,10 @@ return {
               -- values are used (+ 1000, so that they are after those defined here, but still
               -- with their original order)
               [types.lsp.CompletionItemKind.Variable] = 1,
-              [types.lsp.CompletionItemKind.Method] = 2,
-              [types.lsp.CompletionItemKind.Property] = 3,
+              [types.lsp.CompletionItemKind.Constant] = 2,
+              [types.lsp.CompletionItemKind.Method] = 3,
+              [types.lsp.CompletionItemKind.Property] = 4,
+              [types.lsp.CompletionItemKind.Keyword] = 5,
             }
             local kind1 = entry1:get_kind()
             kind1 = modified_priority[kind1] or 1000 + kind1
