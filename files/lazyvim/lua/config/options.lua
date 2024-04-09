@@ -2,6 +2,7 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
+vim.opt.autoread = true  -- Auto read when a file is changed from the outside
 vim.opt.autowrite = false
 vim.opt.backup = false
 vim.opt.writebackup = true
@@ -20,6 +21,7 @@ vim.opt.textwidth = 88
 vim.opt.colorcolumn = "88"
 
 vim.opt.mouse = ""
+vim.g.behave = "xterm"
 vim.opt.spelllang = { "en", "fr" }
 vim.opt.number = true -- Print line number
 vim.opt.relativenumber = false -- Relative line numbers
@@ -57,8 +59,10 @@ vim.cmd("match Error /\\s\\+$/")  -- highlight trailing empty chars as errors
 vim.api.nvim_create_user_command("Shell", "split +:terminal", {
   desc = "Launch a termain in a new horizontal split window",
 })
-vim.keymap.set("n", "<F10>", "<cmd>Shell<cr>")
-vim.keymap.set("t", "<C-w>", "<C-\\><C-N><C-W>")
+vim.keymap.set("n", "<F10>", "<cmd>Shell<cr>", { desc = "Create a new terminal windows" })
+vim.keymap.set("t", "<C-w>", "<C-\\><C-N><C-W>", { desc = "Leave a terminal windows like any other" } )
+vim.keymap.set("v", "<C-r>", '"hy:%s@<C-r>h@@gc<left><left><left>', { desc = "Replace the current selection" })
+
 vim.api.nvim_create_autocmd("TermOpen", {
   desc = "Config terminal and go to insert mode",
   command = "setlocal nonumber norelativenumber nospell | startinsert",
@@ -73,6 +77,9 @@ vim.api.nvim_create_autocmd("BufEnter", {
 vim.g.mapleader = " "
 vim.opt.timeoutlen = 1000
 vim.opt.ttimeoutlen = 0
+
+vim.bo.undolevels = 1000
+vim.opt.history = 1000
 
 -- Disable modeline feature (header in files like `# vim: <options>`)
 vim.g.modelines = 0

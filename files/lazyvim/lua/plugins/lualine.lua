@@ -54,7 +54,10 @@ return {
             'diagnostics',
           },
           lualine_c = {
-            { diagnostics_message }
+            {
+              diagnostics_message,
+              color = { gui = "italic" }
+            },
           },
           lualine_x = {
             -- 'encoding',
