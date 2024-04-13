@@ -101,3 +101,5 @@ vim.api.nvim_create_autocmd("WinLeave", {
   desc = "Disable cursorline when leaving window",
   command = "setlocal nocursorline"
 })
+
+-- vim.lsp.set_log_level("debug")
