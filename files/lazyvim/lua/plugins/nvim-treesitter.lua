@@ -3,7 +3,7 @@ return {
   opts = {
     indent = {
       enable = true,
-      disable = {},  -- Ex.: {"python", "rust"}
+      disable = { "python" },  -- Result is too bad on Python
     },
     highlight = {
       -- Note: seem to slow down nvim (chars slow to display) on big files

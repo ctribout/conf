@@ -16,6 +16,7 @@ vim.opt.showmatch = true
 vim.opt.matchtime= 2  -- How many tenths of a second to blink when matching brackets
 vim.opt.linebreak = false
 vim.opt.formatoptions:append("q")
+vim.opt.formatoptions:remove("c")
 vim.opt.formatoptions:remove("t")
 vim.opt.textwidth = 88
 vim.opt.colorcolumn = "88"
@@ -32,6 +33,7 @@ vim.opt.autoindent = true
 vim.opt.shiftwidth = 4 -- 1 tab == 4 spaces
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
+vim.opt.indentkeys:remove("o")
 -- keep a single shift on a new line after a parenthesis in Python
 vim.g.pyindent_open_paren = vim.bo.shiftwidth
 vim.opt.whichwrap:append {
@@ -87,7 +89,7 @@ vim.g.modeline = false
 
 vim.g.matchparen_timeout = 2
 vim.g.matchparen_insert_timeout = 2
-vim.opt.matchpairs = ""
+vim.opt.matchpairs = "(:),{:},[:]"
 
 -- Display the cursor line only in the active window
 vim.api.nvim_create_augroup("CursorLineOnlyInActiveWindow", { clear = true })
