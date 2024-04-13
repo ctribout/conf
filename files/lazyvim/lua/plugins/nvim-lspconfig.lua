@@ -4,7 +4,7 @@ return {
     diagnostics = {
       virtual_text = false,
       update_in_insert = false,
-      underline = true,
+      underline = false,
       float = {
         border = "single",
         source = true,

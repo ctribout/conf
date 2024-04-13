@@ -26,15 +26,18 @@ return {
         -- miscs = {}, -- Uncomment to turn off hard-coded styles
       },
       dim_inactive = {
+        -- Dims the background color of inactive windows, going toward the "mantle" color
+        -- in "dark" mode
         enabled = true, -- dims the background color of inactive window
         shade = "dark",
-        percentage = 0.1, -- percentage of the shade to apply to the inactive window
+        percentage = 0.4, -- [0-1], the lowest the closest to "mantle"
       },
       color_overrides = {
         mocha = {
           -- https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/palettes/mocha.lua
-          base = "#282838",
-          mantle = "#141424",
+          base = "#1e1e2e", -- main background color (active)
+          mantle = "#12121b", -- status bar, and context top view
+          crust = "#09090f",  -- darkest background
           text = "#e6e9ff",
           peach = "#c79e85",
         },

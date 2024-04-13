@@ -3,6 +3,7 @@
 return {
   {
     "nvim-lualine/lualine.nvim",
+    dependencies = { "catppuccin/nvim" }, -- needed because its colors are referenced
     -- Note: tab line managed by the bufferline.nvim pluging instead
     opts = function(_, opts)
       local utils = require("lualine.utils.utils")
@@ -56,7 +57,10 @@ return {
           lualine_c = {
             {
               diagnostics_message,
-              color = { gui = "italic" }
+              color = {
+                gui = "italic",
+                fg = string.format("%06x", vim.api.nvim_get_hl_by_name('Comment', true).foreground),
+              },
             },
           },
           lualine_x = {
