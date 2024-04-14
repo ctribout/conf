@@ -7,7 +7,7 @@ vim.opt.autowrite = false
 vim.opt.backup = false
 vim.opt.writebackup = true
 vim.opt.swapfile = false
-vim.opt.autochdir = true
+vim.opt.autochdir = false  -- Impacts too many plugins (ex.: live previews)
 vim.opt.foldmethod = "manual"
 vim.opt.hidden = true
 vim.opt.wrap = true -- Force line wrap
@@ -33,6 +33,7 @@ vim.opt.autoindent = true
 vim.opt.shiftwidth = 4 -- 1 tab == 4 spaces
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
+vim.opt.shiftround = true -- Round indent
 vim.opt.indentkeys:remove("o")
 -- keep a single shift on a new line after a parenthesis in Python
 vim.g.pyindent_open_paren = vim.bo.shiftwidth
@@ -65,23 +66,28 @@ vim.keymap.set("n", "<F10>", "<cmd>Shell<cr>", { desc = "Create a new terminal w
 vim.keymap.set("t", "<C-w>", "<C-\\><C-N><C-W>", { desc = "Leave a terminal windows like any other" } )
 vim.keymap.set("v", "<C-r>", '"hy:%s@<C-r>h@@gc<left><left><left>', { desc = "Replace the current selection" })
 
-vim.api.nvim_create_autocmd("TermOpen", {
-  desc = "Config terminal and go to insert mode",
-  command = "setlocal nonumber norelativenumber nospell | startinsert",
-})
-vim.api.nvim_create_autocmd("BufEnter", {
-  desc = "Set terminal to insert mode when going back to its window",
-  group = termgroup,
-  pattern = "term://*",
-  command = "startinsert",
-})
-
 vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 vim.opt.timeoutlen = 1000
 vim.opt.ttimeoutlen = 0
 
 vim.bo.undolevels = 1000
 vim.opt.history = 1000
+
+vim.opt.splitbelow = true -- Put new windows below current
+vim.opt.splitkeep = "screen"
+vim.opt.splitright = true -- Put new windows right of current
+vim.opt.termguicolors = true
+vim.opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
+vim.opt.wildmode = "longest:full,full" -- Command-line completion mode
+vim.opt.winminwidth = 5 -- Minimum window width
+vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
+vim.opt.showmode = false -- Dont show mode since we have a statusline
+vim.opt.sidescrolloff = 8 -- Columns of context
+vim.opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
+vim.opt.number = true -- Print line number
+vim.opt.pumblend = 10 -- Popup blend
+vim.opt.pumheight = 10 -- Maximum number of entries in a popup
 
 -- Disable modeline feature (header in files like `# vim: <options>`)
 vim.g.modelines = 0
@@ -91,17 +97,10 @@ vim.g.matchparen_timeout = 2
 vim.g.matchparen_insert_timeout = 2
 vim.opt.matchpairs = "(:),{:},[:]"
 
--- Display the cursor line only in the active window
-vim.api.nvim_create_augroup("CursorLineOnlyInActiveWindow", { clear = true })
-vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
-  group = "CursorLineOnlyInActiveWindow",
-  desc = "Enable cursorline in active window",
-  command = "setlocal cursorline"
-})
-vim.api.nvim_create_autocmd("WinLeave", {
-  group = "CursorLineOnlyInActiveWindow",
-  desc = "Disable cursorline when leaving window",
-  command = "setlocal nocursorline"
-})
+vim.opt.foldlevel = 99
+if vim.fn.has("nvim-0.9.0") == 1 then
+  vim.opt.statuscolumn = [[%!v:lua.require'utils'.statuscolumn()]]
+  -- vim.opt.foldtext = "v:lua.require'utils'.foldtext()"
+end
 
 -- vim.lsp.set_log_level("debug")
