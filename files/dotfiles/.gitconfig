@@ -5,7 +5,7 @@
     cp = cherry-pick
     fp = format-patch
     last = log -1 -p --stat HEAD
-    lg = log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ar)%Creset'
+    lg = log --graph --date="format:'%A %Y-%m-%d %H:%M'" --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen[%an %ar (%ad)]%Creset'
     rb = rebase -i
     rba = rebase -i --autosquash
     mt = mergetool
@@ -39,6 +39,7 @@
 [log]
     # abbrevCommit = true
     decorate = short
+    date = iso
 [merge]
     conflictStyle = diff3
     tool = vimdiff
