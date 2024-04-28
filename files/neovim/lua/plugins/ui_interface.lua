@@ -5,7 +5,7 @@ return {
     -- https://github.com/MunifTanjim/nui.nvim
     "MunifTanjim/nui.nvim",
     lazy = true,
- },
+  },
 
   -- top tab line with open buffers
   {
@@ -167,6 +167,11 @@ return {
           lualine_x = {'location'},
           lualine_y = {},
           lualine_z = {}
+        },
+        options = {
+          disabled_filetypes = {
+            statusline = { 'help', 'neo-tree', 'aerial' },
+          },
         },
       }
     end

@@ -9,7 +9,7 @@ return {
     lazy = true,
     cmd = "VenvSelect",
     opts = {
-      name = { "venv", ".venv", "env", ".env" },
+      name = { "venv", ".venv", "env", ".env", ".pyenv", "pyenv" },
       notify_user_on_activate = false,
     },
     keys = {

@@ -2,12 +2,14 @@ return {
 
   -- Treesitter parser generator for faster and more accurate syntax highlighting
   {
+    -- https://github.com/nvim-treesitter/nvim-treesitter
     "nvim-treesitter/nvim-treesitter",
     version = false, -- last release is way too old and doesn't work on Windows
     lazy = false,
     build = ":TSUpdate",
     dependencies = {
       {
+        -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
         "nvim-treesitter/nvim-treesitter-textobjects",
       },
     },
@@ -29,14 +31,19 @@ return {
       highlight = { enable = true },
       indent = { enable = false },  -- Result is too bad on Python
       ensure_installed = {
+        -- c, lua, query, vimdoc and vim are mandatory (as nvim ships them too and it
+        -- can conflict)
         "bash",
         "c",
         "diff",
         "dockerfile",
+        "gitcommit",
         "git_config",
         "git_rebase",
         "gitcommit",
+        "html",
         "json",
+        "lua",
         "make",
         "markdown",
         "markdown_inline",
@@ -46,6 +53,8 @@ return {
         "rst",
         "rust", 
         "toml",
+        "vim",
+        "vimdoc",
         "xml",
         "yaml",
       },
@@ -77,6 +86,7 @@ return {
 
   -- Show context of the current function
   {
+    -- https://github.com/nvim-treesitter/nvim-treesitter-context
     "nvim-treesitter/nvim-treesitter-context",
     opts = {
       mode = "cursor",

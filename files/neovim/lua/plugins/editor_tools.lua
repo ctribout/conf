@@ -56,7 +56,22 @@ return {
       open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
       filesystem = {
         bind_to_cwd = false,
-        follow_current_file = { enabled = true },
+        follow_current_file = {
+          enabled = true,
+        },
+        filtered_items = {
+          hide_dotfiles = false,
+          hide_by_pattern = {
+            ".*_cache",
+            ".env",
+            "env",
+            ".git",
+            ".pyenv",
+            "pyenv",
+            ".venv",
+            "venv",
+          },
+        },
         use_libuv_file_watcher = true,
       },
       window = {
@@ -79,6 +94,20 @@ return {
           expander_expanded = "",
           expander_highlight = "NeoTreeExpander",
         },
+        modified = {
+          symbol = "󱗓"
+        },
+        git_status = {
+          symbols = {
+            added = "✚",
+            modified = "",
+            untracked = "",
+            ignored = "",
+            unstaged = "󰄱",
+            staged = "",
+            conflict = "",
+          }
+        }
       },
     },
   },

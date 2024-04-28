@@ -33,9 +33,10 @@ local function find_venv()
     end
   end
   -- Fallback: find a folder with a venv "usual" name
+  local project_dir = find_project_dir({ ".git", ".svn", ".hg", ".pyproject.toml" })
   local found = vim.fs.find(
     { ".venv", ".env", "venv", "env", "pyenv", ".pyenv" },
-    { upward = true, type = 'directory', stop = find_project_dir(), path = curdir }
+    { upward = true, type = 'directory', stop = vim.fs.dirname(project_dir), path = curdir }
   )
   if #found > 0 then
     return found[1]
