@@ -76,6 +76,7 @@ vim.api.nvim_create_autocmd("FileType", {
   group = augroup("tw_py"),
   pattern = { "python" },
   callback = function(event)
+    vim.b.editorconfig = false
     vim.opt_local.textwidth = 88
   end,
 })
@@ -85,6 +86,7 @@ vim.api.nvim_create_autocmd("FileType", {
   group = augroup("tw_git"),
   pattern = { "gitcommit" },
   callback = function(event)
+    vim.b.editorconfig = false
     vim.opt_local.textwidth = 80
   end,
 })

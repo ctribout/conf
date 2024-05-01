@@ -54,6 +54,7 @@ return {
         treesitter = true,
         treesitter_context = true,
         which_key = true,
+        window_picker = true,
       },
       styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
         comments = { "italic" },

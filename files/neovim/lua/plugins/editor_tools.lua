@@ -2,6 +2,21 @@ local utils = require("utils")
 
 return {
 
+  -- windows picker, used for neotree to choose where to open a file with 'w'
+  {
+    -- https://github.com/s1n7ax/nvim-window-picker
+    "s1n7ax/nvim-window-picker",
+    lazy = true,
+    opts = {
+      hint = 'floating-big-letter',
+      filter_rules = {
+        bo = {
+          filetype = utils.special_filetypes,
+        },
+      },
+    },
+  },
+
   -- file explorer
   {
     -- https://github.com/nvim-neo-tree/neo-tree.nvim
@@ -23,8 +38,16 @@ return {
         end,
         desc = "Explorer NeoTree (cwd)",
       },
+      {
+        "<leader>ft",
+        function()
+          require("neo-tree.command").execute({ toggle = true, action = "show", dir = require("utils").find_project_dir() })
+        end,
+        desc = "Toggle NeoTree (Root Dir)",
+      },
       { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (Root Dir)", remap = true },
       { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
+      { "<leader>t", "<leader>ft", desc = "Toggle NeoTree", remap = true },
       {
         "<leader>ge",
         function()
@@ -85,6 +108,9 @@ return {
             end,
             desc = "Copy Path to Clipboard",
           },
+          ['e'] = function() vim.api.nvim_exec('Neotree focus filesystem left', true) end,
+          ['b'] = function() vim.api.nvim_exec('Neotree focus buffers left', true) end,
+          ['g'] = function() vim.api.nvim_exec('Neotree focus git_status left', true) end,
         },
       },
       default_component_configs = {

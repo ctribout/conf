@@ -1,5 +1,18 @@
 local utils = require("utils")
 
+local function dial(increment, g)
+  dmap = require("dial.map")
+  dcfg = require("dial.config")
+  local is_visual = vim.fn.mode(true):sub(1, 1) == "v"
+  local func = (increment and "inc" or "dec") .. (g and "_g" or "_") .. (is_visual and "visual" or "normal")
+  local group = vim.bo.filetype
+  local gdata = dcfg.augends:get(group)
+  if not gdata then
+    group = "default"
+  end
+  return dmap[func](group)
+end
+
 return {
 
   -- Automatically highlights other instances of the word under your cursor.
@@ -86,15 +99,6 @@ return {
       wk.register(opts.defaults)
       vim.keymap.set({"n",  "v"}, "<leader>k", "<cmd>WhichKey<cr>", { desc = "WhichKey" })
     end,
-  },
-
-  -- Toggle words
-  {
-    -- https://github.com/tandy1229/wordswitch.nvim
-    "tandy1229/wordswitch.nvim",
-    keys = { 
-      { "<leader>t", "<cmd>:WordSwitch<cr>", desc = "Toggle word" },
-    },
   },
 
   -- Move any selection in any direction
@@ -243,6 +247,165 @@ return {
         end,
       },
     },
+  },
+
+
+  -- increment/decrement values
+  {
+    "monaqa/dial.nvim",
+    -- https://github.com/monaqa/dial.nvim
+    keys = {
+        { "<C-a>", function() return dial(true) end, expr = true, desc = "Increment", mode = {"n", "v"} },
+        { "<C-x>", function() return dial(false) end, expr = true, desc = "Decrement", mode = {"n", "v"} },
+        { "g<C-a>", function() return dial(true, true) end, expr = true, desc = "Increment", mode = {"n", "v"} },
+        { "g<C-x>", function() return dial(false, true) end, expr = true, desc = "Decrement", mode = {"n", "v"} },
+    },
+    config = function(_, opts)
+      local augend = require("dial.augend")
+
+      local logical_alias = augend.constant.new({
+        elements = { "&&", "||" },
+        word = false,
+        cyclic = true,
+      })
+
+      local ordinal_numbers = augend.constant.new({
+        -- elements through which we cycle. When we increment, we go down
+        -- On decrement we go up
+        elements = {
+          "first",
+          "second",
+          "third",
+          "fourth",
+          "fifth",
+          "sixth",
+          "seventh",
+          "eighth",
+          "ninth",
+          "tenth",
+        },
+        -- if true, it only matches strings with word boundary. firstDate wouldn't work for example
+        word = false,
+        -- do we cycle back and forth (tenth to first on increment, first to tenth on decrement).
+        -- Otherwise nothing will happen when there are no further values
+        cyclic = true,
+      })
+
+      local weekdays = augend.constant.new({
+        elements = {
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        },
+        word = true,
+        cyclic = true,
+      })
+
+      local months = augend.constant.new({
+        elements = {
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        },
+        word = true,
+        cyclic = true,
+      })
+
+      local capitalized_boolean = augend.constant.new({
+        elements = {
+          "True",
+          "False",
+        },
+        word = true,
+        cyclic = true,
+      })
+
+      local groups = {
+        default = {
+          augend.integer.alias.decimal_int,
+          augend.integer.alias.hex,
+          augend.date.alias["%Y/%m/%d"],
+          augend.constant.alias.bool, 
+          weekdays,
+          months,
+          ordinal_numbers,
+        },
+        typescript = {
+          augend.integer.alias.decimal_int,
+          augend.constant.alias.bool,
+          logical_alias,
+          augend.constant.new({ elements = { "let", "const" } }),
+          ordinal_numbers,
+          weekdays,
+          months,
+        },
+        css = {
+          augend.integer.alias.decimal_int,
+          augend.hexcolor.new({
+            case = "lower",
+          }),
+          augend.hexcolor.new({
+            case = "upper",
+          }),
+        },
+        markdown = {
+          augend.misc.alias.markdown_header,
+          ordinal_numbers,
+          weekdays,
+          months,
+        },
+        json = {
+          augend.integer.alias.decimal_int,
+          augend.semver.alias.semver,
+        },
+        lua = {
+          augend.integer.alias.decimal_int,
+          augend.constant.alias.bool,
+          augend.constant.new({
+            elements = { "and", "or" },
+            word = true,
+            cyclic = true,
+          }),
+          ordinal_numbers,
+          weekdays,
+          months,
+        },
+        python = {
+          augend.integer.alias.decimal_int,
+          augend.integer.alias.hex,
+          augend.integer.alias.octal,
+          augend.integer.alias.binary,
+          capitalized_boolean,
+          logical_alias,
+          ordinal_numbers,
+          weekdays,
+          months,
+        },
+      }
+      dcfg = require("dial.config")
+      dcfg.augends:register_group(groups)
+      dcfg.augends:register_group({
+      -- aliases
+      javascript = groups.typescript,
+      javascriptreact = groups.typescript,
+      sass = groups.css,
+      scss = groups.css,
+      typescriptreact = groups.typescript,
+      })
+    end,
   },
 
 }
