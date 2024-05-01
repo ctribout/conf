@@ -1,3 +1,24 @@
+local special_filetypes = {
+  "aerial",
+  "alpha",
+  "checkhealth",
+  "dashboard",
+  "fish",
+  "help",
+  "lazy",
+  "lazyterm",
+  "lspinfo",
+  "mason",
+  "neo-tree",
+  "noice",
+  "notify",
+  "NvimTree",
+  "toggleterm",
+  "trouble",
+  "Trouble",
+  "zsh",
+}
+
 local function find_project_dir(paths)
   paths = paths or { ".git", ".svn", ".hg", "pyproject.toml", "requirements.txt" }
   local found = vim.fs.find(
@@ -18,7 +39,6 @@ local function find_project_dir(paths)
 end
 
 local function find_venv()
-
   local curdir = vim.fs.dirname(vim.fn.expand("%:p"))
   -- Check using poetry
   if vim.fn.executable('poetry') == 1 then
@@ -43,73 +63,71 @@ local function find_venv()
   end
 end
 
-
-function icon(sign, len)
-  sign = sign or {}
-  len = len or 2
-  local text = vim.fn.strcharpart(sign.text or "", 0, len)
-  text = text .. string.rep(" ", len - vim.fn.strchars(text))
-  return sign.texthl and ("%#" .. sign.texthl .. "#" .. text .. "%*") or text
-end
-
-function get_mark(buf, lnum)
-  local marks = vim.fn.getmarklist(buf)
-  vim.list_extend(marks, vim.fn.getmarklist())
-  for _, mark in ipairs(marks) do
-    if mark.pos[1] == buf and mark.pos[2] == lnum and mark.mark:match("[a-zA-Z]") then
-      return { text = mark.mark:sub(2), texthl = "DiagnosticHint" }
-    end
-  end
-end
-
-function get_signs(buf, lnum)
-  -- Get regular signs
-  local signs = {}
-
-  if vim.fn.has("nvim-0.10") == 0 then
-    -- Only needed for Neovim <0.10
-    -- Newer versions include legacy signs in nvim_buf_get_extmarks
-    for _, sign in ipairs(vim.fn.sign_getplaced(buf, { group = "*", lnum = lnum })[1].signs) do
-      local ret = vim.fn.sign_getdefined(sign.name)[1]
-      if ret then
-        ret.priority = sign.priority
-        signs[#signs + 1] = ret
-      end
-    end
-  end
-
-  -- Get extmark signs
-  local extmarks = vim.api.nvim_buf_get_extmarks(
-    buf,
-    -1,
-    { lnum - 1, 0 },
-    { lnum - 1, -1 },
-    { details = true, type = "sign" }
-  )
-  for _, extmark in pairs(extmarks) do
-    signs[#signs + 1] = {
-      name = extmark[4].sign_hl_group or "",
-      text = extmark[4].sign_text,
-      texthl = extmark[4].sign_hl_group,
-      priority = extmark[4].priority,
-    }
-  end
-
-  -- Sort by priority
-  table.sort(signs, function(a, b)
-    return (a.priority or 0) < (b.priority or 0)
-  end)
-
-  return signs
-end
-
-function statuscolumn()
+local function statuscolumn()
   local win = vim.g.statusline_winid
   local buf = vim.api.nvim_win_get_buf(win)
   local is_file = vim.bo[buf].buftype == ""
   local show_signs = vim.wo[win].signcolumn ~= "no"
 
   local components = { "", "", "" } -- left, middle, right
+
+  local function icon(sign, len)
+    sign = sign or {}
+    len = len or 2
+    local text = vim.fn.strcharpart(sign.text or "", 0, len)
+    text = text .. string.rep(" ", len - vim.fn.strchars(text))
+    return sign.texthl and ("%#" .. sign.texthl .. "#" .. text .. "%*") or text
+  end
+
+  local function get_mark(buf, lnum)
+    local marks = vim.fn.getmarklist(buf)
+    vim.list_extend(marks, vim.fn.getmarklist())
+    for _, mark in ipairs(marks) do
+      if mark.pos[1] == buf and mark.pos[2] == lnum and mark.mark:match("[a-zA-Z]") then
+        return { text = mark.mark:sub(2), texthl = "DiagnosticHint" }
+      end
+    end
+  end
+
+  local function get_signs(buf, lnum)
+    -- Get regular signs
+    local signs = {}
+    if vim.fn.has("nvim-0.10") == 0 then
+      -- Only needed for Neovim <0.10
+      -- Newer versions include legacy signs in nvim_buf_get_extmarks
+      for _, sign in ipairs(vim.fn.sign_getplaced(buf, { group = "*", lnum = lnum })[1].signs) do
+        local ret = vim.fn.sign_getdefined(sign.name)[1]
+        if ret then
+          ret.priority = sign.priority
+          signs[#signs + 1] = ret
+        end
+      end
+    end
+
+    -- Get extmark signs
+    local extmarks = vim.api.nvim_buf_get_extmarks(
+      buf,
+      -1,
+      { lnum - 1, 0 },
+      { lnum - 1, -1 },
+      { details = true, type = "sign" }
+    )
+    for _, extmark in pairs(extmarks) do
+      signs[#signs + 1] = {
+        name = extmark[4].sign_hl_group or "",
+        text = extmark[4].sign_text,
+        texthl = extmark[4].sign_hl_group,
+        priority = extmark[4].priority,
+      }
+    end
+
+    -- Sort by priority
+    table.sort(signs, function(a, b)
+      return (a.priority or 0) < (b.priority or 0)
+    end)
+
+    return signs
+  end
 
   if show_signs then
     ---@type Sign?,Sign?,Sign?
@@ -155,7 +173,7 @@ function statuscolumn()
   return table.concat(components, "")
 end
 
-icons = {
+local icons = {
   diagnostics = {
     Error = " ",
     Warn = " ",

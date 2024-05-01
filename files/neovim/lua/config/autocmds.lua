@@ -32,27 +32,14 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
   end,
 })
 
--- close some filetypes with <q>
+-- Special treatment for special filetypes (close with <q>, no colorcolumn, ...)
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("close_with_q"),
-  pattern = {
-    "PlenaryTestPopup",
-    "help",
-    "lspinfo",
-    "notify",
-    "qf",
-    "query",
-    "spectre_panel",
-    "startuptime",
-    "tsplayground",
-    "neotest-output",
-    "checkhealth",
-    "neotest-summary",
-    "neotest-output-panel",
-  },
+  pattern = require("utils").special_filetypes,
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    vim.opt_local.colorcolumn = ""
   end,
 })
 
@@ -68,7 +55,7 @@ vim.api.nvim_create_autocmd("FileType", {
 -- wrap and check for spell in text filetypes
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("wrap_spell"),
-  pattern = { "gitcommit", "markdown" },
+  pattern = { "gitcommit", "markdown", "restructuredtext" },
   callback = function()
     vim.opt_local.wrap = true
     vim.opt_local.spell = true
@@ -81,6 +68,24 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = { "json", "jsonc", "json5" },
   callback = function()
     vim.opt_local.conceallevel = 0
+  end,
+})
+
+-- enforce textwidth = 88 for Python
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("tw_py"),
+  pattern = { "python" },
+  callback = function(event)
+    vim.opt_local.textwidth = 88
+  end,
+})
+
+-- enforce textwidth = 80 for git commit messages
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("tw_git"),
+  pattern = { "gitcommit" },
+  callback = function(event)
+    vim.opt_local.textwidth = 80
   end,
 })
 

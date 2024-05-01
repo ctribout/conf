@@ -11,15 +11,21 @@ vim.opt.autochdir = false  -- Impacts too many plugins (ex.: live previews)
 vim.opt.foldmethod = "manual"
 vim.opt.hidden = true
 vim.opt.wrap = true -- Force line wrap
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 vim.opt.joinspaces = false -- Don't use two spaces when joining lines
 vim.opt.showmatch = true
 vim.opt.matchtime= 2  -- How many tenths of a second to blink when matching brackets
 vim.opt.linebreak = false
-vim.opt.formatoptions:append("q")
-vim.opt.formatoptions:remove("c")
-vim.opt.formatoptions:remove("t")
+vim.opt.formatoptions = {}
+vim.opt.formatoptions:append("c") -- auto-wrap comments using textwidth
+-- vim.opt.formatoptions:append("o")  -- auto insert comment leader on new line (normal mode)
+vim.opt.formatoptions:append("q")  -- format comments with gq
+vim.opt.formatoptions:append("r")  -- auto insert comment leader on new line (insert mode)
+vim.opt.formatoptions:append("1")  -- don't break a line after a one letter word, if possible
+
 vim.opt.textwidth = 88
-vim.opt.colorcolumn = "88"
+vim.opt.colorcolumn = "+0"  -- highlight column at `textwidth`
 
 vim.opt.mouse = ""
 vim.g.behave = "xterm"
@@ -42,20 +48,11 @@ vim.opt.whichwrap:append {
   ['<'] = true, ['>'] = true, ['['] = true, [']'] = true, h = false, l = false,
 }
 
-vim.g.autoformat = false -- disable auto-format on save
-
 vim.opt.completeopt = "menu,menuone,noinsert,noselect"
-
--- root dir detection
--- Each entry can be:
--- * the name of a detector function like `lsp` or `cwd`
--- * a pattern or array of patterns like `.git` or `lua`.
--- * a function with signature `function(buf) -> string|string[]`
-vim.g.root_spec = { "lsp", { ".git", "lua", "pyproject.toml", "requirement.txt" }, "cwd" }
 
 vim.opt.shortmess = "S"  -- don't display the searchcount [X/Y] in the statusbar
 vim.opt.list = false -- don't display invisible chars (see vim.opt.listchars)
-vim.cmd("match Error /\\s\\+$/")  -- highlight trailing empty chars as errors
+vim.cmd("match TrailingSpace /\\s\\+$/")  -- highlight trailing empty chars
 
 -- The neovim :terminal command replaces the current split and then it gets
 -- deleted when it is exited, so create a split first with a new Shell cmd
@@ -91,6 +88,7 @@ vim.opt.wildmode = "longest:full,full" -- Command-line completion mode
 vim.opt.winminwidth = 5 -- Minimum window width
 vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
 vim.opt.showmode = false -- Dont show mode since we have a statusline
+vim.opt.scrolloff = 8 -- Lines of context
 vim.opt.sidescrolloff = 8 -- Columns of context
 vim.opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
 vim.opt.number = true -- Print line number

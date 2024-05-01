@@ -29,7 +29,7 @@ return {
         gitsigns = true,
         headlines = true,
         illuminate = true,
-        indent_blankline = { enabled = true },
+        indent_blankline = { enabled = false },
         leap = true,
         lsp_trouble = true,
         mason = true,
@@ -108,6 +108,10 @@ return {
           -- https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/groups/syntax.lua
 
           WinSeparator = { fg = colors.overlay1 }, -- make windows vertical/horizontal separator lines a bit more visible
+          IblIndent = { fg = colors.surface0 },  -- indent lines
+          MiniIndentscopeSymbol = { fg = colors.surface2 },  -- indent line for current scope
+          TrailingSpace = { bg = colors.red },
+
           Character = { fg = c_character, style = { "bold" } },
           String = { fg = c_string },
           Number = { fg = c_number },
@@ -195,8 +199,14 @@ return {
           ["@operator.regex"] = { link = "Character" },
           ["@punctuation.bracket.regex"] = { link = "Character" },
 
-          -- Python-specific overload
+          -- Markup
+          ["@markup.raw"] = { link = "String" },
+
+          -- Python-specific overloads
           ["@keyword.directive.python"] = { link = "Comment" }, -- shebang
+
+          -- Bash-specific overloads
+          ["@function.builtin.bash"] = { link = "@function.builtin" }, -- shebang
         }
       end,
     },
