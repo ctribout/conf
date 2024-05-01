@@ -163,7 +163,7 @@ local function statuscolumn()
     else
       components[2] = is_relnum and "%r" or "%l" -- other lines
     end
-    components[2] = "%=" .. components[2] .. " " -- right align
+    components[2] = "%=" .. components[2] .. "" -- right align
   end
 
   if vim.v.virtnum ~= 0 then
@@ -229,4 +229,5 @@ return {
   find_venv = find_venv,
   statuscolumn = statuscolumn,
   icons = icons,
+  special_filetypes = special_filetypes,
 }
