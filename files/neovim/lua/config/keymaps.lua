@@ -47,10 +47,12 @@ vim.keymap.set("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap 
 -- tabs
 vim.keymap.set("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
 vim.keymap.set("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
-vim.keymap.set("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
+vim.keymap.set("n", "<leader><tab>n", "<cmd>tabnew<cr>", { desc = "New Tab" })
 vim.keymap.set("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+vim.keymap.set("n", "<leader><tab><tab>", "<cmd>tabnext<cr>", { desc = "Next Tab", remap = true })
 vim.keymap.set("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 vim.keymap.set("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+vim.keymap.set("n", "<leader><tab>z", "<cmd>tab split<cr>", { desc = "Zoom in new Tab" })
 
 -- terminal
 vim.keymap.set("n", "<leader>ct", "<cmd>Shell<cr>", { desc = "New terminal windows (split)" })
@@ -58,4 +60,3 @@ vim.keymap.set("t", "<C-w>", "<C-\\><C-N><C-W>", { desc = "Leave a terminal wind
 
 -- misc
 vim.keymap.set("v", "<C-r>", '"hy:%s@<C-r>h@@gc<left><left><left>', { desc = "Replace the current selection" })
-vim.keymap.set("n", "<leader>z", "<cmd>tab split<cr>", { desc = "Zoom in new tab" })
