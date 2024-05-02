@@ -24,24 +24,36 @@ return {
     branch = "v3.x",
     cmd = "Neotree",
     keys = {
+      -- TODO: resize after open/close/toggle, or only the first window is changed
       {
         "<leader>fe",
         function()
-          require("neo-tree.command").execute({ toggle = true, dir = require("utils").find_project_dir() })
+          require("neo-tree.command").execute({ dir = require("utils").find_project_dir() })
+          local current_tab = vim.fn.tabpagenr()
+          vim.cmd("tabdo wincmd =")
+          vim.cmd("tabnext " .. current_tab)
         end,
         desc = "Explorer NeoTree (Root Dir)",
       },
       {
         "<leader>fE",
         function()
-          require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
+          require("neo-tree.command").execute({ dir = vim.uv.cwd() })
+          local current_tab = vim.fn.tabpagenr()
+          vim.cmd("tabdo wincmd =")
+          vim.cmd("tabnext " .. current_tab)
         end,
         desc = "Explorer NeoTree (cwd)",
       },
       {
         "<leader>ft",
         function()
-          require("neo-tree.command").execute({ toggle = true, action = "show", dir = require("utils").find_project_dir() })
+          require("neo-tree.command").execute(
+            { toggle = true, action = "show", dir = require("utils").find_project_dir() }
+          )
+          local current_tab = vim.fn.tabpagenr()
+          vim.cmd("tabdo wincmd =")
+          vim.cmd("tabnext " .. current_tab)
         end,
         desc = "Toggle NeoTree (Root Dir)",
       },
@@ -51,14 +63,14 @@ return {
       {
         "<leader>ge",
         function()
-          require("neo-tree.command").execute({ source = "git_status", toggle = true })
+          require("neo-tree.command").execute({ source = "git_status" })
         end,
         desc = "Git Explorer",
       },
       {
         "<leader>be",
         function()
-          require("neo-tree.command").execute({ source = "buffers", toggle = true })
+          require("neo-tree.command").execute({ source = "buffers" })
         end,
         desc = "Buffer Explorer",
       },

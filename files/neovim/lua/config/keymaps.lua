@@ -58,3 +58,4 @@ vim.keymap.set("t", "<C-w>", "<C-\\><C-N><C-W>", { desc = "Leave a terminal wind
 
 -- misc
 vim.keymap.set("v", "<C-r>", '"hy:%s@<C-r>h@@gc<left><left><left>', { desc = "Replace the current selection" })
+vim.keymap.set("n", "<leader>z", "<cmd>tab split<cr>", { desc = "Zoom in new tab" })

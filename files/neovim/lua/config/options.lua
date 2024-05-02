@@ -44,13 +44,12 @@ vim.opt.indentkeys:remove("o")
 -- keep a single shift on a new line after a parenthesis in Python
 vim.g.pyindent_open_paren = vim.bo.shiftwidth
 vim.opt.whichwrap:append {
-  -- Move to next/previous line with arrows at the edge of lines 
+  -- Move to next/previous line with arrows at the edge of lines
   ['<'] = true, ['>'] = true, ['['] = true, [']'] = true, h = false, l = false,
 }
 
 vim.opt.completeopt = "menu,menuone,noinsert,noselect"
 
-vim.opt.shortmess = "S"  -- don't display the searchcount [X/Y] in the statusbar
 vim.opt.list = false -- don't display invisible chars (see vim.opt.listchars)
 vim.cmd("match TrailingSpace /\\s\\+$/")  -- highlight trailing empty chars
 
@@ -86,7 +85,17 @@ vim.opt.termguicolors = true
 vim.opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
 vim.opt.wildmode = "longest:full,full" -- Command-line completion mode
 vim.opt.winminwidth = 5 -- Minimum window width
-vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
+vim.opt.shortmess:append({
+  W = true,  -- don't give "written" or "[w]" when writing a file
+  I = true,  -- don't give the intro message when starting Vim
+  c = true,  -- don't give ins-completion-menu messages
+  C = true,  -- don't give messages while scanning for ins-completion items
+  S = true,  -- do not show search count message when searching
+  a = true,  -- all of the above abbreviations
+  F = true,  -- don't give the file info when editing a file
+  t = true,  -- truncate file message at the start if it is too long
+})
+
 vim.opt.showmode = false -- Dont show mode since we have a statusline
 vim.opt.scrolloff = 8 -- Lines of context
 vim.opt.sidescrolloff = 8 -- Columns of context

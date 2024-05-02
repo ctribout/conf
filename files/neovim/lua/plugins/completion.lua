@@ -99,7 +99,7 @@ return {
                 [types.lsp.CompletionItemKind.Method] = 3,
                 [types.lsp.CompletionItemKind.Property] = 4,
                 [types.lsp.CompletionItemKind.Keyword] = 5,
-                [types.lsp.CompletionItemKind.Text] = 99,
+                [types.lsp.CompletionItemKind.Text] = 9999,
               }
               local kind1 = entry1:get_kind()
               kind1 = modified_priority[kind1] or 1000 + kind1
