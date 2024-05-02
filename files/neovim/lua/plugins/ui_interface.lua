@@ -14,6 +14,7 @@ return {
     dependencies = { "catppuccin/nvim" }, -- needed because its colors are referenced
     lazy = false,
     opts = function(_, opts)
+      local mocha = require("catppuccin.palettes").get_palette("mocha")
       return {
         options = {
           always_show_bufferline = true,
@@ -32,17 +33,22 @@ return {
             },
           },
         },
-        highlights = {
-          modified = {
-            fg = vim.api.nvim_get_hl_by_name('ErrorMsg', true).foreground,
+        highlights = require("catppuccin.groups.integrations.bufferline").get({
+          styles = { "italic", "bold" },
+          custom = {
+            all = {
+              modified = {
+                fg = mocha.red,
+              },
+              modified_visible = {
+                fg = mocha.red,
+              },
+              modified_selected = {
+                fg = mocha.red,
+              },
+            },
           },
-          modified_visible = {
-            fg = vim.api.nvim_get_hl_by_name('ErrorMsg', true).foreground,
-          },
-          modified_selected = {
-            fg = vim.api.nvim_get_hl_by_name('ErrorMsg', true).foreground,
-          },
-        },
+        }),
       }
     end,
     config = function(_, opts)
