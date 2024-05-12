@@ -142,7 +142,6 @@ return {
           init_options = {
             -- https://github.com/astral-sh/ruff-lsp
             settings = {
-              fixAll = false,
               lint = {
                 args = { -- TODO: maybe move that to ~/.config/ruff/ruff.toml ?
 
