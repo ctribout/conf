@@ -94,11 +94,13 @@ return {
                 -- The values defined below force the order (smaller wins), then the default
                 -- values are used (+ 1000, so that they are after those defined here, but still
                 -- with their original order)
-                [types.lsp.CompletionItemKind.Variable] = 1,
-                [types.lsp.CompletionItemKind.Constant] = 2,
-                [types.lsp.CompletionItemKind.Method] = 3,
-                [types.lsp.CompletionItemKind.Property] = 4,
-                [types.lsp.CompletionItemKind.Keyword] = 5,
+                [types.lsp.CompletionItemKind.EnumMember] = 1,
+                [types.lsp.CompletionItemKind.Variable] = 2,
+                [types.lsp.CompletionItemKind.Constant] = 3,
+                [types.lsp.CompletionItemKind.Method] = 4,
+                [types.lsp.CompletionItemKind.Property] = 5,
+                [types.lsp.CompletionItemKind.Module] = 6,
+                [types.lsp.CompletionItemKind.Keyword] = 7,
                 [types.lsp.CompletionItemKind.Text] = 9999,
               }
               local kind1 = entry1:get_kind()

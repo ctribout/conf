@@ -101,7 +101,11 @@ vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
 vim.api.nvim_create_autocmd("WinLeave", {
   group = "CursorLineOnlyInActiveWindow",
   desc = "Disable cursorline when leaving window",
-  command = "setlocal nocursorline"
+  callback = function(event)
+    if vim.bo.filetype ~= "neo-tree" then
+      vim.cmd("setlocal nocursorline")
+    end
+  end,
 })
 
 -- Better new terminal windows

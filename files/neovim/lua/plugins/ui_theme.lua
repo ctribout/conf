@@ -82,8 +82,8 @@ return {
         mocha = {
           -- https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/palettes/mocha.lua
           base = "#1e1e2e", -- main background color (active) [default]
-          mantle = "#12121b", -- status bar, and context top view [darker]
-          crust = "#09090f",  -- darkest background [darker]
+          mantle = "#090910", -- status bar, inactive windows and context top view [darker]
+          crust = "#03030f",  -- darkest background [darker]
           text = "#e6e9ff",  -- [lighter]
           lavender = "#bec8fe",  -- [lighter]
         },

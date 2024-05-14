@@ -28,7 +28,10 @@ return {
       require("nvim-treesitter.query_predicates")
     end,
     opts = {
-      highlight = { enable = true },
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = { "python" },
+      },
       indent = { enable = false },  -- Result is too bad on Python
       ensure_installed = {
         -- c, lua, query, vimdoc and vim are mandatory (as nvim ships them too and it
@@ -59,7 +62,6 @@ return {
         "yaml",
       },
       prefer_git = true,
-      additional_vim_regex_highlighting = false,
       incremental_selection = {
         enable = true,
         keymaps = {

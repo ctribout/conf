@@ -2,6 +2,7 @@ return {
 
   -- Session management
   {
+     -- https://github.com/folke/persistence.nvim
     "folke/persistence.nvim",
     event = "BufReadPre",
     opts = { options = vim.opt.sessionoptions:get() },

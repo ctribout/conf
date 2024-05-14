@@ -270,6 +270,11 @@ return {
               ["q"] = actions.close,
             },
           },
+          path_display = {
+            absolute = true,
+            filename_first = { reverse_directories = false },
+            truncate = 3,
+          },
         },
       }
     end,

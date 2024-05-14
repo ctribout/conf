@@ -169,7 +169,9 @@ return {
         inactive_sections = {
           lualine_a = {},
           lualine_b = {},
-          lualine_c = {'filename'},
+          lualine_c = {
+            { 'filename', path = 3, shorting_target = 10 },
+          },
           lualine_x = {'location'},
           lualine_y = {},
           lualine_z = {}
@@ -229,6 +231,7 @@ return {
 
   -- better vim.ui
   {
+    -- https://github.com/stevearc/dressing.nvim
     "stevearc/dressing.nvim",
     lazy = true,
     init = function()
