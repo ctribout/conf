@@ -214,6 +214,7 @@ return {
     config = function(_, opts)
       require("catppuccin").setup(opts)
       vim.cmd.colorscheme "catppuccin"
+      vim.cmd("match TrailingSpace /\\s\\+$/")  -- highlight trailing empty chars
     end,
   },
 

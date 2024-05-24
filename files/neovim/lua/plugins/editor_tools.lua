@@ -257,6 +257,7 @@ return {
           end,
           mappings = {
             i = {
+              ['<c-d>'] = actions.delete_buffer,
               ["<c-t>"] = open_with_trouble,
               ["<a-t>"] = open_selected_with_trouble,
               ["<a-i>"] = find_files_no_ignore,
@@ -267,6 +268,7 @@ return {
               ["<C-b>"] = actions.preview_scrolling_up,
             },
             n = {
+              ['<c-d>'] = actions.delete_buffer,
               ["q"] = actions.close,
             },
           },

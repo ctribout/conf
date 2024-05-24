@@ -51,7 +51,6 @@ vim.opt.whichwrap:append {
 vim.opt.completeopt = "menu,menuone,noinsert,noselect"
 
 vim.opt.list = false -- don't display invisible chars (see vim.opt.listchars)
-vim.cmd("match TrailingSpace /\\s\\+$/")  -- highlight trailing empty chars
 
 -- The neovim :terminal command replaces the current split and then it gets
 -- deleted when it is exited, so create a split first with a new Shell cmd

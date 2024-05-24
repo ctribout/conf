@@ -99,7 +99,7 @@ return {
           -- the right already, so that it's hopefully still readable a bit longer
           -- The value reserved for all other elements is empiric and should allow
           -- to have correct behavior in most cases
-          local length_max = vim.fn.winwidth(0) - 65
+          local length_max = vim.fn.winwidth(0) - 45
           if length_max <= 0 then
             return ""
           end
@@ -138,7 +138,7 @@ return {
             --    unnamed = '󰋶'
             --  }
             --},
-            'branch',
+            -- 'branch',
             'diff',
             'diagnostics',
           },
