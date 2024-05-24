@@ -268,6 +268,11 @@ return {
         word = false,
         cyclic = true,
       })
+      local logical_ops = augend.constant.new({
+        elements = { "and", "or" },
+        word = true,
+        cyclic = true,
+      })
 
       local ordinal_numbers = augend.constant.new({
         -- elements through which we cycle. When we increment, we go down
@@ -333,67 +338,26 @@ return {
         cyclic = true,
       })
 
+      local default = {
+        augend.constant.alias.bool,
+        augend.date.alias["%Y/%m/%d"],
+        augend.hexcolor.new({ case = "lower" }),
+        augend.hexcolor.new({ case = "upper" }),
+        augend.integer.alias.binary,
+        augend.integer.alias.decimal_int,
+        augend.integer.alias.hex,
+        augend.semver.alias.semver,
+        capitalized_boolean,
+        logical_alias,
+        logical_ops,
+        months,
+        ordinal_numbers,
+        weekdays,
+      }
+      -- note: can be extended for specific filetypes with { elt1, elt2, unpack(default) }
+      -- ( or table.unpack in more recent lua versions)
       local groups = {
-        default = {
-          augend.integer.alias.decimal_int,
-          augend.integer.alias.hex,
-          augend.date.alias["%Y/%m/%d"],
-          augend.constant.alias.bool, 
-          weekdays,
-          months,
-          ordinal_numbers,
-        },
-        typescript = {
-          augend.integer.alias.decimal_int,
-          augend.constant.alias.bool,
-          logical_alias,
-          augend.constant.new({ elements = { "let", "const" } }),
-          ordinal_numbers,
-          weekdays,
-          months,
-        },
-        css = {
-          augend.integer.alias.decimal_int,
-          augend.hexcolor.new({
-            case = "lower",
-          }),
-          augend.hexcolor.new({
-            case = "upper",
-          }),
-        },
-        markdown = {
-          augend.misc.alias.markdown_header,
-          ordinal_numbers,
-          weekdays,
-          months,
-        },
-        json = {
-          augend.integer.alias.decimal_int,
-          augend.semver.alias.semver,
-        },
-        lua = {
-          augend.integer.alias.decimal_int,
-          augend.constant.alias.bool,
-          augend.constant.new({
-            elements = { "and", "or" },
-            word = true,
-            cyclic = true,
-          }),
-          ordinal_numbers,
-          weekdays,
-          months,
-        },
-        python = {
-          augend.integer.alias.decimal_int,
-          augend.integer.alias.hex,
-          augend.integer.alias.octal,
-          augend.integer.alias.binary,
-          capitalized_boolean,
-          logical_alias,
-          ordinal_numbers,
-          weekdays,
-          months,
-        },
+        default = default,
       }
       dcfg = require("dial.config")
       dcfg.augends:register_group(groups)
