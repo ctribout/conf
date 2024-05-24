@@ -170,6 +170,7 @@ install_fonts() {
 
     if which fc-cache >/dev/null 2>&1; then
         echo "Resetting font cache, this may take a moment..."
+        rm -rf "${scriptDir}/.buildfonts"
         mkdir "${scriptDir}/.buildfonts"
         cd "${scriptDir}/.buildfonts"
         fc-cache -f "$(dirname "${my_font}")"
