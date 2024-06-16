@@ -88,3 +88,5 @@
 [include]
     # Set there a [user] section for instance, or machine specific config
     path=~/.gitconfig.local
+[init]
+	defaultBranch = main
