@@ -30,7 +30,9 @@ return {
     opts = {
       highlight = {
         enable = true,
-        additional_vim_regex_highlighting = { "python" },
+        additional_vim_regex_highlighting = {
+          -- "python",
+        },
       },
       indent = { enable = false },  -- Result is too bad on Python
       ensure_installed = {
@@ -54,7 +56,7 @@ return {
         "query",
         "regex",
         "rst",
-        "rust", 
+        "rust",
         "toml",
         "vim",
         "vimdoc",

@@ -6,6 +6,10 @@ return {
   {
     -- https://github.com/linux-cultist/venv-selector.nvim"
     "linux-cultist/venv-selector.nvim",
+    -- The latest version on main now annoyingly nags about switching to another version
+    -- at each startup, so stay away from it until an actual switch to that "regexp"
+    -- branch
+    tag = "0.4",
     lazy = true,
     cmd = "VenvSelect",
     opts = {

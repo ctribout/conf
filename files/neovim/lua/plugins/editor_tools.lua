@@ -24,7 +24,16 @@ return {
     branch = "v3.x",
     cmd = "Neotree",
     keys = {
-      -- TODO: resize after open/close/toggle, or only the first window is changed
+      {
+        "<leader>fc",
+        function()
+          require("neo-tree.command").execute({ dir = vim.uv.cwd() })
+          local current_tab = vim.fn.tabpagenr()
+          vim.cmd("tabdo wincmd =")
+          vim.cmd("tabnext " .. current_tab)
+        end,
+        desc = "Explorer NeoTree (cwd)",
+      },
       {
         "<leader>fe",
         function()
@@ -38,12 +47,12 @@ return {
       {
         "<leader>fE",
         function()
-          require("neo-tree.command").execute({ dir = vim.uv.cwd() })
+          require("neo-tree.command").execute({ dir = vim.fs.dirname(vim.fn.expand("%:p")) })
           local current_tab = vim.fn.tabpagenr()
           vim.cmd("tabdo wincmd =")
           vim.cmd("tabnext " .. current_tab)
         end,
-        desc = "Explorer NeoTree (cwd)",
+        desc = "Explorer NeoTree (current file's folder)",
       },
       {
         "<leader>ft",
@@ -58,7 +67,7 @@ return {
         desc = "Toggle NeoTree (Root Dir)",
       },
       { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (Root Dir)", remap = true },
-      { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
+      { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (current file's folder)", remap = true },
       { "<leader>t", "<leader>ft", desc = "Toggle NeoTree", remap = true },
       {
         "<leader>ge",
