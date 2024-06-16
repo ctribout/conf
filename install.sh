@@ -249,6 +249,33 @@ install_latex_tools() {
     echo "Installed LaTeX tools."
 }
 
+nodejs_top_folder=~/.nodejs
+npm_bin_folder="${nodejs_top_folder}/bin"
+npm_path="${npm_bin_folder}/npm"
+
+install_nodejs() {
+    if [ ${force_reinstall} -eq 0 -a -e "${npm_path}" ]; then return 0; fi
+
+    if ! yes_no "Install nodejs tools?" "N"; then return 0; fi
+    if [ ${force_reinstall} -ne 0 ]; then
+        rm -rf "${nodejs_top_folder}"
+    fi
+
+    echo "Installing nodejs tools..."
+    mkdir -p "${nodejs_top_folder}"
+    if type curl 2>&1 1>/dev/null; then
+        curl --proto '=https' --tlsv1.2 -LsSf https://nodejs.org/dist/v22.3.0/node-v22.3.0-linux-x64.tar.xz | tar -JxC "${nodejs_top_folder}"
+    elif type wget 2>&1 1>/dev/null; then
+        wget -qO - https://nodejs.org/dist/v22.3.0/node-v22.3.0-linux-x64.tar.xz | tar -JxC "${nodejs_top_folder}"
+    else
+        echo "Couldn't download nodejs binaries: please install curl or wget"
+    fi
+    mv "${nodejs_top_folder}"/node-*/* "${nodejs_top_folder}"
+    rm -rf "${nodejs_top_folder}"/node-*
+    "${npm_path}" install --global npm
+    echo "Installed nodejs tools."
+}
+
 parse_command_line "$@"
 
 install_conf_files
@@ -259,3 +286,4 @@ install_diff_so_fancy
 install_python_tools
 install_rust_tools
 install_latex_tools
+install_nodejs
