@@ -1,5 +1,8 @@
 -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 
+-- Disable suspend on ctrl-z
+vim.keymap.set("n", "<C-z>", "<nop>")  -- use :suspend if needed
+
 -- Clear search with <esc> (note: use <C-l> instead)
 vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and Clear hlsearch" })
 

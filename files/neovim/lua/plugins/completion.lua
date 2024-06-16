@@ -17,7 +17,7 @@ return {
       local cmp = require("cmp")
       return {
         completion = {
-          completeopt = "menu,menuone,noinsert,noselect",
+          completeopt = "menu,menuone,noinsert,noselect,fuzzy,preview",
         },
         mapping = cmp.mapping.preset.insert({
           ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -56,9 +56,7 @@ return {
           end,
         },
         experimental = {
-          ghost_text = {
-            hl_group = "LspCodeLens",
-          },
+          ghost_text = false,
         },
         sorting = {
           comparators = {
