@@ -201,6 +201,11 @@ return {
                   -- an issue to use them, as long as actual exceptions are raised as
                   -- exception
                   "--ignore=S101",  -- assert
+                  -- Failing anytime a `random` function is used, assuming it could be
+                  -- used for secrets even when it's not
+                  "--ignore=S311",  -- suspicious-non-cryptographic-random-usage
+                  -- Failing anytime subprocess.run() or equivalent is used
+                  "--ignore=S603",  -- subprocess-without-shell-equals-true
                 }
               },
             },
