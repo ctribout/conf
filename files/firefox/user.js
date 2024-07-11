@@ -441,6 +441,9 @@ user_pref("privacy.trackingprotection.fingerprinting.enabled",		false);
 user_pref("privacy.trackingprotection.socialtracking.enabled",		false);
 user_pref("privacy.trackingprotection.origin_telemetry.enabled",		false);
 
+// Disallow websites to perform privacy-preserving ad measurement
+user_pref("dom.private-attribution.submission.enabled",		false);
+
 // https://wiki.mozilla.org/Security/Fingerprinting
 // Disabled, as it is VERY inconvenient (forces the FF version to the last old ESR even for extensions that complain it's too old, floods with canvas authorizations, silently blocks some standard canvas function, etc.)
 // user_pref("privacy.resistFingerprinting",		true);
