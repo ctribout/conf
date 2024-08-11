@@ -68,10 +68,22 @@ return {
   {
     -- https://github.com/folke/which-key.nvim
     "folke/which-key.nvim",
+    event = "VeryLazy",
     opts = {
       win = {
         border = "double", -- none, single, double, shadow
-        winblend = 10, -- value between 0-100 0 for fully opaque and 100 for fully transparent
+        wo = {
+          winblend = 10, -- value between 0-100 0 for fully opaque and 100 for fully transparent
+        },
+      },
+    },
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
       },
     },
     config = function(_, opts)
@@ -80,22 +92,38 @@ return {
       wk.add({
         {
           mode = { "n", "v" },
-          {"g", group = "goto" },
-          {"gs", group = "surround" },
-          {"z", group = "fold" },
-          {"]", group = "next" },
-          {"[", group = "prev" },
-          {"<leader><tab>", group = "tabs" },
-          {"<leader>b", group = "buffer" },
-          {"<leader>c", group = "code" },
-          {"<leader>f", group = "file/find" },
-          {"<leader>g", group = "git" },
-          {"<leader>gh", group = "hunks" },
-          {"<leader>q", group = "quit/session" },
-          {"<leader>s", group = "search" },
-          {"<leader>u", group = "ui" },
-          {"<leader>w", group = "windows" },
-          {"<leader>x", group = "diagnostics/quickfix" },
+          { "<leader><tab>", group = "tabs" },
+          { "<leader>c", group = "code" },
+          { "<leader>f", group = "file/find" },
+          { "<leader>g", group = "git" },
+          { "<leader>gh", group = "hunks" },
+          { "<leader>q", group = "quit/session" },
+          { "<leader>s", group = "search" },
+          { "<leader>u", group = "ui", icon = { icon = "󰙵 ", color = "cyan" } },
+          { "<leader>x", group = "diagnostics/quickfix", icon = { icon = "󱖫 ", color = "green" } },
+          { "[", group = "prev" },
+          { "]", group = "next" },
+          { "g", group = "goto" },
+          { "gs", group = "surround" },
+          { "z", group = "fold" },
+          {
+            "<leader>b",
+            group = "buffer",
+            expand = function()
+              return require("which-key.extras").expand.buf()
+            end,
+          },
+          {
+            "<leader>w",
+            group = "windows",
+            proxy = "<c-w>",
+            expand = function()
+              return require("which-key.extras").expand.win()
+            end,
+          },
+          -- better descriptions
+          { "gx", desc = "Open with system app" },
+
         },
       })
       vim.keymap.set({"n",  "v"}, "<leader>k", "<cmd>WhichKey<cr>", { desc = "WhichKey" })
@@ -178,51 +206,60 @@ return {
     end,
     config = function(_, opts)
       require("mini.ai").setup(opts)
-      -- -- register all text objects with which-key
-      -- local i = {
-      --   [" "] = "Whitespace",
-      --   ['"'] = 'Balanced "',
-      --   ["'"] = "Balanced '",
-      --   ["`"] = "Balanced `",
-      --   ["("] = "Balanced (",
-      --   [")"] = "Balanced ) including white-space",
-      --   [">"] = "Balanced > including white-space",
-      --   ["<lt>"] = "Balanced <",
-      --   ["]"] = "Balanced ] including white-space",
-      --   ["["] = "Balanced [",
-      --   ["}"] = "Balanced } including white-space",
-      --   ["{"] = "Balanced {",
-      --   ["?"] = "User Prompt",
-      --   _ = "Underscore",
-      --   a = "Argument",
-      --   b = "Balanced ), ], }",
-      --   c = "Class",
-      --   d = "Digit(s)",
-      --   e = "Word in CamelCase & snake_case",
-      --   f = "Function",
-      --   g = "Entire file",
-      --   o = "Block, conditional, loop",
-      --   q = "Quote `, \", '",
-      --   t = "Tag",
-      --   u = "Use/call function & method",
-      --   U = "Use/call without dot in name",
-      -- }
-      -- local a = vim.deepcopy(i)
-      -- for k, v in pairs(a) do
-      --   a[k] = v:gsub(" including.*", "")
-      -- end
-      --
-      -- local ic = vim.deepcopy(i)
-      -- local ac = vim.deepcopy(a)
-      -- for key, name in pairs({ n = "Next", l = "Last" }) do
-      --   i[key] = vim.tbl_extend("force", { name = "Inside " .. name .. " textobject" }, ic)
-      --   a[key] = vim.tbl_extend("force", { name = "Around " .. name .. " textobject" }, ac)
-      -- end
-      -- require("which-key").register({
-      --   mode = { "o", "x" },
-      --   i = i,
-      --   a = a,
-      -- })
+      -- register all text objects with which-key
+      local objects = {
+        { " ", desc = "whitespace" },
+        { '"', desc = '" string' },
+        { "'", desc = "' string" },
+        { "(", desc = "() block" },
+        { ")", desc = "() block with white-space" },
+        { "<", desc = "<> block" },
+        { ">", desc = "<> block with white-space" },
+        { "?", desc = "user prompt" },
+        { "U", desc = "use/call without dot" },
+        { "[", desc = "[] block" },
+        { "]", desc = "[] block with white-space" },
+        { "_", desc = "underscore" },
+        { "`", desc = "` string" },
+        { "a", desc = "argument" },
+        { "b", desc = ")]} block" },
+        { "c", desc = "class" },
+        { "d", desc = "digit(s)" },
+        { "e", desc = "CamelCase / snake_case" },
+        { "f", desc = "function" },
+        { "g", desc = "entire file" },
+        { "i", desc = "indent" },
+        { "o", desc = "block, conditional, loop" },
+        { "q", desc = "quote `\"'" },
+        { "t", desc = "tag" },
+        { "u", desc = "use/call" },
+        { "{", desc = "{} block" },
+        { "}", desc = "{} with white-space" },
+      }
+      local ret = { mode = { "o", "x" } }
+      local mappings = {
+        around = "a",
+        inside = "i",
+        around_next = "an",
+        inside_next = "in",
+        around_last = "al",
+        inside_last = "il",
+        goto_left = nil,
+        goto_right = nil,
+      }
+
+      for name, prefix in pairs(mappings) do
+        name = name:gsub("^around_", ""):gsub("^inside_", "")
+        ret[#ret + 1] = { prefix, group = name }
+        for _, obj in ipairs(objects) do
+          local desc = obj.desc
+          if prefix:sub(1, 1) == "i" then
+            desc = desc:gsub(" with white-space", "")
+          end
+          ret[#ret + 1] = { prefix .. obj[1], desc = obj.desc }
+        end
+      end
+      require("which-key").add(ret, { notify = false })
     end,
   },
 
