@@ -78,6 +78,7 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function(event)
     vim.b.editorconfig = false
     vim.opt_local.textwidth = 88
+    vim.opt_local.indentkeys:remove(":")
   end,
 })
 
