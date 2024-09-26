@@ -171,6 +171,8 @@ user_pref("browser.fixup.alternate.enabled",		false);
 
 // https://trac.torproject.org/projects/tor/wiki/doc/TorifyHOWTO/WebBrowsers
 user_pref("network.proxy.socks_remote_dns",		true);
+// Can't connect to website with a certificate from cloudflare otherwise
+user_pref("network.dns.echconfig.fallback_to_origin_when_all_failed",		true);
 
 // Disable websockets
 // user_pref("network.websocket.max-connections", 0);
