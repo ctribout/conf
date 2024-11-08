@@ -63,3 +63,6 @@ vim.keymap.set("t", "<C-w>", "<C-\\><C-N><C-W>", { desc = "Leave a terminal wind
 
 -- misc
 vim.keymap.set("v", "<C-r>", '"hy:%s@<C-r>h@@gc<left><left><left>', { desc = "Replace the current selection" })
+-- to compensate for a frequent mistype of mine (I don't use :x, so map it to the real
+-- key I meant to type)
+vim.api.nvim_command(':cabbrev x w')
