@@ -138,7 +138,7 @@ return {
             },
           },
         },
-        ruff_lsp = {
+        ruff = {
           init_options = {
             -- https://github.com/astral-sh/ruff-lsp
             settings = {
