@@ -14,7 +14,7 @@ return {
       ensure_installed = {
         -- packages available here: https://github.com/mason-org/mason-registry/tree/main/packages
         "pyright",
-        "ruff-lsp",
+        "ruff",
       },
     },
     config = function(_, opts)
