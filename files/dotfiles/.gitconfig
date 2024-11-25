@@ -14,6 +14,7 @@
     wdiff = !git diff --word-diff
     wt = worktree
     subup = !git submodule sync && git submodule update --recursive --init
+    recommit = git commit --edit --file  $(git rev-parse --git-path COMMIT_EDITMSG)
 [branch]
     autosetupmerge = always
     autosetuprebase = always

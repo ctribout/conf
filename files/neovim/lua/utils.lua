@@ -20,7 +20,7 @@ local special_filetypes = {
 }
 
 local function find_project_dir(paths)
-  paths = paths or { ".git", ".svn", ".hg", "pyproject.toml", "requirements.txt" }
+  paths = paths or { ".git", ".svn", ".hg" }
   local found = vim.fs.find(
     paths,
     { upward = true, stop = vim.loop.os_homedir(), path = vim.fs.dirname(vim.fn.expand("%:p")) }
