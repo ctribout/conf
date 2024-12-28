@@ -287,6 +287,20 @@ return {
     },
   },
 
+  -- Focus on a windows or on on certain part of it
+  {
+    "pocco81/true-zen.nvim",
+    -- https://github.com/pocco81/true-zen.nvim
+    keys = {
+      {
+        "<leader>z",
+        function()
+          require("true-zen").focus()
+        end,
+        desc = "True Zen (focus)",
+      },
+    },
+  },
 
   -- increment/decrement values
   {
