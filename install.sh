@@ -94,10 +94,10 @@ install_conf_files() {
 }
 
 install_neovim() {
-    local url=https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
+    local url=https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz
     local target_exe=~/.local/bin/nvim
     local fallback_exe=~/.local/bin/vim
-    local app_folder=~/.local/app/nvim-linux64
+    local app_folder=~/.local/app/nvim-linux-x86_64
     local target_conf_folder=~/.config/nvim
 
     if [ ${force_reinstall} -eq 0 -a -e "${target_exe}" ]; then return 0; fi
