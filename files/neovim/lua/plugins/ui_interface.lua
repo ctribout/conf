@@ -112,18 +112,6 @@ return {
           return ""
         end
       end
-      -- from venv-selector lualine component (to remove the text when no venv is set)
-      local venv = require("lualine.component"):extend()
-      function venv:update_status(is_focused)
-          local venv = require('venv-selector').get_active_venv()
-          if venv then
-            local venv_parts = vim.fn.split(venv, '/')
-            local venv_name = venv_parts[#venv_parts]
-            return ' ' .. venv_name
-          else
-            return ''
-          end
-        end
       return {
         sections = {
           lualine_a = {'mode'},
