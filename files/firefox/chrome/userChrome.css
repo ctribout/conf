@@ -24,8 +24,16 @@ max-width: none !important;
 /* Disable the "close tab" buttons on each tab
 see https://support.mozilla.org/en-US/questions/1177825 */
 
-#tabbrowser-tabs .tabbrowser-tab .tab-close-button { display:none!important; }
+/* #tabbrowser-tabs .tabbrowser-tab .tab-close-button { display:none!important; } */
 
 /* Hide the "What's new?" button */
 #appMenu-whatsnew-button { display:none !important; }
+
+.tab-background[selected] {
+
+   background-attachment: none!important;
+   background-image: none!important;
+   background-color: #d4d4d4 !important;
+}
+
 
