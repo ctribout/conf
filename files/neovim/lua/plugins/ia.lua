@@ -1,76 +1,61 @@
 return {
 
 {
-  "CopilotC-Nvim/CopilotChat.nvim",
-  branch = "main",
-  cmd = "CopilotChat",
-  opts = function()
-    local user = vim.env.USER or "User"
-    user = user:sub(1, 1):upper() .. user:sub(2)
-    return {
-      auto_insert_mode = true,
-      question_header = "  " .. user .. " ",
-      answer_header = "  Copilot ",
-      window = {
-        width = 0.4,
+  "olimorris/codecompanion.nvim",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-treesitter/nvim-treesitter",
+    -- {
+    --   "echasnovski/mini.diff",
+    --   lazy = true,
+    -- },
+    -- {
+    --   "Davidyz/VectorCode", -- Index and search code in your repositories
+    --   build = "pip install --user pipx --break-system-packages && pipx upgrade vectorcode",
+    --   dependencies = { "nvim-lua/plenary.nvim" },
+    -- },
+  },
+  opts = {
+    strategies = {
+      chat = { adapter = "copilot" },
+      inline = { adapter = "copilot" },
+      agent = { adapter = "copilot" },
+    },
+    display = {
+      diff = {
+        enabled = true,
+        provider = "default",    -- or "default"
+        layout = "vertical",       -- or "horizontal"
       },
-    }
-  end,
-  keys = {
-    { "<c-s>", "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
-    { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
-    {
-      "<leader>aa",
-      function()
-        return require("CopilotChat").toggle()
-      end,
-      desc = "Toggle (CopilotChat)",
-      mode = { "n", "v" },
     },
-    {
-      "<leader>ax",
-      function()
-        return require("CopilotChat").reset()
-      end,
-      desc = "Clear (CopilotChat)",
-      mode = { "n", "v" },
-    },
-    {
-      "<leader>aq",
-      function()
-        vim.ui.input({
-          prompt = "Quick Chat: ",
-        }, function(input)
-          if input ~= "" then
-            require("CopilotChat").ask(input)
-          end
-        end)
-      end,
-      desc = "Quick Chat (CopilotChat)",
-      mode = { "n", "v" },
-    },
-    {
-      "<leader>ap",
-      function()
-        require("CopilotChat").select_prompt()
-      end,
-      desc = "Prompt Actions (CopilotChat)",
-      mode = { "n", "v" },
+    extensions = {
+      -- vectorcode = {
+      --   opts = {
+      --     add_tool = true,
+      --   },
+      -- },
     },
   },
-  config = function(_, opts)
-    local chat = require("CopilotChat")
-
-    vim.api.nvim_create_autocmd("BufEnter", {
-      pattern = "copilot-chat",
-      callback = function()
-        vim.opt_local.relativenumber = false
-        vim.opt_local.number = false
-      end,
-    })
-
-    chat.setup(opts)
-  end,
+  keys = {
+    {
+      "<C-a>",
+      "<cmd>CodeCompanionActions<CR>",
+      desc = "Open the action palette",
+      mode = { "n", "v" },
+    },
+    {
+      "<Leader>a",
+      "<cmd>CodeCompanionChat Toggle<CR>",
+      desc = "Toggle a chat buffer",
+      mode = { "n", "v" },
+    },
+    {
+      "<LocalLeader>a",
+      "<cmd>CodeCompanionChat Add<CR>",
+      desc = "Add code to a chat buffer",
+      mode = { "v" },
+    },
+  },
 },
 
 {
