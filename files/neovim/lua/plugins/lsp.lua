@@ -4,8 +4,8 @@ return {
 
   -- Tool to install and manage LSP servers, linters, formatters, ...
   {
-    -- https://github.com/williamboman/mason.nvim
-    "williamboman/mason.nvim",
+    -- https://github.com/mason-org/mason.nvim
+    "mason-org/mason.nvim",
     cmd = "Mason",
     keys = {
       { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" },
@@ -42,10 +42,10 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      -- https://github.com/williamboman/mason.nvim
-      "williamboman/mason.nvim",
-      -- https://github.com/williamboman/mason-lspconfig.nvim
-      "williamboman/mason-lspconfig.nvim",
+      -- https://github.com/mason-org/mason.nvim
+      "mason-org/mason.nvim",
+      -- https://github.com/mason-org/mason-lspconfig.nvim
+      "mason-org/mason-lspconfig.nvim",
     },
     opts = {
       inlay_hints = {
