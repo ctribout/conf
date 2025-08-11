@@ -38,13 +38,13 @@ return {
   },
   keys = {
     {
-      "<C-a>",
+      "<Leader>ap",
       "<cmd>CodeCompanionActions<CR>",
       desc = "Open the action palette",
       mode = { "n", "v" },
     },
     {
-      "<Leader>a",
+      "<Leader>aa",
       "<cmd>CodeCompanionChat Toggle<CR>",
       desc = "Toggle a chat buffer",
       mode = { "n", "v" },
