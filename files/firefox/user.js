@@ -107,6 +107,8 @@ user_pref("browser.tabs.warnOnClose",		true);
 user_pref("browser.newtab.url",		"about:blank");
 user_pref("browser.newtabpage.activity-stream.enabled",		false);
 user_pref("browser.uidensity",		1);
+// Don't preview links
+user_pref("browser.ml.linkPreview.enabled", false);
 
 
 // https://developer.mozilla.org/en-US/docs/IndexedDB
