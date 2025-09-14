@@ -83,6 +83,14 @@ return {
         end,
         desc = "Buffer Explorer",
       },
+      {
+        "<leader>fv",
+        function()
+          require("neo-tree.command").execute({ source = "document_symbols" })
+        end,
+        desc = "Document Symbols Explorer",
+      },
+      { "<leader>v", "<leader>fv", desc = "Document Symbol Explorer", remap = true },
     },
     deactivate = function()
       vim.cmd([[Neotree close]])
@@ -132,6 +140,7 @@ return {
           ['e'] = function() vim.api.nvim_exec('Neotree focus filesystem left', true) end,
           ['b'] = function() vim.api.nvim_exec('Neotree focus buffers left', true) end,
           ['g'] = function() vim.api.nvim_exec('Neotree focus git_status left', true) end,
+          ['v'] = function() vim.api.nvim_exec('Neotree focus document_symbols left', true) end,
         },
       },
       default_component_configs = {
