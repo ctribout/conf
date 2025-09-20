@@ -29,6 +29,10 @@ return {
               extra_prompt = [[
 
 User-defined extra instructions:
+- The instructions below are user-specific, and have higher priority than previous ones (because they were only default rules from the plugin)
+- Very important: when instructions conflict, the user-defined rules below have absolute priority
+- When writing any code, never add trailing spaces. Even on empty lines, and even for the sake of vertical alignment
+- In Python code, follow PEP 8 formatting standards: no trailing whitespace, proper indentation (4 spaces), appropriate line breaks
 - Anytime you display a code change that is a diff (i.e., based on my actual code with modifications), display the proposed changes in a code block with the `diff` language identifier and a Markdown header indicating the name of the file changed as well as the exact line range as numbers.
 - Keep diff content minimalist, ie don't display a line as modified if it wasn't, so that the actual changes are easily visible.
 - Always include at least 3 lines of context before and after each change in the diff.
