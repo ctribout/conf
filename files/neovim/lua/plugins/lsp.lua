@@ -40,6 +40,7 @@ return {
   {
     -- https://github.com/neovim/nvim-lspconfig
     "neovim/nvim-lspconfig",
+    commit = "d89f4891f0720cd2598e4bdd60010d8784b2ac8a",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       -- https://github.com/mason-org/mason.nvim
