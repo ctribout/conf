@@ -7,6 +7,7 @@ return {
     -- https://github.com/mason-org/mason.nvim
     "mason-org/mason.nvim",
     cmd = "Mason",
+    event = { "BufReadPre", "BufNewFile", "BufWritePre" },
     keys = {
       { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" },
     },
@@ -33,30 +34,6 @@ return {
       else
         ensure_installed()
       end
-    end,
-  },
-
-  -- LSP config
-  {
-    -- https://github.com/neovim/nvim-lspconfig
-    "neovim/nvim-lspconfig",
-    commit = "d89f4891f0720cd2598e4bdd60010d8784b2ac8a",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      -- https://github.com/mason-org/mason.nvim
-      "mason-org/mason.nvim",
-      -- https://github.com/mason-org/mason-lspconfig.nvim
-      "mason-org/mason-lspconfig.nvim",
-    },
-    opts = {
-      inlay_hints = {
-        enabled = false,
-      },
-      codelens = {
-        enabled = false,
-      },
-    },
-    config = function(_, opts)
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('UserLspConfig', {}),
         callback = function(ev)
@@ -124,9 +101,12 @@ return {
       -- LSP servers
       local servers = {
         -- see possible servers and conf at
-        -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+        -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
         pyright = {
           -- https://github.com/microsoft/pyright/blob/main/packages/vscode-pyright/package.json
+          handlers = {
+            ["textDocument/publishDiagnostics"] = function() end,
+          },
           settings = {
             python = {
               analysis = {
@@ -134,10 +114,14 @@ return {
                 -- with the need for an extra imports added at the same time
                 autoImportCompletions = false,
                 ignore = { '*' }, -- Ruff used instead
-                typeCheckingMode = 'on', -- Mypy used instead
+                typeCheckingMode = 'off', -- Mypy used instead
+                -- Disable all diagnostic rules
+                diagnosticMode = 'off',
               },
             },
           },
+          cmd = { "pyright-langserver", "--stdio" },
+          filetypes = { "python" },
         },
         ruff = {
           init_options = {
@@ -211,46 +195,20 @@ return {
               },
             },
           },
+          cmd = { "ruff", "server" },
+          filetypes = { "python" },
         },
       }
-      local capabilities = vim.tbl_deep_extend(
-        "force",
-        {},
-        vim.lsp.protocol.make_client_capabilities(),
-        require("cmp_nvim_lsp").default_capabilities(),
-        opts.capabilities or {}
-      )
 
-      local function setup(server)
-        local server_opts = vim.tbl_deep_extend("force", {
-          capabilities = vim.deepcopy(capabilities),
-        }, servers[server] or {})
-        require("lspconfig")[server].setup(server_opts)
-      end
+      -- Setup capabilities
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      -- get all the servers that are available though mason-lspconfig
-      local have_mason, mlsp = pcall(require, "mason-lspconfig")
-      local all_mslp_servers = {}
-      if have_mason then
-        all_mslp_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
-      end
-
-      local ensure_installed = {} ---@type string[]
-      for server, server_opts in pairs(servers) do
-        if server_opts then
-          server_opts = server_opts == true and {} or server_opts
-          -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
-          if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
-            setup(server)
-          else
-            ensure_installed[#ensure_installed + 1] = server
-          end
-        end
-      end
-
-      if have_mason then
-        mlsp.setup({ ensure_installed = ensure_installed })
-        mlsp.setup_handlers({ setup })
+      -- Setup each server
+      for server_name, config in pairs(servers) do
+        config = config or {}
+        config.capabilities = vim.tbl_deep_extend("force", {}, capabilities, config.capabilities or {})
+        vim.lsp.config[server_name] = config
+        vim.lsp.enable(server_name)
       end
     end,
   },
