@@ -109,6 +109,13 @@ user_pref("browser.newtabpage.activity-stream.enabled",		false);
 user_pref("browser.uidensity",		1);
 // Don't preview links
 user_pref("browser.ml.linkPreview.enabled", false);
+// Disable AI features
+user_pref("browser.ml.enable", false);
+user_pref("browser.ml.chat.enabled", false);
+user_pref("browser.ml.chat.menu", false);
+user_pref("browser.ml.chat.page", false);
+user_pref("browser.ml.chat.page.footerBadge", false);
+user_pref("browser.ml.chat.page.menuBadge", false);
 
 
 // https://developer.mozilla.org/en-US/docs/IndexedDB
