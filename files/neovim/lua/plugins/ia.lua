@@ -2,7 +2,10 @@
 return {
 
 {
+  -- https://github.com/olimorris/codecompanion.nvim
   "olimorris/codecompanion.nvim",
+  -- TODO: unfreeze once released and stable
+  -- see https://github.com/olimorris/codecompanion.nvim/pull/2439
   version = "v17.33.0",
   dependencies = {
     "nvim-lua/plenary.nvim",
@@ -108,6 +111,12 @@ Do not summarize with vague, positive conclusions. End responses on actionable f
         agent = { adapter = "copilot" },
       },
       display = {
+	    chat = {
+          show_context = true,
+          show_token_count = true,
+          show_tools_processing = true,
+	      -- show_settings = true,  -- Can't change the adapter if set
+	    },
         diff = {
           enabled = true,
           provider = "mini_diff",    -- or "default"
