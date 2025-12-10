@@ -10,15 +10,6 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
-    {
-      "echasnovski/mini.diff",
-      lazy = true,
-    },
-    -- {
-    --   "Davidyz/VectorCode", -- Index and search code in your repositories
-    --   build = "pip install --user pipx --break-system-packages && pipx upgrade vectorcode",
-    --   dependencies = { "nvim-lua/plenary.nvim" },
-    -- },
   },
   opts = function()
     local codecompanion = require("codecompanion")
@@ -119,8 +110,6 @@ Do not summarize with vague, positive conclusions. End responses on actionable f
 	    },
         diff = {
           enabled = true,
-          provider = "mini_diff",    -- or "default"
-          layout = "vertical",       -- or "horizontal"
         },
       },
       extensions = {
