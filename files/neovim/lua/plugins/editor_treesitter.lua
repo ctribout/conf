@@ -4,37 +4,16 @@ return {
   {
     -- https://github.com/nvim-treesitter/nvim-treesitter
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     version = false, -- last release is way too old and doesn't work on Windows
-    lazy = false,
     build = ":TSUpdate",
-    dependencies = {
-      {
-        -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-        "nvim-treesitter/nvim-treesitter-textobjects",
-      },
-    },
-    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-    keys = {
-      { "<c-space>", desc = "Increment Selection" },
-      { "<bs>", desc = "Decrement Selection", mode = "x" },
-    },
-    init = function(plugin)
-      -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
-      -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
-      -- no longer trigger the **nvim-treesitter** module to be loaded in time.
-      -- Luckily, the only things that those plugins need are the custom queries, which we make available
-      -- during startup.
-      require("lazy.core.loader").add_to_rtp(plugin)
-      require("nvim-treesitter.query_predicates")
-    end,
+    cmd = { "TSUpdate", "TSInstall", "TSLog", "TSUninstall" },
+    opts_extend = { "ensure_installed" },
+    ---@alias lazyvim.TSFeat { enable?: boolean, disable?: string[] }
+    ---@class lazyvim.TSConfig: TSConfig
     opts = {
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = {
-          -- "python",
-        },
-      },
-      indent = { enable = false },  -- Result is too bad on Python
+      indent = { enable = true }, ---@type lazyvim.TSFeat
+      highlight = { enable = true }, ---@type lazyvim.TSFeat
       ensure_installed = {
         -- c, lua, query, vimdoc and vim are mandatory (as nvim ships them too and it
         -- can conflict)
@@ -47,23 +26,30 @@ return {
         "git_rebase",
         "gitcommit",
         "html",
+        "javascript",
+        "jsdoc",
         "json",
+        "jsonc",
         "lua",
+        "luadoc",
+        "luap",
         "make",
         "markdown",
         "markdown_inline",
+        "printf",
         "python",
         "query",
         "regex",
         "rst",
         "rust",
         "toml",
+        "tsx",
+        "typescript",
         "vim",
         "vimdoc",
         "xml",
         "yaml",
       },
-      prefer_git = true,
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -83,9 +69,17 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
+    ---@param opts TSConfig
+    config = function(plugin, opts)
+      require("nvim-treesitter").setup(opts)
     end,
+  },
+
+  -- Textobjects for treesitter
+  {
+    -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
   },
 
   -- Show context of the current function
@@ -94,9 +88,11 @@ return {
     "nvim-treesitter/nvim-treesitter-context",
     opts = {
       mode = "cursor",
-      max_lines = 3,
+      max_lines = 4,
+      trim_scope = 'inner',  -- or 'outer'
       line_numbers = true,
     },
   },
 
 }
+
