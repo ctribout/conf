@@ -47,6 +47,9 @@ require("lazy").setup({
     enabled = false, -- automatically check for config file changes and reload the ui
     notify = false, -- get a notification when changes are found
   },
+  rocks = {
+    enabled = false,
+  },
 })
 
 -- Set own configuration on top of the plugins'

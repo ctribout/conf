@@ -49,6 +49,7 @@ vim.opt.whichwrap:append {
 }
 
 vim.opt.completeopt = "menu,menuone,noinsert,noselect"
+vim.opt.clipboard = "unnamedplus"  -- Use + register (X11 clipboard/Wayland)
 
 vim.opt.list = false -- don't display invisible chars (see vim.opt.listchars)
 

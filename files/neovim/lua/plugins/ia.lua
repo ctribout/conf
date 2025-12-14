@@ -144,6 +144,7 @@ Do not summarize with vague, positive conclusions. End responses on actionable f
 },
 
 {
+  -- https://github.com/zbirenbaum/copilot.lua
   "zbirenbaum/copilot.lua",
   cmd = "Copilot",
   build = ":Copilot auth",
@@ -168,6 +169,7 @@ Do not summarize with vague, positive conclusions. End responses on actionable f
 },
 
 {
+  -- https://github.com/zbirenbaum/copilot-cmp
   "zbirenbaum/copilot-cmp",
   opts = {},
   config = function(_, opts)
