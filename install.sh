@@ -276,6 +276,15 @@ install_nodejs() {
     echo "Installed nodejs tools."
 }
 
+install_apt_packages() {
+    if ! yes_no "Install common apt packages (xclip, fd-find, ripgrep)?" "Y"; then return 0; fi
+
+    echo "Installing apt packages"
+    sudo apt update
+    sudo apt install -y xclip fd-find ripgrep fzf
+    echo "Installed apt packages."
+}
+
 parse_command_line "$@"
 
 install_conf_files
@@ -287,3 +296,4 @@ install_python_tools
 install_rust_tools
 install_latex_tools
 install_nodejs
+install_apt_packages
