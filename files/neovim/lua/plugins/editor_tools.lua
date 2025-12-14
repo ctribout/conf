@@ -249,13 +249,8 @@ return {
     opts = function()
       require("telescope").load_extension("aerial")
       local actions = require("telescope.actions")
+      local open_with_trouble = require("trouble.sources.telescope").open
 
-      local open_with_trouble = function(...)
-        return require("trouble.providers.telescope").open_with_trouble(...)
-      end
-      local open_selected_with_trouble = function(...)
-        return require("trouble.providers.telescope").open_selected_with_trouble(...)
-      end
       return {
         defaults = {
           prompt_prefix = " ",
@@ -277,8 +272,6 @@ return {
             i = {
               ['<c-d>'] = actions.delete_buffer,
               ["<c-t>"] = open_with_trouble,
-              ["<a-t>"] = open_selected_with_trouble,
-              ["<a-i>"] = find_files_no_ignore,
               ["<a-h>"] = find_files_with_hidden,
               ["<C-Down>"] = actions.cycle_history_next,
               ["<C-Up>"] = actions.cycle_history_prev,
@@ -317,19 +310,18 @@ return {
   {
     -- https://github.com/folke/trouble.nvim
     "folke/trouble.nvim",
-    cmd = { "TroubleToggle", "Trouble" },
-    opts = { use_diagnostic_signs = true },
+    cmd = { "Trouble" },
+    opts = {},
     keys = {
-      { "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
-      { "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
-      { "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
-      { "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
+      { "<leader>xx", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Document Diagnostics (Trouble)" },
+      { "<leader>xX", "<cmd>Trouble diagnostics toggle<cr>", desc = "Workspace Diagnostics (Trouble)" },
+      { "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
+      { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
+      { "<leader>xS", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
       {
         "[q",
         function()
-          if require("trouble").is_open() then
-            require("trouble").previous({ skip_groups = true, jump = true })
-          else
+          if not pcall(require("trouble").prev) then
             local ok, err = pcall(vim.cmd.cprev)
             if not ok then
               vim.notify(err, vim.log.levels.ERROR)
@@ -341,9 +333,7 @@ return {
       {
         "]q",
         function()
-          if require("trouble").is_open() then
-            require("trouble").next({ skip_groups = true, jump = true })
-          else
+          if not pcall(require("trouble").next) then
             local ok, err = pcall(vim.cmd.cnext)
             if not ok then
               vim.notify(err, vim.log.levels.ERROR)
