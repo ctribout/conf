@@ -33,23 +33,26 @@ return {
             },
           },
         },
-         -- TODO: that doesn't appear to work anymore
-        -- highlights = require("catppuccin.groups.integrations.bufferline").get_theme({
-        --   styles = { "italic", "bold" },
-        --   custom = {
-        --     all = {
-        --       modified = {
-        --         fg = mocha.red,
-        --       },
-        --       modified_visible = {
-        --         fg = mocha.red,
-        --       },
-        --       modified_selected = {
-        --         fg = mocha.red,
-        --       },
-        --     },
-        --   },
-        -- }),
+        highlights = {
+          buffer_selected = {
+            bold = true,
+            italic = true,
+          },
+          modified = {
+            fg = mocha.red,
+          },
+          modified_visible = {
+            fg = mocha.red,
+          },
+          modified_selected = {
+            fg = mocha.red,
+            italic = true,
+          },
+          tab_selected = {
+            bold = true,
+            italic = true,
+          }
+        },
       }
     end,
     config = function(_, opts)
