@@ -4,9 +4,6 @@ return {
 {
   -- https://github.com/olimorris/codecompanion.nvim
   "olimorris/codecompanion.nvim",
-  -- TODO: unfreeze once released and stable
-  -- see https://github.com/olimorris/codecompanion.nvim/pull/2439
-  version = "v17.33.0",
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
