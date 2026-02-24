@@ -10,11 +10,15 @@
     rba = rebase -i --autosquash
     mt = mergetool
     st = status
-    rdiff = !git diff $(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)) HEAD
-    wdiff = !git diff --word-diff
+    rdiff = "!git diff $(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)) HEAD"
+    wdiff = "!git diff --word-diff"
+
     wt = worktree
-    subup = !git submodule sync && git submodule update --recursive --init
-    recommit = !git commit --edit --file  $(git rev-parse --git-path COMMIT_EDITMSG)
+    subup = "!git submodule sync && git submodule update --recursive --init"
+    recommit = "!git commit --edit --file  $(git rev-parse --git-path COMMIT_EDITMSG)"
+    brc = "!git branch --merged origin/main | grep -Ev '(^\\*|main|master|develop|release/)' | xargs -r -n 1 git branch -d"
+
+
 [branch]
     autosetupmerge = always
     autosetuprebase = always
