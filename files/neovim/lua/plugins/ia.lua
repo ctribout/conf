@@ -75,10 +75,10 @@ Current date: %s. Neovim: %s. OS: %s (use system-specific commands)
 - Code output must be copy-paste safe
 
 ]],
-              ctx.language,
               ctx.date,
               ctx.nvim_version,
-              ctx.os
+              ctx.os,
+              ctx.language
             )
             end,
           },
@@ -87,12 +87,12 @@ Current date: %s. Neovim: %s. OS: %s (use system-specific commands)
         agent = { adapter = "copilot" },
       },
       display = {
-	    chat = {
+        chat = {
           show_context = true,
           show_token_count = true,
           show_tools_processing = true,
-	      -- show_settings = true,  -- Can't change the adapter if set
-	    },
+          -- show_settings = true,  -- Can't change the adapter if set
+        },
         diff = {
           enabled = true,
         },
