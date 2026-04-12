@@ -12,7 +12,18 @@ return {
     local codecompanion = require("codecompanion")
     local defaults = require("codecompanion.config").config
     return {
-      strategies = {
+      interactions = {
+        cli = {
+          agent = "claude_code",
+          agents = {
+            claude_code = {
+              cmd = "claude",
+              args = {},
+              description = "Claude Code CLI",
+              provider = "terminal",
+            },
+          },
+        },
         chat = {
           adapter = "copilot",
           opts = {
@@ -117,6 +128,12 @@ Current date: %s. Neovim: %s. OS: %s (use system-specific commands)
       "<Leader>aa",
       "<cmd>CodeCompanionChat Toggle<CR>",
       desc = "Toggle a chat buffer",
+      mode = { "n", "v" },
+    },
+    {
+      "<Leader>ac",
+      "<cmd>CodeCompanionCLI<CR>",
+      desc = "Toggle a CLI buffer",
       mode = { "n", "v" },
     },
     {
