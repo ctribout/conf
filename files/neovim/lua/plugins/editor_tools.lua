@@ -27,7 +27,7 @@ return {
       "MunifTanjim/nui.nvim",
       "nvim-tree/nvim-web-devicons",
     },
-    config = function()
+    config = function(_, opts)
       require("nvim-web-devicons").set_icon({
         yaml = {
           icon = "",
@@ -40,6 +40,7 @@ return {
           name = "Yml"
         },
       })
+      require("neo-tree").setup(opts)
     end,
     lazy = false, -- neo-tree will lazily load itself
     cmd = "Neotree",
