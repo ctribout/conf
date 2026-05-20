@@ -67,6 +67,11 @@ fi
 # Initialize starship prompt
 which starship &> /dev/null && eval "$(starship init zsh)"
 
+# Initialize starship prompt
+if [[ -o interactive && "$TERM" != "dumb" ]] && command -v starship > /dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi
+
 if direnv version &> /dev/null; then
     eval "$(direnv hook zsh)"
 fi
