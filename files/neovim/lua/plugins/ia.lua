@@ -101,6 +101,7 @@ Current date: %s. Neovim: %s. OS: %s (use system-specific commands)
         },
         diff = {
           enabled = true,
+          threshold_for_chat = 0,
         },
       },
       extensions = {
