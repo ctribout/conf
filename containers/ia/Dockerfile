@@ -4,6 +4,9 @@ ARG UID=1000
 ARG GID=1000
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DEVCONTAINER=true
+ENV LANG=C.UTF-8
+ENV TZ=Europe/Paris
+ENV DISABLE_AUTOUPDATER=1
 ENV HOME=/home/dev
 ENV XDG_CONFIG_HOME=/home/dev/.config
 ENV NPM_CONFIG_PREFIX=/home/dev/.npm-global
@@ -30,6 +33,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ripgrep \
     shellcheck \
     tree \
+    tzdata \
     unzip \
     zip \
     && ln -s /usr/bin/fdfind /usr/local/bin/fd \
@@ -38,6 +42,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN curl -sSL https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64 \
     -o /usr/local/bin/hadolint \
     && chmod +x /usr/local/bin/hadolint
+
+RUN ARCH=$(dpkg --print-architecture) \
+    && curl -fsSL "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${ARCH}" \
+        -o /usr/local/bin/yq \
+    && SHFMT_VER=$(curl -fsSL https://api.github.com/repos/mvdan/sh/releases/latest | jq -r .tag_name) \
+    && curl -fsSL "https://github.com/mvdan/sh/releases/download/${SHFMT_VER}/shfmt_${SHFMT_VER}_linux_${ARCH}" \
+        -o /usr/local/bin/shfmt \
+    && chmod +x /usr/local/bin/yq /usr/local/bin/shfmt
 
 RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
     -o /usr/share/keyrings/githubcli-archive-keyring.gpg \
