@@ -31,6 +31,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pipx \
     python3 \
     ripgrep \
+    samba-common-bin \
     shellcheck \
     tree \
     tzdata \

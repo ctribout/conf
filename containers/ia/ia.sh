@@ -23,6 +23,7 @@ DEFAULT_AGENT_ARGS=()
 case "$TOOL" in
     claude)
         ENTRYPOINT="claude"
+        DEFAULT_AGENT_ARGS=(--allow-dangerously-skip-permissions)
         VOLUME_FLAGS=(
             "-v" "${HOME}/.claude:/home/dev/.claude"
             "-v" "${HOME}/.claude.json:/home/dev/.claude.json"
