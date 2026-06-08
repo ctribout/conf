@@ -18,6 +18,7 @@ RUN userdel -r ubuntu \
     && useradd -m -u ${UID} -g ${GID} -s /bin/bash dev
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    bash-completion \
     build-essential \
     ca-certificates \
     cmake \
@@ -25,14 +26,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fd-find \
     git \
     jq \
+    less \
+    ltrace \
+    ncat \
     ninja-build \
     nodejs \
     npm \
     pipx \
     python3 \
+    python3-venv \
     ripgrep \
     samba-common-bin \
     shellcheck \
+    socat \
+    strace \
     tree \
     tzdata \
     unzip \

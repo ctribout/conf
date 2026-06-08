@@ -83,7 +83,14 @@ for spec in "${FORWARD_ENV[@]}"; do
     fi
 done
 
+# --network=host avoids docker bridge NAT/DNS overhead, which on some
+# corp networks made API calls ~5x slower than on the host. Trade-off:
+# the container shares the host's network namespace (can reach loopback
+# services on the host). To override for a one-off run that needs
+# isolation or published ports, pass through to docker, e.g.:
+#   ia.sh <tool> -- --network=bridge -p 127.0.0.1:3000:3000
 docker run --rm -it \
+    --network=host \
     --security-opt=no-new-privileges:true \
     --cap-drop=ALL \
     --entrypoint "$ENTRYPOINT" \
