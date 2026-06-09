@@ -51,8 +51,22 @@ case "$TOOL" in
 esac
 
 LAUNCH_DIR="$PWD"
+EXTRA_MOUNTS=()
 if WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null); then
-    :
+    WORKSPACE=$(readlink -f "$WORKSPACE")
+    # In a linked worktree, .git is a file pointing to an absolute path under
+    # the main repo's .git directory. That path is outside WORKSPACE, so git
+    # inside the container cannot resolve it. Mount the common git dir at the
+    # same absolute path so both the per-worktree gitdir (which lives under
+    # it) and shared objects/refs/config are reachable.
+    if COMMON_GIT_DIR=$(git rev-parse --git-common-dir 2>/dev/null) \
+        && [ -n "$COMMON_GIT_DIR" ]; then
+        COMMON_GIT_DIR=$(readlink -f "$COMMON_GIT_DIR")
+        case "$COMMON_GIT_DIR/" in
+            "$WORKSPACE"/*) ;;  # regular repo: .git already inside WORKSPACE
+            *) EXTRA_MOUNTS+=("-v" "$COMMON_GIT_DIR:$COMMON_GIT_DIR") ;;
+        esac
+    fi
 else
     WORKSPACE="$PWD"
 fi
@@ -100,6 +114,7 @@ docker run --rm -it \
     "${COMMON_ENV_FLAGS[@]}" \
     "${ENV_FLAGS[@]}" \
     -v "${WORKSPACE}:${WORKSPACE}" \
+    "${EXTRA_MOUNTS[@]}" \
     -w "${LAUNCH_DIR}" \
     "${VOLUME_FLAGS[@]}" \
     "${DOCKER_ARGS[@]}" \
