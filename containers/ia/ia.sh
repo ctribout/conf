@@ -52,6 +52,13 @@ esac
 
 LAUNCH_DIR="$PWD"
 EXTRA_MOUNTS=()
+
+# Dotfiles installed by ../../install.sh are symlinks whose targets live under
+# this repo's files/ dir (absolute paths). Mount that dir read-only at its real
+# path so those symlinks (e.g. ~/.claude/statusline-command.sh) resolve inside
+# the container instead of dangling.
+CONF_FILES_DIR=$(readlink -f "$(dirname "$0")/../../files" 2>/dev/null || true)
+
 if WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null); then
     WORKSPACE=$(readlink -f "$WORKSPACE")
     # In a linked worktree, .git is a file pointing to an absolute path under
@@ -69,6 +76,15 @@ if WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null); then
     fi
 else
     WORKSPACE="$PWD"
+fi
+
+# Add the read-only files/ mount unless it already lives inside WORKSPACE (in
+# which case the workspace mount covers it and we avoid shadowing it read-only).
+if [ -n "$CONF_FILES_DIR" ] && [ -d "$CONF_FILES_DIR" ]; then
+    case "$CONF_FILES_DIR/" in
+        "$WORKSPACE"/*) ;;  # already reachable via the workspace mount
+        *) EXTRA_MOUNTS+=("-v" "$CONF_FILES_DIR:$CONF_FILES_DIR:ro") ;;
+    esac
 fi
 
 for dir in "${CONFIG_DIRS[@]}"; do

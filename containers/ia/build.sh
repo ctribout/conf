@@ -23,8 +23,8 @@ docker build \
     --build-arg NPM_CACHEBUST="$NPM_CACHEBUST" \
     -t ia-sandbox \
     .
-docker image prune -f
 
 if [ "$CLEAN" = true ]; then
+    docker image prune -f
     docker builder prune -f
 fi

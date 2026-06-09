@@ -81,6 +81,7 @@ RUN pipx ensurepath && \
     pipx install \
     ansible-lint \
     poetry \
+    pre-commit \
     uv \
     yamllint
 
