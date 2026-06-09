@@ -75,3 +75,26 @@ fi
 if direnv version &> /dev/null; then
     eval "$(direnv hook zsh)"
 fi
+
+# Enable bash-style completion machinery so we can reuse:
+#   - bash-completion's helpers (`_command_offset`, `_filedir`, etc.)
+#   - the system pytest completion script
+#     (/usr/share/bash-completion/completions/pytest), which provides the
+#     `file.py::Class::method` completion we want.
+# Then install the `uv run <cmd> …` / `poetry run <cmd> …` passthrough
+# (helper defined in ~/.shellrc).
+#
+# Note: this trades zsh's richer native uv/poetry completion (with
+# descriptions) for being able to delegate to commands' own completers — a
+# fair deal if you frequently type `uv run pytest …::`.
+if [ -n "$ZSH_VERSION" ]; then
+    autoload -Uz compinit && compinit -u
+    autoload -Uz bashcompinit && bashcompinit
+    [ -r /usr/share/bash-completion/bash_completion ] && \
+        source /usr/share/bash-completion/bash_completion 2>/dev/null
+
+    if typeset -f _install_run_passthrough_completion >/dev/null; then
+        _install_run_passthrough_completion uv 'uv generate-shell-completion bash' _uv_native
+        _install_run_passthrough_completion poetry 'poetry completions bash' _poetry_native
+    fi
+fi

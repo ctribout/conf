@@ -87,3 +87,11 @@ fi
 if [[ $- == *i* && "$TERM" != "dumb" ]] && command -v starship > /dev/null 2>&1; then
     eval "$(starship init bash)"
 fi
+
+# Install `uv run <cmd> …` / `poetry run <cmd> …` completion passthrough
+# (helper defined in ~/.shellrc). Must run after bash-completion has been
+# sourced above, since the wrapper relies on `_command_offset`.
+if declare -F _install_run_passthrough_completion >/dev/null; then
+    _install_run_passthrough_completion uv 'uv generate-shell-completion bash' _uv_native
+    _install_run_passthrough_completion poetry 'poetry completions bash' _poetry_native
+fi

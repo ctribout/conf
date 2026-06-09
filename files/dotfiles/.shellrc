@@ -110,6 +110,58 @@ test -f ~/.shellrc.local && source ~/.shellrc.local
 set_prompt
 unset -f set_prompt set_prompt_spe
 
+# ---- Make `uv run <cmd> …` and `poetry run <cmd> …` complete <cmd>'s own
+# arguments, instead of falling through to uv/poetry's generic completion.
+#
+# Strategy: source the tool's own completion script, save it under a backup
+# name, then wrap it. When the user is past `<tool> run <cmd>`, we shift the
+# completion context to <cmd> using bash-completion's `_command_offset`.
+# Otherwise we delegate to the tool's original completion unchanged.
+#
+# Concretely: with the system `_pytest` completion from the bash-completion
+# package, this restores `uv run pytest tests/foo.py::Bar::test_<TAB>` →
+# class/method completion, without aliasing or wrapping pytest.
+#
+# Caveat: the heuristic treats the first non-option word after `run` as the
+# command. If you pass a uv option that takes a separate value (e.g.
+# `uv run --with pkg pytest …`), `pkg` will be misidentified as the command.
+# Workaround: use the `--opt=value` form (`--with=pkg`), which is a single
+# token and is correctly skipped.
+#
+# This is pure bash syntax but works in zsh too once `bashcompinit` is
+# enabled and the bash-completion library has been sourced. The function is
+# only defined here; the actual install calls live in ~/.bashrc / ~/.zshrc so
+# they run *after* each shell has finished its own completion setup.
+_install_run_passthrough_completion() {
+    local tool=$1 gen_cmd=$2 native_name=$3
+    command -v "$tool" >/dev/null 2>&1 || return
+    eval "$($gen_cmd 2>/dev/null)" || return
+
+    # Discover which function the tool's completion registered itself as.
+    local main_fn
+    main_fn=$(complete -p "$tool" 2>/dev/null | sed -n 's/.* -F \([^ ]\+\).*/\1/p')
+    [ -n "$main_fn" ] || return
+
+    # Save original under $native_name (only on first invocation).
+    if ! declare -F "$native_name" >/dev/null; then
+        eval "$(declare -f "$main_fn" | sed "1s/^$main_fn/$native_name/")"
+    fi
+
+    eval "
+        $main_fn() {
+            local i j
+            for (( i=1; i<COMP_CWORD; i++ )); do
+                [[ \${COMP_WORDS[i]} == run ]] || continue
+                for (( j=i+1; j<COMP_CWORD; j++ )); do
+                    [[ \${COMP_WORDS[j]} != -* ]] && { _command_offset \$j; return; }
+                done
+                break
+            done
+            $native_name \"\$@\"
+        }
+    "
+}
+
 if direnv version &> /dev/null; then
     eval "$(direnv hook bash)"
 fi
