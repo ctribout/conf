@@ -23,3 +23,20 @@ and tell the user what would need to be done so they can decide.
 
 Do not install system or user-space packages, and do not add new dependencies
 to a project's manifest, without asking the user first.
+
+# Comments
+
+Prefer self-explanatory code (clear names, small functions) over comments.
+Add a comment only to explain a non-obvious "why" the code can't express
+itself — never to narrate "what" it does, and never to narrate history
+(what it used to do, why something was removed, or that something is
+"kept for future use"). Past context belongs in commit messages.
+
+# Autonomous / "autopilot" / unattended mode
+
+If the runtime auto-replies to a clarifying question with a canned "user is not
+available / work autonomously" message, treat it as no answer, not as approval.
+Never perform irreversible or remote-visible actions on that basis (posting/
+editing/approving PRs or MRs, pushes, deletions, publishes, webhooks, anything
+that mutates remote state). Stop and request explicit confirmation in chat
+instead. Read-only investigation and easily-reverted local edits are fine.

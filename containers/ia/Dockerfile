@@ -12,10 +12,13 @@ ENV XDG_CONFIG_HOME=/home/dev/.config
 ENV NPM_CONFIG_PREFIX=/home/dev/.npm-global
 ENV PATH=/home/dev/.local/bin:/home/dev/.npm-global/bin:/home/dev/.cargo/bin:$PATH
 
-# ubuntu:24.04 ships a built-in 'ubuntu' user at UID/GID 1000; remove it first
+# ubuntu:24.04 ships a built-in 'ubuntu' user at UID/GID 1000; remove it first.
+# Pre-create /home/dev/.config so docker's bind-mount auto-creation (in ia.sh)
+# doesn't make it root-owned and lock dev-run tools out of it.
 RUN userdel -r ubuntu \
     && groupadd -g ${GID} dev \
-    && useradd -m -u ${UID} -g ${GID} -s /bin/bash dev
+    && useradd -m -u ${UID} -g ${GID} -s /bin/bash dev \
+    && install -d -o dev -g dev -m 0755 /home/dev/.config
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash-completion \
@@ -25,7 +28,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     cmake \
     curl \
     fd-find \
+    ghostscript \
     git \
+    imagemagick \
     jq \
     less \
     ltrace \
@@ -33,14 +38,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ninja-build \
     nodejs \
     npm \
+    pandoc \
     pipx \
+    poppler-utils \
     python3 \
+    python3-openpyxl \
     python3-venv \
     ripgrep \
     samba-common-bin \
     shellcheck \
     socat \
     strace \
+    tesseract-ocr \
     tree \
     tzdata \
     unzip \

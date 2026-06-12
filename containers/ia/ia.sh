@@ -4,10 +4,17 @@ set -euo pipefail
 # Host env vars to forward into every container (only those actually set on the host).
 # Each entry: NAME (forward host $NAME as-is) or HOST:CONTAINER (rename), e.g. a
 # read-only token GH_TOKEN_RO:GH_TOKEN sets the container's GH_TOKEN from $GH_TOKEN_RO.
+# Per-host additions can be provided via $IA_CONTAINER_FORWARD_ENV (whitespace-
+# separated entries with the same syntax), typically set in ~/.shellrc.local
 FORWARD_ENV=(
     GH_TOKEN GITHUB_TOKEN GH_HOST
     GITLAB_TOKEN GITLAB_HOST
 )
+if [ -n "${IA_CONTAINER_FORWARD_ENV:-}" ]; then
+    # Intentional word-splitting on whitespace.
+    # shellcheck disable=SC2206
+    FORWARD_ENV+=(${IA_CONTAINER_FORWARD_ENV})
+fi
 
 usage() {
     echo "Usage: $(basename "$0") <claude|codex|copilot> [agent args...] [-- docker run args...]" >&2
@@ -37,7 +44,6 @@ case "$TOOL" in
         ;;
     copilot)
         ENTRYPOINT="copilot"
-        DEFAULT_AGENT_ARGS=(--no-mouse)
         VOLUME_FLAGS=(
             "-v" "${HOME}/.config/github-copilot:/home/dev/.config/github-copilot"
             "-v" "${HOME}/.copilot:/home/dev/.copilot"
