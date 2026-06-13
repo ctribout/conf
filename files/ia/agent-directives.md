@@ -37,6 +37,10 @@ conclusion, not the evidence behind it), and never restate what the code or anot
 file already states: a computed value (`3600 * 4  # 14400`, `MyEnum.A  # 27`) or a
 drifting location (§3.2, line numbers, sibling files, tickets) — the copy rots.
 
+Don't use comments as cosmetic structure: decorative separators (rows of dashes,
+banners, ...) and block-label headers add visual noise without explaining a why — use
+blank lines, or split the file, instead.
+
 # Autonomous / "autopilot" / unattended mode
 
 If the runtime auto-replies to a clarifying question with a canned "user is not
