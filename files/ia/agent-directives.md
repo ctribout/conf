@@ -32,6 +32,11 @@ itself — never to narrate "what" it does, and never to narrate history
 (what it used to do, why something was removed, or that something is
 "kept for future use"). Past context belongs in commit messages.
 
+Write the "why" as a standalone fact for a reader who never saw the change (the
+conclusion, not the evidence behind it), and never restate what the code or another
+file already states: a computed value (`3600 * 4  # 14400`, `MyEnum.A  # 27`) or a
+drifting location (§3.2, line numbers, sibling files, tickets) — the copy rots.
+
 # Autonomous / "autopilot" / unattended mode
 
 If the runtime auto-replies to a clarifying question with a canned "user is not
