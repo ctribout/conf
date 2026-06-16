@@ -29,11 +29,16 @@ see https://support.mozilla.org/en-US/questions/1177825 */
 /* Hide the "What's new?" button */
 #appMenu-whatsnew-button { display:none !important; }
 
-.tab-background[selected] {
+#tabbrowser-tabs {
+   --tab-selected-bgcolor: #bcbcbc !important;
+}
 
-   background-attachment: none!important;
-   background-image: none!important;
-   background-color: #d4d4d4 !important;
+.tabbrowser-tab[selected] .tab-background,
+.tabbrowser-tab[visuallyselected] .tab-background,
+.tabbrowser-tab[multiselected] .tab-background {
+   background-image: none !important;
+   background-color: #bcbcbc !important;
+   border-inline-start: 3px solid #0a84ff !important;
 }
 
 
