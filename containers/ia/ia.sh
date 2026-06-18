@@ -39,6 +39,7 @@ case "$TOOL" in
         ;;
     codex)
         ENTRYPOINT="codex"
+        DEFAULT_AGENT_ARGS=(--sandbox danger-full-access)
         VOLUME_FLAGS=("-v" "${HOME}/.codex:/home/dev/.codex")
         CONFIG_DIRS=("${HOME}/.codex")
         ;;
