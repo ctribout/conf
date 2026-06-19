@@ -49,3 +49,5 @@ Never perform irreversible or remote-visible actions on that basis (posting/
 editing/approving PRs or MRs, pushes, deletions, publishes, webhooks, anything
 that mutates remote state). Stop and request explicit confirmation in chat
 instead. Read-only investigation and easily-reverted local edits are fine.
+
+@RTK.md

@@ -7,6 +7,7 @@ ENV DEVCONTAINER=true
 ENV LANG=C.UTF-8
 ENV TZ=Europe/Paris
 ENV DISABLE_AUTOUPDATER=1
+ENV RTK_TELEMETRY_DISABLED=1
 ENV HOME=/home/dev
 ENV XDG_CONFIG_HOME=/home/dev/.config
 ENV NPM_CONFIG_PREFIX=/home/dev/.npm-global
@@ -33,7 +34,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     graphviz \
     imagemagick \
     jq \
+    latexmk \
     less \
+    lmodern \
     ltrace \
     ncat \
     ninja-build \
@@ -51,6 +54,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     socat \
     strace \
     tesseract-ocr \
+    texlive-fonts-extra \
+    texlive-fonts-recommended \
+    texlive-lang-french \
+    texlive-latex-extra \
+    texlive-latex-recommended \
+    texlive-plain-generic \
     tree \
     tzdata \
     unzip \
@@ -92,6 +101,7 @@ RUN pipx ensurepath && \
     ansible-lint \
     poetry \
     pre-commit \
+    prek \
     uv \
     yamllint
 
@@ -102,6 +112,9 @@ RUN npm install -g @anthropic-ai/claude-code \
     && ln -s /home/dev/.npm-global/bin/claude /home/dev/.local/bin/claude
 RUN npm install -g @openai/codex
 RUN npm install -g @github/copilot
+RUN curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+
+COPY entrypoint.sh /usr/local/bin/ia-entrypoint
 
 WORKDIR /workspace
-ENTRYPOINT ["claude"]
+ENTRYPOINT ["/usr/local/bin/ia-entrypoint"]

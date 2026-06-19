@@ -29,7 +29,6 @@ DEFAULT_AGENT_ARGS=()
 
 case "$TOOL" in
     claude)
-        ENTRYPOINT="claude"
         DEFAULT_AGENT_ARGS=(--allow-dangerously-skip-permissions)
         VOLUME_FLAGS=(
             "-v" "${HOME}/.claude:/home/dev/.claude"
@@ -38,13 +37,11 @@ case "$TOOL" in
         CONFIG_DIRS=("${HOME}/.claude")
         ;;
     codex)
-        ENTRYPOINT="codex"
         DEFAULT_AGENT_ARGS=(--sandbox danger-full-access)
         VOLUME_FLAGS=("-v" "${HOME}/.codex:/home/dev/.codex")
         CONFIG_DIRS=("${HOME}/.codex")
         ;;
     copilot)
-        ENTRYPOINT="copilot"
         VOLUME_FLAGS=(
             "-v" "${HOME}/.config/github-copilot:/home/dev/.config/github-copilot"
             "-v" "${HOME}/.copilot:/home/dev/.copilot"
@@ -130,7 +127,8 @@ docker run --rm -it \
     --network=host \
     --security-opt=no-new-privileges:true \
     --cap-drop=ALL \
-    --entrypoint "$ENTRYPOINT" \
+    --entrypoint /usr/local/bin/ia-entrypoint \
+    -e IA_TOOL="$TOOL" \
     -e HOME=/home/dev \
     -e XDG_CONFIG_HOME=/home/dev/.config \
     -e TERM -e COLORTERM \
