@@ -1324,6 +1324,9 @@ user_pref("media.autoplay.allow-muted", false);
 /*** Downloads: always ask where (arkenfox sets useDownloadDir=false already) ***/
 user_pref("browser.download.folderList", 2);
 
+/*** PDFs: no in-browser viewer, always prompt what to do (overrides arkenfox 2620) ***/
+user_pref("pdfjs.disabled", true);
+
 /*** Network choices ***/
 user_pref("network.trr.mode", 5);                             // DNS-over-HTTPS off (deliberate)
 user_pref("network.protocol-handler.external.mailto", false); // no "associate a webmail?" prompt bar
