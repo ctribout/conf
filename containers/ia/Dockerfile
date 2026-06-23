@@ -52,6 +52,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     samba-common-bin \
     shellcheck \
     socat \
+    sqlite3 \
     strace \
     tesseract-ocr \
     texlive-fonts-extra \
