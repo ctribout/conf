@@ -54,7 +54,6 @@ return {
           vim.keymap.set('n', 'gi', function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, { buffer = ev.buf, desc = "Go to implementation" })
           vim.keymap.set('n', 'gy', function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, { buffer = ev.buf, desc = "Go to type definition" })
           vim.keymap.set('n', 'gK', vim.lsp.buf.signature_help, { buffer = ev.buf, desc = "Signature Help" })
-          vim.keymap.set('i', '<c-k>', vim.lsp.buf.signature_help, { buffer = ev.buf, desc = "Signature Help" })
         end,
       })
 
@@ -201,7 +200,7 @@ return {
       }
 
       -- Setup capabilities
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       -- Setup each server
       for server_name, config in pairs(servers) do

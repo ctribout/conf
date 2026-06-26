@@ -149,11 +149,12 @@ Current date: %s. Neovim: %s. OS: %s (use system-specific commands)
   event = "BufReadPost",
   opts = {
     suggestion = {
-      enabled = false,
+      enabled = true,
       auto_trigger = true,
-      hide_during_completion = true,
+      hide_during_completion = true, -- yield to the blink menu when it's open
       keymap = {
-        accept = false, -- handled by nvim-cmp / blink.cmp
+        accept = "<C-l>",
+        dismiss = "<C-]>",
         next = "<M-]>",
         prev = "<M-[>",
       },
@@ -164,30 +165,13 @@ Current date: %s. Neovim: %s. OS: %s (use system-specific commands)
       help = true,
     },
   },
-},
-
-{
-  -- https://github.com/zbirenbaum/copilot-cmp
-  "zbirenbaum/copilot-cmp",
-  opts = {},
   config = function(_, opts)
-    local copilot_cmp = require("copilot_cmp")
-    copilot_cmp.setup(opts)
+    require("copilot").setup(opts)
+    -- ghost text defaults to the Comment color/style, indistinguishable from a
+    -- comment you're typing; give it a lighter fg over a slightly raised background
+    local palette = require("catppuccin.palettes").get_palette()
+    vim.api.nvim_set_hl(0, "CopilotSuggestion", { fg = palette.text, bg = palette.surface2 })
   end,
-  specs = {
-    {
-      "hrsh7th/nvim-cmp",
-      optional = true,
-      ---@param opts cmp.ConfigSchema
-      opts = function(_, opts)
-        table.insert(opts.sources, 1, {
-          name = "copilot",
-          group_index = 1,
-          priority = 100,
-        })
-      end,
-    },
-  },
 },
 
 }

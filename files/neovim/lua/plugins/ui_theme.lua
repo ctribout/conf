@@ -23,7 +23,7 @@ return {
       integrations = {
         aerial = true,
         alpha = true,
-        cmp = true,
+        blink_cmp = true,
         dashboard = true,
         flash = true,
         gitsigns = true,
