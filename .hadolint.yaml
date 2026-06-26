@@ -1,0 +1,7 @@
+# This is a rolling dev-tooling image that intentionally tracks latest versions,
+# and keeps separate RUN layers for cache granularity.
+ignored:
+  - DL3008 # apt: track latest, don't pin package versions
+  - DL3013 # pip/pipx: track latest
+  - DL3016 # npm: track latest
+  - DL3059 # keep separate RUN layers (cache busting)

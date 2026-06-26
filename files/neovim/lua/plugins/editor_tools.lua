@@ -230,7 +230,7 @@ return {
       -- find
       { "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
       { "<leader>ff", function() require("telescope.builtin")["find_files"]({ cwd = require("utils").find_project_dir() }) end, desc = "Find Files (Root Dir)" },
-      { "<leader>fF", function() require("telescope.builtin")["find_files"]({ cwd = False }) end, desc = "Find Files (cwd)" },
+      { "<leader>fF", function() require("telescope.builtin")["find_files"]({ cwd = false }) end, desc = "Find Files (cwd)" },
       { "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Find Files (git-files)" },
       { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
       -- git
@@ -245,7 +245,7 @@ return {
       { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document Diagnostics" },
       { "<leader>sD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace Diagnostics" },
       { "<leader>sg", function() require("telescope.builtin")["live_grep"]({ cwd = require("utils").find_project_dir() }) end, desc = "Grep (Root Dir)" },
-      { "<leader>sG", function() require("telescope.builtin")["live_grep"]({ cwd = False }) end, desc = "Grep (cwd)" },
+      { "<leader>sG", function() require("telescope.builtin")["live_grep"]({ cwd = false }) end, desc = "Grep (cwd)" },
       { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
       { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
       { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
@@ -293,7 +293,6 @@ return {
             i = {
               ['<c-d>'] = actions.delete_buffer,
               ["<c-t>"] = open_with_trouble,
-              ["<a-h>"] = find_files_with_hidden,
               ["<C-Down>"] = actions.cycle_history_next,
               ["<C-Up>"] = actions.cycle_history_prev,
               ["<C-f>"] = actions.preview_scrolling_down,
@@ -391,10 +390,6 @@ return {
     event = "VeryLazy",
     opts = function()
       local icons = require("utils").icons.kinds
-
-      -- HACK: fix lua's weird choice for `Package` for control
-      -- structures like if/else/for/etc.
-      icons.lua = { Package = icons.Control }
 
       local opts = {
         manage_folds = false,

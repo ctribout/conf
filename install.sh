@@ -45,15 +45,15 @@ yes_no() {
     local question="$1"
     local default="$2"
     if [ "${default}" = "N" ]; then
-        read -p "${question} [y/N] " answer
+        read -rp "${question} [y/N] " answer
     elif [ "${default}" = "Y" ]; then
-        read -p "${question} [Y/n] " answer
+        read -rp "${question} [Y/n] " answer
     else
         echo "invalid default value"
         exit 1
     fi
     if [ -z "${answer}" ]; then answer="${default}"; fi
-    if [ "${answer}" = "Y" -o "${answer}" = "y" ]; then
+    if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
         return 0
     fi
     return 1
@@ -67,11 +67,11 @@ install_conf_files() {
     # Check if files in this folder are present in the user home directory
     #  - if yes: backup (move)
     # Then, create a symlink to our file
-    for conf_file_folder in $(find "${scriptDir}/files/" -mindepth 1 -maxdepth 1 -type d); do
+    while IFS= read -r conf_file_folder; do
         if [ ! -e "${conf_file_folder}/location.sh" ]; then
             continue
         fi
-        for target_folder in $(${conf_file_folder}/location.sh); do
+        for target_folder in $("${conf_file_folder}"/location.sh); do
             while IFS= read -r conf_file; do
                 target_file=${target_folder}/${conf_file}
                 if [ "$(readlink -f "${target_file}")" = "$(readlink -f "${conf_file_folder}/${conf_file}")" ]; then
@@ -79,7 +79,7 @@ install_conf_files() {
                     # echo "  - $(readlink -f "${conf_file_folder}/${conf_file}") already installed"
                     continue
                 fi
-                if [ -e "${target_file}" -o -L "${target_file}" ]; then
+                if [ -e "${target_file}" ] || [ -L "${target_file}" ]; then
                     # File already exists, save it just in case...
                     mv "${target_file}" "${target_file}.backup"
                 fi
@@ -88,7 +88,7 @@ install_conf_files() {
                 echo "  - $(readlink -f "${conf_file_folder}/${conf_file}") installed"
             done < <(cd "${conf_file_folder}" && find . -mindepth 1 \( -type f -o -type l \) -a -not -name "location.sh")
         done
-    done
+    done < <(find "${scriptDir}/files/" -mindepth 1 -maxdepth 1 -type d)
 
     echo "Installed configuration files."
 }
@@ -100,7 +100,7 @@ install_neovim() {
     local app_folder=~/.local/app/nvim-linux-x86_64
     local target_conf_folder=~/.config/nvim
 
-    if [ ${force_reinstall} -eq 0 -a -e "${target_exe}" ]; then return 0; fi
+    if [ ${force_reinstall} -eq 0 ] && [ -e "${target_exe}" ]; then return 0; fi
     if ! yes_no "Install neovim?" "Y"; then return 0; fi
     if [ ${force_reinstall} -ne 0 ]; then
         rm -rf "${app_folder}" "${target_exe}" "${fallback_exe}"
@@ -110,9 +110,9 @@ install_neovim() {
 
     mkdir -p "$(dirname "${app_folder}")" "$(dirname "${target_exe}")"
 
-    if type curl 2>&1 1>/dev/null; then
+    if type curl >/dev/null 2>&1; then
         curl --proto '=https' --tlsv1.2 -LsSf "${url}" | tar -zxC "$(dirname "${app_folder}")"
-    elif type wget 2>&1 1>/dev/null; then
+    elif type wget >/dev/null 2>&1; then
         wget -qO - "${url}" | tar -zxC "$(dirname "${app_folder}")"
     else
         echo "Couldn't download neovim: please install curl or wget"
@@ -133,11 +133,36 @@ install_neovim() {
     echo "Installed neovim."
 }
 
+install_tree_sitter() {
+    local url=https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-x64.gz
+    local target_exe=~/.local/bin/tree-sitter
+
+    if [ ${force_reinstall} -eq 0 ] && [ -e "${target_exe}" ]; then return 0; fi
+    if ! yes_no "Install tree-sitter CLI (builds nvim treesitter parsers)?" "Y"; then return 0; fi
+    if [ ${force_reinstall} -ne 0 ]; then
+        rm -f "${target_exe}"
+    fi
+
+    echo "Installing tree-sitter CLI..."
+
+    mkdir -p "$(dirname "${target_exe}")"
+
+    if type curl >/dev/null 2>&1; then
+        curl --proto '=https' --tlsv1.2 -LsSf "${url}" | gunzip > "${target_exe}"
+    elif type wget >/dev/null 2>&1; then
+        wget -qO - "${url}" | gunzip > "${target_exe}"
+    else
+        echo "Couldn't download tree-sitter: please install curl or wget"
+    fi
+    chmod +x "${target_exe}"
+    echo "Installed tree-sitter CLI."
+}
+
 install_starship() {
     local url=https://github.com/starship/starship/releases/latest/download/starship-x86_64-unknown-linux-gnu.tar.gz
     local target_exe=~/.local/bin/starship
 
-    if [ ${force_reinstall} -eq 0 -a -e "${target_exe}" ]; then return 0; fi
+    if [ ${force_reinstall} -eq 0 ] && [ -e "${target_exe}" ]; then return 0; fi
     if ! yes_no "Install starship?" "Y"; then return 0; fi
     if [ ${force_reinstall} -ne 0 ]; then
         rm -rf "${target_exe}"
@@ -147,9 +172,9 @@ install_starship() {
 
     mkdir -p "$(dirname "${target_exe}")"
 
-    if type curl 2>&1 1>/dev/null; then
+    if type curl >/dev/null 2>&1; then
         curl --proto '=https' --tlsv1.2 -LsSf "${url}" | tar -zxC "$(dirname "${target_exe}")"
-    elif type wget 2>&1 1>/dev/null; then
+    elif type wget >/dev/null 2>&1; then
         wget -qO - "${url}" | tar -zxC "$(dirname "${target_exe}")"
     else
         echo "Couldn't download starship: please install curl or wget"
@@ -161,7 +186,7 @@ install_fonts() {
     local my_font=~/.local/share/fonts/LiterationMonoNerdFont-Regular.ttf
     local target=${scriptDir}/files/fonts/LiterationMonoNerdFont-Regular.ttf
 
-    if [ ${force_reinstall} -eq 0 -a -e "${my_font}" ]; then return 0; fi
+    if [ ${force_reinstall} -eq 0 ] && [ -e "${my_font}" ]; then return 0; fi
     if ! yes_no "Install Nerd font?" "Y"; then return 0; fi
 
     echo "Installing fonts..."
@@ -183,7 +208,7 @@ install_fonts() {
 install_diff_so_fancy() {
     local install_path="${scriptDir}/tools/diff-so-fancy"
 
-    if [ ${force_reinstall} -eq 0 -a -d "${install_path}" ]; then return 0; fi
+    if [ ${force_reinstall} -eq 0 ] && [ -d "${install_path}" ]; then return 0; fi
     if ! yes_no "Install diff-so-fancy?" "Y"; then return 0; fi
     if [ ${force_reinstall} -ne 0 ]; then
         rm -rf "${install_path}"
@@ -205,7 +230,7 @@ install_python_tools() {
 install_rust_tools() {
     local rustup_path=~/.cargo/bin/rustup
 
-    if [ ${force_reinstall} -eq 0 -a -e "${rustup_path}" ]; then return 0; fi
+    if [ ${force_reinstall} -eq 0 ] && [ -e "${rustup_path}" ]; then return 0; fi
     if ! yes_no "Install rust tools?" "N"; then return 0; fi
     if [ ${force_reinstall} -ne 0 ]; then
         rm -rf ~/.cargo
@@ -219,9 +244,9 @@ install_rust_tools() {
     fi
 
     echo "Installing rust tools..."
-    if type curl 2>&1 1>/dev/null; then
+    if type curl >/dev/null 2>&1; then
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --quiet --no-modify-path -y
-    elif type wget 2>&1 1>/dev/null; then
+    elif type wget >/dev/null 2>&1; then
         wget -qO - https://sh.rustup.rs | sh -s -- --quiet --no-modify-path -y
     else
         echo "Couldn't download rust installer: please install curl or wget"
@@ -232,16 +257,16 @@ install_rust_tools() {
 install_latex_tools() {
     local texlab_path=~/.local/bin/texlab
 
-    if [ ${force_reinstall} -eq 0 -a -e "${texlab_path}" ]; then return 0; fi
+    if [ ${force_reinstall} -eq 0 ] && [ -e "${texlab_path}" ]; then return 0; fi
     if ! yes_no "Install LaTeX tools?" "N"; then return 0; fi
     if [ ${force_reinstall} -ne 0 ]; then
         rm -f "${texlab_path}"
     fi
 
     echo "Installing LaTeX tools..."
-    if type curl 2>&1 1>/dev/null; then
+    if type curl >/dev/null 2>&1; then
         curl --proto '=https' --tlsv1.2 -LsSf https://github.com/latex-lsp/texlab/releases/latest/download/texlab-x86_64-linux.tar.gz | tar -zxC "$(dirname "${texlab_path}")"
-    elif type wget 2>&1 1>/dev/null; then
+    elif type wget >/dev/null 2>&1; then
         wget -qO - https://github.com/latex-lsp/texlab/releases/latest/download/texlab-x86_64-linux.tar.gz | tar -zxC "$(dirname "${texlab_path}")"
     else
         echo "Couldn't download texlab binaries: please install curl or wget"
@@ -254,7 +279,7 @@ npm_bin_folder="${nodejs_top_folder}/bin"
 npm_path="${npm_bin_folder}/npm"
 
 install_nodejs() {
-    if [ ${force_reinstall} -eq 0 -a -e "${npm_path}" ]; then return 0; fi
+    if [ ${force_reinstall} -eq 0 ] && [ -e "${npm_path}" ]; then return 0; fi
 
     if ! yes_no "Install nodejs tools?" "N"; then return 0; fi
     if [ ${force_reinstall} -ne 0 ]; then
@@ -263,9 +288,9 @@ install_nodejs() {
 
     echo "Installing nodejs tools..."
     mkdir -p "${nodejs_top_folder}"
-    if type curl 2>&1 1>/dev/null; then
+    if type curl >/dev/null 2>&1; then
         curl --proto '=https' --tlsv1.2 -LsSf https://nodejs.org/dist/v24.2.0/node-v24.2.0-linux-x64.tar.xz | tar -JxC "${nodejs_top_folder}"
-    elif type wget 2>&1 1>/dev/null; then
+    elif type wget >/dev/null 2>&1; then
         wget -qO - https://nodejs.org/dist/v24.2.0/node-v24.2.0-linux-x64.tar.xz | tar -JxC "${nodejs_top_folder}"
     else
         echo "Couldn't download nodejs binaries: please install curl or wget"
@@ -289,6 +314,7 @@ parse_command_line "$@"
 
 install_conf_files
 install_neovim
+install_tree_sitter
 install_starship
 install_fonts
 install_diff_so_fancy

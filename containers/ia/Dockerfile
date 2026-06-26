@@ -13,12 +13,15 @@ ENV XDG_CONFIG_HOME=/home/dev/.config
 ENV NPM_CONFIG_PREFIX=/home/dev/.npm-global
 ENV PATH=/home/dev/.local/bin:/home/dev/.npm-global/bin:/home/dev/.cargo/bin:$PATH
 
+# fail RUN pipelines if any stage fails (also enables bash features)
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 # ubuntu:24.04 ships a built-in 'ubuntu' user at UID/GID 1000; remove it first.
 # Pre-create /home/dev/.config so docker's bind-mount auto-creation (in ia.sh)
 # doesn't make it root-owned and lock dev-run tools out of it.
 RUN userdel -r ubuntu \
     && groupadd -g ${GID} dev \
-    && useradd -m -u ${UID} -g ${GID} -s /bin/bash dev \
+    && useradd -l -m -u ${UID} -g ${GID} -s /bin/bash dev \
     && install -d -o dev -g dev -m 0755 /home/dev/.config
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -38,6 +41,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     less \
     lmodern \
     ltrace \
+    lua-check \
     ncat \
     ninja-build \
     nodejs \
@@ -94,6 +98,31 @@ RUN ARCH=$(dpkg --print-architecture) \
     && curl -fsSL "$GLAB_URL" -o /tmp/glab.deb \
     && dpkg -i /tmp/glab.deb \
     && rm /tmp/glab.deb
+
+# Neovim: latest stable from GitHub (matches the host, not the distro package) so
+# core config can be load-tested headless with `nvim -l` / `nvim --headless`
+RUN ARCH=$(dpkg --print-architecture) \
+    && case "$ARCH" in \
+         amd64) NVIM_ARCH=x86_64 ;; \
+         arm64) NVIM_ARCH=arm64 ;; \
+         *) echo "unsupported arch: $ARCH" >&2; exit 1 ;; \
+       esac \
+    && curl -fsSL "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-${NVIM_ARCH}.tar.gz" \
+        -o /tmp/nvim.tar.gz \
+    && tar -C /opt -xzf /tmp/nvim.tar.gz \
+    && ln -s "/opt/nvim-linux-${NVIM_ARCH}/bin/nvim" /usr/local/bin/nvim \
+    && rm /tmp/nvim.tar.gz
+
+# tree-sitter CLI: nvim-treesitter (main branch) compiles parsers with it
+RUN ARCH=$(dpkg --print-architecture) \
+    && case "$ARCH" in \
+         amd64) TS_ARCH=x64 ;; \
+         arm64) TS_ARCH=arm64 ;; \
+         *) echo "unsupported arch: $ARCH" >&2; exit 1 ;; \
+       esac \
+    && curl -fsSL "https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-${TS_ARCH}.gz" \
+        | gunzip > /usr/local/bin/tree-sitter \
+    && chmod +x /usr/local/bin/tree-sitter
 
 USER dev
 

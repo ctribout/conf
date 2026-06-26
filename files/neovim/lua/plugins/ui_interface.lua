@@ -61,7 +61,7 @@ return {
       vim.api.nvim_create_autocmd("BufAdd", {
         callback = function()
           vim.schedule(function()
-            pcall(nvim_bufferline)
+            pcall(function() require("bufferline.ui").refresh() end)
           end)
         end,
       })
@@ -139,18 +139,11 @@ return {
               diagnostics_message,
               color = {
                 gui = "italic",
-                fg = string.format("%06x", vim.api.nvim_get_hl_by_name('Comment', true).foreground),
+                fg = string.format("%06x", vim.api.nvim_get_hl(0, { name = "Comment", link = false }).fg),
               },
             },
           },
-          lualine_x = {
-            {
-              venv,
-              color = {
-                fg = string.format("%06x", vim.api.nvim_get_hl_by_name('Comment', true).foreground),
-              },
-            },
-          },
+          lualine_x = {},
           lualine_y = {
             'selectioncount',
             'searchcount',

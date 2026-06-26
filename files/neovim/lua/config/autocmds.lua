@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = augroup("highlight_yank"),
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
 })
 
@@ -116,8 +116,20 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 vim.api.nvim_create_autocmd("BufEnter", {
   desc = "Set terminal to insert mode when going back to its window",
-  group = termgroup,
+  group = augroup("term"),
   pattern = "term://*",
   command = "startinsert",
+})
+
+-- highlight trailing whitespace in every window (the previous `:match` form only
+-- covered the window that was active when the colorscheme loaded)
+vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
+  group = augroup("trailing_space"),
+  desc = "Highlight trailing whitespace",
+  callback = function()
+    if not vim.w.trailing_space_match then
+      vim.w.trailing_space_match = vim.fn.matchadd("TrailingSpace", [[\s\+$]])
+    end
+  end,
 })
 

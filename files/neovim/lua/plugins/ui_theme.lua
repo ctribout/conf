@@ -103,7 +103,7 @@ return {
         local c_bracket = colors.subtext1
 
         return {
-          -- To see the highlight group use for a character, use ":Inspect" on recent nvim 
+          -- To see the highlight group use for a character, use ":Inspect" on recent nvim
 
           -- Defaults here:
           -- https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/groups/syntax.lua
@@ -214,7 +214,6 @@ return {
     config = function(_, opts)
       require("catppuccin").setup(opts)
       vim.cmd.colorscheme "catppuccin"
-      vim.cmd("match TrailingSpace /\\s\\+$/")  -- highlight trailing empty chars
     end,
   },
 

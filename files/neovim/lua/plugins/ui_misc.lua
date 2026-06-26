@@ -2,19 +2,6 @@ local special_filetypes = require("utils").special_filetypes
 
 return {
 
-  -- Color column to indicate too long lines
-  {
-    -- https://github.com/m4xshen/smartcolumn.nvim
-    "m4xshen/smartcolumn.nvim",
-    enabled = false,
-    opts = {
-      colorcolumn = { "88" },
-      disabled_filetypes = special_filetypes,
-      custom_colorcolumn = {},
-      scope = "file",  -- can be "file", "window" or "line"
-    },
-  },
-
   -- indent guides
   {
     -- https://github.com/lukas-reineke/indent-blankline.nvim

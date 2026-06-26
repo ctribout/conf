@@ -1,8 +1,6 @@
-local utils = require("utils")
-
 local function dial(increment, g)
-  dmap = require("dial.map")
-  dcfg = require("dial.config")
+  local dmap = require("dial.map")
+  local dcfg = require("dial.config")
   local is_visual = vim.fn.mode(true):sub(1, 1) == "v"
   local func = (increment and "inc" or "dec") .. (g and "_g" or "_") .. (is_visual and "visual" or "normal")
   local group = vim.bo.filetype
@@ -257,7 +255,7 @@ return {
           if prefix:sub(1, 1) == "i" then
             desc = desc:gsub(" with white-space", "")
           end
-          ret[#ret + 1] = { prefix .. obj[1], desc = obj.desc }
+          ret[#ret + 1] = { prefix .. obj[1], desc = desc }
         end
       end
       require("which-key").add(ret, { notify = false })
@@ -412,16 +410,8 @@ return {
       local groups = {
         default = default,
       }
-      dcfg = require("dial.config")
+      local dcfg = require("dial.config")
       dcfg.augends:register_group(groups)
-      dcfg.augends:register_group({
-      -- aliases
-      javascript = groups.typescript,
-      javascriptreact = groups.typescript,
-      sass = groups.css,
-      scss = groups.css,
-      typescriptreact = groups.typescript,
-      })
     end,
   },
 

@@ -9,8 +9,6 @@ return {
     {"nvim-treesitter/nvim-treesitter", branch = "main"},
   },
   opts = function()
-    local codecompanion = require("codecompanion")
-    local defaults = require("codecompanion.config").config
     return {
       interactions = {
         cli = {

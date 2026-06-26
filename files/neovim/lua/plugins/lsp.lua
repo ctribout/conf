@@ -41,7 +41,6 @@ return {
           vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
           -- Buffer local mappings.
           -- See `:help vim.lsp.*` for documentation on any of the below functions
-          local opts = { buffer = ev.buf }
           vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = ev.buf, desc = "Go to declaration" })
           vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = ev.buf, desc = "Hover" })
           vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { buffer = ev.buf, desc = "Rename" })
@@ -58,10 +57,9 @@ return {
       })
 
       local diagnostic_goto = function(next, severity)
-        local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
         severity = severity and vim.diagnostic.severity[severity] or nil
         return function()
-          go({ severity = severity })
+          vim.diagnostic.jump({ count = next and 1 or -1, severity = severity })
         end
       end
       vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
@@ -72,11 +70,6 @@ return {
       vim.keymap.set("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
       vim.keymap.set("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 
-      -- diagnostics
-      for name, icon in pairs(utils.icons.diagnostics) do
-        name = "DiagnosticSign" .. name
-        vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
-      end
       vim.diagnostic.config({
         virtual_text = false,
         update_in_insert = false,

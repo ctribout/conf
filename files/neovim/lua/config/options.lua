@@ -59,10 +59,11 @@ vim.api.nvim_create_user_command(
   "Shell",
   function()
     local bname = vim.api.nvim_buf_get_name(0)
+    local cwd
     if vim.fn.filereadable(bname) == 1 then
       cwd = vim.fs.dirname(bname)
     else
-      cwd = vim.loop.cwd()
+      cwd = vim.uv.cwd()
     end
     vim.cmd("belowright split term://" .. cwd .. "//" .. vim.o.shell)
   end,
