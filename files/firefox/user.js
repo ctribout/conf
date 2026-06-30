@@ -1327,6 +1327,9 @@ user_pref("browser.download.folderList", 2);
 /*** PDFs: no in-browser viewer, always prompt what to do (overrides arkenfox 2620) ***/
 user_pref("pdfjs.disabled", true);
 
+/*** Tabs: don't tear a tab into a new window on drag ***/
+user_pref("browser.tabs.allowTabDetach", false);
+
 /*** Network choices ***/
 user_pref("network.trr.mode", 5);                             // DNS-over-HTTPS off (deliberate)
 user_pref("network.protocol-handler.external.mailto", false); // no "associate a webmail?" prompt bar
