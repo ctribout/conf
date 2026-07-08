@@ -22,8 +22,10 @@
 # Environment safety
 
 - Never run `sudo`. If a task needs elevated privileges, stop and tell the user what's required so they can decide.
-- Don't install system or user-space packages, or add dependencies to a project's manifest, without asking first.
 - Never commit, push, or open PRs/MRs unless explicitly asked; don't even offer to. Leave changes in the working tree.
+- Don't install system or user-space packages, or add dependencies to a project's manifest, without asking first.
+- Don't install into shared or global locations without asking, in any language: no sudo/apt/system package managers, no global, --user, pipx, or -g installs.
+- Using a project's own tooling to create and populate a project-scoped environment (venv, node_modules, ...) needs no approval, but don't modify dependencies without asking.
 
 # Comments
 
