@@ -11,6 +11,7 @@ ENV RTK_TELEMETRY_DISABLED=1
 ENV HOME=/home/dev
 ENV XDG_CONFIG_HOME=/home/dev/.config
 ENV NPM_CONFIG_PREFIX=/home/dev/.npm-global
+ENV NPM_CONFIG_UPDATE_NOTIFIER=false
 ENV PATH=/home/dev/.local/bin:/home/dev/.npm-global/bin:/home/dev/.cargo/bin:$PATH
 
 # fail RUN pipelines if any stage fails (also enables bash features)
@@ -44,8 +45,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     lua-check \
     ncat \
     ninja-build \
-    nodejs \
-    npm \
     pandoc \
     pipx \
     poppler-utils \
@@ -70,6 +69,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     zip \
     && ln -s /usr/bin/fdfind /usr/local/bin/fd \
+    && rm -rf /var/lib/apt/lists/*
+
+# Node from NodeSource, not the distro: ubuntu 24.04 ships node 18, while
+# @anthropic-ai/claude-code and friends require >= 22.
+RUN install -d -m 0755 /etc/apt/keyrings \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
+        -o /etc/apt/keyrings/nodesource.asc \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.asc] https://deb.nodesource.com/node_22.x nodistro main" \
+    > /etc/apt/sources.list.d/nodesource.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sSL https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64 \
