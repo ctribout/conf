@@ -23,6 +23,8 @@ HISTFILESIZE=2000
 export EDITOR=vim
 export VISUAL=vim
 
+export SSH_ASKPASS_REQUIRE=never
+
 # set terminal title
 setttitle() {
     echo -ne "\033]0;$1\007"
