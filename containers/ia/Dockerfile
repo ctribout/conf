@@ -27,6 +27,7 @@ RUN userdel -r ubuntu \
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash-completion \
+    bc \
     bubblewrap \
     build-essential \
     ca-certificates \
