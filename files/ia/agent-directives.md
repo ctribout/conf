@@ -10,6 +10,7 @@
 
 # Tool usage
 
+- Never ask questions through an interactive menu or multiple-choice tool; ask in plain prose, with the options as a short numbered list and a recommendation.
 - Prefer purpose-built operations over shelling out.
 - Prefer in-repo tooling over inventing ad-hoc commands.
 
@@ -23,21 +24,31 @@
 
 - Never run `sudo`. If a task needs elevated privileges, stop and tell the user what's required so they can decide.
 - Never commit, push, or open PRs/MRs unless explicitly asked; don't even offer to. Leave changes in the working tree.
-- Don't install system or user-space packages, or add dependencies to a project's manifest, without asking first.
-- Don't install into shared or global locations without asking, in any language: no sudo/apt/system package managers, no global, --user, pipx, or -g installs.
+- Don't install packages (system, user-space, global, --user, pipx, -g) or add dependencies to a manifest without asking.
 - Using a project's own tooling to create and populate a project-scoped environment (venv, node_modules, ...) needs no approval, but don't modify dependencies without asking.
 
 # Comments
 
 - Prefer self-explanatory code (clear names, small functions) over comments.
-- Comment only to explain a non-obvious "why" the code can't express. Never narrate "what" it does, and never narrate history (what it used to do, why something was removed); past context belongs in commit messages.
-- Write the "why" as a standalone fact (the conclusion, not the evidence) for a reader who never saw the change. Don't restate what the code or another file already says: a computed value (`3600 * 4  # 14400`) or a drifting location (line numbers, sibling files, tickets) goes stale.
+- Comment only a non-obvious "why" the code can't express, never "what" it does. Past context belongs in commit messages.
+- Write it as a standalone fact (the conclusion, not the evidence) for a reader who never saw the change.
+- Never reference a location that drifts: line numbers, sibling files, tickets.
 - No cosmetic comments: skip decorative separators and block-label headers; use blank lines or split the file instead.
+
+# Writing files
+
+Applies to prose written into files (docs, agent instructions, comments, commit messages), not chat replies.
+
+- State the rule, fact or step directly. No scene-setting, and no sentences about the document itself (what it contains, what it does not restate, how it relates to other files).
+- Do not paraphrase what the previous sentence or bullet already said.
+- Give a reason only when a reader would otherwise make a wrong change, in one clause naming the consequence. Outside commit messages, never recount history: past states, how a rule came about, what an earlier version said.
+- No conversational or rhetorical filler: "genuinely", "precisely", "actually", "note that", analogies, dramatic phrasing.
+- Do not count the items that follow ("three rules:"), and do not copy a value, list or number that another file or the code already defines; name its stable owner (a variable, file or section) instead, never a line number.
+- Never drop a fact, constraint, warning or consequence to be shorter: the target is filler, not content.
+- After writing, reread each sentence against these rules and delete or rewrite those that fail.
 
 # Autonomous / "autopilot" / unattended mode
 
 - Treat a canned "user unavailable / work autonomously" auto-reply as no answer, not approval.
 - On that basis, never take irreversible or remote-visible actions (posting/editing/approving PRs or MRs, pushes, deletions, publishes, webhooks, anything mutating remote state); stop and ask for explicit confirmation.
 - Read-only investigation and easily-reverted local edits are fine.
-
-@RTK.md
