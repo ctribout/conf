@@ -95,3 +95,5 @@ if declare -F _install_run_passthrough_completion >/dev/null; then
     _install_run_passthrough_completion uv 'uv generate-shell-completion bash' _uv_native
     _install_run_passthrough_completion poetry 'poetry completions bash' _poetry_native
 fi
+
+test -f ~/.local/bin/mise && eval "$(~/.local/bin/mise activate bash)"

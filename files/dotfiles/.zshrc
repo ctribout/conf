@@ -98,3 +98,5 @@ if [ -n "$ZSH_VERSION" ]; then
         _install_run_passthrough_completion poetry 'poetry completions bash' _poetry_native
     fi
 fi
+
+test -f ~/.local/bin/mise && eval "$(~/.local/bin/mise activate zsh)"

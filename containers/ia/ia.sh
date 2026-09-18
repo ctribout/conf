@@ -37,11 +37,12 @@ case "$TOOL" in
         CONFIG_DIRS=("${HOME}/.claude")
         ;;
     codex)
-        DEFAULT_AGENT_ARGS=(--sandbox danger-full-access)
+        DEFAULT_AGENT_ARGS=(--sandbox danger-full-access --ask-for-approval never)
         VOLUME_FLAGS=("-v" "${HOME}/.codex:/home/dev/.codex")
         CONFIG_DIRS=("${HOME}/.codex")
         ;;
     copilot)
+        DEFAULT_AGENT_ARGS=(--allow-all --no-auto-update)
         VOLUME_FLAGS=(
             "-v" "${HOME}/.config/github-copilot:/home/dev/.config/github-copilot"
             "-v" "${HOME}/.copilot:/home/dev/.copilot"
