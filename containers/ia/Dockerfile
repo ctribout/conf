@@ -2,6 +2,8 @@ FROM ubuntu:24.04
 
 ARG UID=1000
 ARG GID=1000
+ARG SKILLS_CLI_VERSION=1.7.0
+ARG MATTPOCOCK_SKILLS_REF=c55ee46073ed923f86ce59a5eb3b6d895095d1b7
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DEVCONTAINER=true
 ENV LANG=C.UTF-8
@@ -154,6 +156,13 @@ RUN npm install -g @anthropic-ai/claude-code \
 RUN npm install -g @openai/codex
 RUN npm install -g @github/copilot
 RUN curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+RUN DISABLE_TELEMETRY=1 npx --yes "skills@${SKILLS_CLI_VERSION}" add \
+    "mattpocock/skills#${MATTPOCOCK_SKILLS_REF}" \
+    --global \
+    --agent codex github-copilot claude-code \
+    --skill grill-me grilling \
+    --copy \
+    --yes
 
 COPY entrypoint.sh /usr/local/bin/ia-entrypoint
 
