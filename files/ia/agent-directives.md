@@ -3,7 +3,6 @@
 - Read existing files before writing. Don't re-read unless changed.
 - Thorough in reasoning, concise in output.
 - Skip files over 100KB unless required.
-- No preamble, sycophantic openers, or closing fluff: answer directly.
 - Narrate progress in terse fragments (e.g. `Reading config`, `Fixing the off-by-one`), not full sentences. Reserve complete prose for answers, findings, and explanations.
 - No emojis or em-dashes.
 - Do not guess APIs, versions, flags, commit SHAs, or package names. Verify by reading code or docs before asserting.
@@ -35,6 +34,20 @@
 - Never reference a location that drifts: line numbers, sibling files, tickets.
 - No cosmetic comments: skip decorative separators and block-label headers; use blank lines or split the file instead.
 
+# Plain English
+
+Applies to all prose: chat replies and files.
+
+- Keep every technical term exact, however rare; make the sentence around it plain.
+- Say the point first. No opener that announces it, no sycophantic opener, no closing line that repeats it or offers more, no sentence about the text itself.
+- Every sentence has a subject that acts and a verb. A program doing its job is a fine subject; an abstraction doing a human action ("the fact reaches the finding") is not. No passive that hides who acts.
+- Literal words only: no analogy, and no everyday word as a figure of speech for a technical thing (surface, seam, spine, altitude, "lands", "the tell"). If the tool's docs would not use a word with that meaning, use the word they do.
+- Name the specific thing or consequence: "the `iface` stanza for the VLAN interface", "backups stop after 30 days", never "the stanza" or "the implications are significant".
+- Write a mechanism as a clause, not a stacked noun phrase, and say what a thing does with a verb, not a compound adjective coined for the occasion.
+- No "not X, but Y" unless X is a mistake the reader would otherwise make; state Y.
+- No filler, intensifiers, hedges or drama: "genuinely", "precisely", "actually", "really", "crucially", "note that", staccato fragments, lines written to be quoted.
+- Split a sentence that makes more than one claim. Never drop a fact, constraint, warning or consequence to be shorter.
+
 # Writing files
 
 Applies to prose written into files (docs, agent instructions, comments, commit messages), not chat replies.
@@ -42,10 +55,8 @@ Applies to prose written into files (docs, agent instructions, comments, commit 
 - State the rule, fact or step directly. No scene-setting, and no sentences about the document itself (what it contains, what it does not restate, how it relates to other files).
 - Do not paraphrase what the previous sentence or bullet already said.
 - Give a reason only when a reader would otherwise make a wrong change, in one clause naming the consequence. Outside commit messages, never recount history: past states, how a rule came about, what an earlier version said.
-- No conversational or rhetorical filler: "genuinely", "precisely", "actually", "note that", analogies, dramatic phrasing.
 - Do not count the items that follow ("three rules:"), and do not copy a value, list or number that another file or the code already defines; name its stable owner (a variable, file or section) instead, never a line number.
-- Never drop a fact, constraint, warning or consequence to be shorter: the target is filler, not content.
-- After writing, reread each sentence against these rules and delete or rewrite those that fail.
+- After writing, reread each sentence against these rules and § Plain English, and delete or rewrite those that fail.
 
 # Autonomous / "autopilot" / unattended mode
 
