@@ -160,7 +160,7 @@ RUN DISABLE_TELEMETRY=1 npx --yes "skills@${SKILLS_CLI_VERSION}" add \
     "mattpocock/skills#${MATTPOCOCK_SKILLS_REF}" \
     --global \
     --agent codex github-copilot claude-code \
-    --skill grill-me grilling \
+    --skill grill-me grilling grill-with-docs domain-modeling \
     --copy \
     --yes
 
