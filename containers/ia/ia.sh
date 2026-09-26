@@ -59,10 +59,10 @@ LAUNCH_DIR="$PWD"
 EXTRA_MOUNTS=()
 
 # Dotfiles installed by ../../install.sh are symlinks whose targets live under
-# this repo's files/ dir (absolute paths). Mount that dir read-only at its real
-# path so those symlinks (e.g. ~/.claude/statusline-command.sh) resolve inside
-# the container instead of dangling.
-CONF_FILES_DIR=$(readlink -f "$(dirname "$0")/../../files" 2>/dev/null || true)
+# this repo's files/ dir (absolute paths). Mount the whole repo read-only at its
+# real path so those symlinks (e.g. ~/.claude/statusline-command.sh) resolve
+# inside the container and agents can read this container's Dockerfile and scripts.
+CONF_DIR=$(readlink -f "$(dirname "$0")/../.." 2>/dev/null || true)
 
 if WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null); then
     WORKSPACE=$(readlink -f "$WORKSPACE")
@@ -83,12 +83,12 @@ else
     WORKSPACE="$PWD"
 fi
 
-# Add the read-only files/ mount unless it already lives inside WORKSPACE (in
+# Add the read-only repo mount unless it already lives inside WORKSPACE (in
 # which case the workspace mount covers it and we avoid shadowing it read-only).
-if [ -n "$CONF_FILES_DIR" ] && [ -d "$CONF_FILES_DIR" ]; then
-    case "$CONF_FILES_DIR/" in
+if [ -n "$CONF_DIR" ] && [ -d "$CONF_DIR" ]; then
+    case "$CONF_DIR/" in
         "$WORKSPACE"/*) ;;  # already reachable via the workspace mount
-        *) EXTRA_MOUNTS+=("-v" "$CONF_FILES_DIR:$CONF_FILES_DIR:ro") ;;
+        *) EXTRA_MOUNTS+=("-v" "$CONF_DIR:$CONF_DIR:ro") ;;
     esac
 fi
 
