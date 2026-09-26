@@ -55,7 +55,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-openpyxl \
     python3-venv \
     ripgrep \
-    samba-common-bin \
     shellcheck \
     socat \
     sqlite3 \

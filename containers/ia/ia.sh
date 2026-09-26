@@ -140,6 +140,6 @@ docker run --rm -it \
     -w "${LAUNCH_DIR}" \
     "${VOLUME_FLAGS[@]}" \
     "${DOCKER_ARGS[@]}" \
-    ia-sandbox \
+    "${IA_IMAGE:-ia-sandbox}" \
     "${DEFAULT_AGENT_ARGS[@]}" \
     "${AGENT_ARGS[@]}"
