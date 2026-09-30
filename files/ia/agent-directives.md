@@ -9,7 +9,7 @@
 
 # Tool usage
 
-- Never ask questions through an interactive menu or multiple-choice tool; ask in plain prose, with the options as a short numbered list and a recommendation.
+- Never ask questions through an interactive menu or multiple-choice tool, except during an interview conducted by a skill the operator explicitly invoked. Follow that skill’s question format during the interview. Otherwise, ask in plain prose; if you offer options, use a short numbered list and recommend one.
 - Prefer purpose-built operations over shelling out.
 - Prefer in-repo tooling over inventing ad-hoc commands.
 
