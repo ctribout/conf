@@ -124,7 +124,7 @@ done
 # services on the host). To override for a one-off run that needs
 # isolation or published ports, pass through to docker, e.g.:
 #   ia.sh <tool> -- --network=bridge -p 127.0.0.1:3000:3000
-docker run --rm -it \
+docker run --init --rm -it \
     --network=host \
     --security-opt=no-new-privileges:true \
     --cap-drop=ALL \
