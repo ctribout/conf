@@ -9,14 +9,21 @@ return {
     lazy = false, -- the main branch does not support lazy-loading
     build = ":TSUpdate",
     config = function()
-      -- the main branch compiles parsers with the `tree-sitter` CLI; without it
-      -- every parser build fails, so warn once instead of erroring per language
-      if vim.fn.executable("tree-sitter") == 1 then
+      -- the main branch compiles parsers with the `tree-sitter` CLI; probe it
+      -- first so an incompatible binary cannot emit an error for each parser
+      local tree_sitter_available = vim.fn.executable("tree-sitter") == 1
+      local tree_sitter_works = false
+      if tree_sitter_available then
+        vim.fn.system({ "tree-sitter", "--version" })
+        tree_sitter_works = vim.v.shell_error == 0
+      end
+
+      if tree_sitter_works then
         require("nvim-treesitter").install({
           "bash", "diff", "dockerfile", "gitcommit", "json", "lua", "markdown",
           "markdown_inline", "python", "query", "toml", "vim", "vimdoc", "yaml",
         })
-      else
+      elseif not tree_sitter_available then
         vim.notify(
           "[treesitter] `tree-sitter` CLI not on PATH; parsers can't be built. "
             .. "Install tree-sitter-cli (npm/cargo/release binary).",
