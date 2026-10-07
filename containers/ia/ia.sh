@@ -37,7 +37,7 @@ case "$TOOL" in
         CONFIG_DIRS=("${HOME}/.claude")
         ;;
     codex)
-        DEFAULT_AGENT_ARGS=(--sandbox danger-full-access --ask-for-approval never)
+        DEFAULT_AGENT_ARGS=(--dangerously-bypass-approvals-and-sandbox --dangerously-bypass-hook-trust)
         VOLUME_FLAGS=("-v" "${HOME}/.codex:/home/dev/.codex")
         CONFIG_DIRS=("${HOME}/.codex")
         ;;
