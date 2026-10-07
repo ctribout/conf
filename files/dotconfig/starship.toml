@@ -24,6 +24,23 @@ truncate_to_repo = false
 [aws]
 format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
 
+[battery]
+full_symbol = ''
+charging_symbol = '️🔋'
+discharging_symbol = '🪫'
+
+[[battery.display]]
+threshold = 95
+style = 'bold 142'
+
+[[battery.display]]
+threshold = 49
+style = 'bold 202'
+
+[[battery.display]]
+threshold = 19
+style = 'bold red'
+
 [bun]
 format = '\[[$symbol($version)]($style)\]'
 
