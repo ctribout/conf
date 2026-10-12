@@ -2,8 +2,6 @@ FROM ubuntu:24.04
 
 ARG UID=1000
 ARG GID=1000
-ARG SKILLS_CLI_VERSION=1.7.0
-ARG MATTPOCOCK_SKILLS_REF=c55ee46073ed923f86ce59a5eb3b6d895095d1b7
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DEVCONTAINER=true
 ENV LANG=C.UTF-8
@@ -156,11 +154,16 @@ RUN npm install -g @anthropic-ai/claude-code \
 RUN npm install -g @openai/codex
 RUN npm install -g @github/copilot
 RUN curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+ARG SKILLS_CLI_VERSION=1.7.0  # https://github.com/vercel-labs/skills/releases
+ARG MATTPOCOCK_SKILLS_REF=v1.3.1  # https://github.com/mattpocock/skills/releases
 RUN DISABLE_TELEMETRY=1 npx --yes "skills@${SKILLS_CLI_VERSION}" add \
     "mattpocock/skills#${MATTPOCOCK_SKILLS_REF}" \
     --global \
     --agent codex github-copilot claude-code \
     --skill grill-me grilling grill-with-docs domain-modeling \
+            handoff teach to-questionnaire \
+            codebase-design diagnosing-bugs prototype improve-codebase-architecture \
+            to-spec to-tickets retro \
     --copy \
     --yes
 
