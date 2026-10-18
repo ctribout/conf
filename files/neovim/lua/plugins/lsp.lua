@@ -16,6 +16,9 @@ return {
         -- packages available here: https://github.com/mason-org/mason-registry/tree/main/packages
         "pyright",
         "ruff",
+        "yaml-language-server",
+        "bash-language-server",
+        "marksman",
       },
     },
     config = function(_, opts)
@@ -116,79 +119,33 @@ return {
           filetypes = { "python" },
         },
         ruff = {
-          init_options = {
-            -- https://github.com/astral-sh/ruff-lsp
-            settings = {
-              lint = {
-                args = { -- TODO: maybe move that to ~/.config/ruff/ruff.toml ?
-
-                  -- rules: https://docs.astral.sh/ruff/rules/
-
-                  "--select=E,W", -- pycodestyle
-                  "--select=I", -- isort
-                  "--select=F", -- pyflakes
-                  "--select=D,ANN", -- pydocstyle and flake8-annotations (doc)
-                  "--select=N", -- pep8-naming
-                  "--select=C4", -- flake8-comprehensions
-                  "--select=UP", -- pyupgrade (deprecated syntax/usage)
-                  "--select=S", -- bandit (security)
-                  "--select=B", -- bugbear (misc lints)
-                  "--select=A", -- flake8-builtins (shadowing builtins)
-                  "--select=T10", -- flake8-debugger
-                  "--select=EXE", -- flake8-executable
-                  "--select=ISC", -- flake8-implicit-str-concat
-                  "--select=PIE", -- flake8-pie (misc lints)
-                  "--select=RET", -- flake8-return (simpler return usage)
-                  "--select=SIM", -- flake8-simplify (use simpler syntax)
-                  "--select=SLF", -- flake8-self (private attribute access)
-                  "--select=PTH", -- flake8-use-pathlib
-                  "--select=PL",  -- pylint
-                  "--select=RUF", -- ruff extra lints
-                  -- extra configuration
-                  "--config", "pydocstyle.convention = 'google'",
-
-                  -- ignored rules
-
-                  "--ignore=PLC0414",  -- useless-import-alias
-                  -- Pylint "too few" or "too many" arbitrary checks
-                  "--ignore=PLR0904",  -- too-many-public-methods
-                  "--ignore=PLR0911",  -- too-many-return-statements
-                  "--ignore=PLR0912",  -- too-many-branches
-                  "--ignore=PLR0913",  -- too-many-arguments
-                  "--ignore=PLR0914",  -- too-many-locals
-                  "--ignore=PLR0915",  -- too-many-statements
-                  "--ignore=PLR0916",  -- too-many-boolean-expressions
-                  "--ignore=PLR0917",  -- too-many-positional
-                  "--ignore=PLR1702",  -- too-many-nested-blocks
-                  -- ruff can't manage multi-files very well yet, so docstrings checks for
-                  -- methods and classes (where inheritance can be involved) are better
-                  -- handled by Pylint Ex.: for methods overloaded in a daughter class
-                  -- when the prototype does not change, it's better to not have to
-                  -- copy/paste the exact same docstring as the parents'
-                  "--ignore=D101",  -- undocumented-public-class
-                  "--ignore=D102",  -- undocumented-public-method
-                  "--ignore=D107",  -- undocumented-public-init
-                  -- Magic methods: they are part of Python's object model, and don't need
-                  -- a docstring as it's already in the Python official documentation
-                  "--ignore=D105",  -- undocumented-magic-method
-                  -- Missing type annotations for "self" or "cls" (useless and deprecated)
-                  "--ignore=ANN101",  -- missing-type-self
-                  "--ignore=ANN102",  -- missing-type-cls
-                  -- Asserts are mostly used to help static checkers like mypy, it's not
-                  -- an issue to use them, as long as actual exceptions are raised as
-                  -- exception
-                  "--ignore=S101",  -- assert
-                  -- Failing anytime a `random` function is used, assuming it could be
-                  -- used for secrets even when it's not
-                  "--ignore=S311",  -- suspicious-non-cryptographic-random-usage
-                  -- Failing anytime subprocess.run() or equivalent is used
-                  "--ignore=S603",  -- subprocess-without-shell-equals-true
-                }
+          cmd = { "ruff", "server" },
+          filetypes = { "python" },
+        },
+        yamlls = {
+          cmd = { "yaml-language-server", "--stdio" },
+          filetypes = { "yaml", "yaml.docker-compose", "yaml.gitlab", "yaml.helm-values" },
+          root_markers = { ".git" },
+          settings = {
+            yaml = {
+              customTags = { "!reference sequence" },
+              schemas = {
+                ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = {
+                  ".gitlab-ci.yml",
+                },
               },
             },
           },
-          cmd = { "ruff", "server" },
-          filetypes = { "python" },
+        },
+        bashls = {
+          cmd = { "bash-language-server", "start" },
+          filetypes = { "bash", "sh" },
+          root_markers = { ".git" },
+        },
+        marksman = {
+          cmd = { "marksman", "server" },
+          filetypes = { "markdown", "markdown.mdx" },
+          root_markers = { ".marksman.toml", ".git" },
         },
       }
 

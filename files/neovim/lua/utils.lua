@@ -26,7 +26,7 @@ local function find_project_dir(paths)
     { upward = true, stop = vim.loop.os_homedir(), path = vim.fs.dirname(vim.fn.expand("%:p")) }
   )
   if #found == 0 then
-    return vim.loop.os_homedir()
+    return vim.uv.cwd()
   end
   local project_dir = vim.fs.dirname(found[1])
   if not project_dir or project_dir == "." or project_dir == "" or project_dir == " " then
