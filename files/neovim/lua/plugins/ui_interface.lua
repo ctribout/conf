@@ -221,24 +221,14 @@ return {
     },
   },
 
-  -- TODO: replace with https://github.com/folke/snacks.nvim
-  -- better vim.ui
   {
-    -- https://github.com/stevearc/dressing.nvim
-    "stevearc/dressing.nvim",
-    lazy = true,
-    init = function()
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.select = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
-        return vim.ui.select(...)
-      end
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.input = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
-        return vim.ui.input(...)
-      end
-    end,
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      input = { enabled = true },
+      picker = { enabled = true, ui_select = true },
+    },
   },
 
   {
