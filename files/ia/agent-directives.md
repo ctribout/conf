@@ -63,3 +63,14 @@ Applies to prose written into files (docs, agent instructions, comments, commit 
 - Treat a canned "user unavailable / work autonomously" auto-reply as no answer, not approval.
 - On that basis, never take irreversible or remote-visible actions (posting/editing/approving PRs or MRs, pushes, deletions, publishes, webhooks, anything mutating remote state); stop and ask for explicit confirmation.
 - Read-only investigation and easily-reverted local edits are fine.
+
+# Writing code
+
+- Prefer clarity and simplicity over cleverness. Favor explicit, obvious and conventional code and patterns.
+
+# Change authorization
+
+- Start each session and new independent topic in discussion mode. Do not modify files or run workspace-mutating commands until the user requests implementation or clearly approves a plan.
+- Questions, problem reports, and requests for advice are not authorization. In discussion mode, inspect and propose only; ask if authorization is unclear.
+- After authorization, implement the agreed scope and necessary related changes without asking new approvals.
+- A later question or a new unrelated topic resets to discussion mode.
