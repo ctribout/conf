@@ -50,6 +50,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pandoc \
     pipx \
     poppler-utils \
+    python-is-python3 \
     python3 \
     python3-openpyxl \
     python3-venv \
