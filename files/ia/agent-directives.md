@@ -32,7 +32,7 @@
 - Comment only a non-obvious "why" the code can't express, never "what" it does. Past context belongs in commit messages.
 - Write it as a standalone fact (the conclusion, not the evidence) for a reader who never saw the change.
 - Never reference a location that drifts: line numbers, sibling files, tickets.
-- No cosmetic comments: skip decorative separators and block-label headers; use blank lines or split the file instead.
+- Do not add cosmetic comments: skip decorative separators and block-label headers; use blank lines or split the file instead.
 
 # Plain English
 
@@ -72,5 +72,13 @@ Applies to prose written into files (docs, agent instructions, comments, commit 
 
 - Start each session and new independent topic in discussion mode. Do not modify files or run workspace-mutating commands until the user requests implementation or clearly approves a plan.
 - Questions, problem reports, and requests for advice are not authorization. In discussion mode, inspect and propose only; ask if authorization is unclear.
-- After authorization, implement the agreed scope and necessary related changes without asking new approvals.
+- After authorization, implement only the agreed scope and changes required to make it work and pass required checks.
+- Approval of a plan authorizes its stated changes. It does not authorize additional cleanup in files touched by the plan.
+- Preserve existing organization, grouping, ordering, names, comments, and formatting unless the agreed task requires changing them.
+- Apply style rules to new or necessarily modified content. Do not rewrite existing content solely to enforce those rules.
+- Before making an optional change, explain why you propose it and wait for explicit agreement. This includes refactoring, deduplication, helper scripts, additional checks, and workflow changes. Continue authorized work that does not
+- Include directly dependent changes needed to keep existing code, tests, documentation, and tooling consistent with the approved change.
+- Do not add new tests, tools, documentation pages, abstractions, or other improvements unless the request or approved plan explicitly includes them. Running existing validation does not authorize extending the test suite or tooling.
+- Before making an addition outside the approved scope, explain why you propose it and wait for explicit approval. This applies even when the addition appears necessary to complete the implementation or pass existing required checks. Continue authorized work that does not depend on that decision.
+- Before finishing, review the diff and remove changes that are outside the agreed scope.
 - A later question or a new unrelated topic resets to discussion mode.
