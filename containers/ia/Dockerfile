@@ -155,8 +155,8 @@ RUN npm install -g @anthropic-ai/claude-code \
 RUN npm install -g @openai/codex
 RUN npm install -g @github/copilot
 RUN curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
-ARG SKILLS_CLI_VERSION=1.7.0  # https://github.com/vercel-labs/skills/releases
-ARG MATTPOCOCK_SKILLS_REF=v1.3.1  # https://github.com/mattpocock/skills/releases
+ARG SKILLS_CLI_VERSION=1.7.6  # https://github.com/vercel-labs/skills/releases
+ARG MATTPOCOCK_SKILLS_REF=v1.3.2  # https://github.com/mattpocock/skills/releases
 RUN DISABLE_TELEMETRY=1 npx --yes "skills@${SKILLS_CLI_VERSION}" add \
     "mattpocock/skills#${MATTPOCOCK_SKILLS_REF}" \
     --global \
