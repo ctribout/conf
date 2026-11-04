@@ -17,17 +17,24 @@ if [ -n "${IA_CONTAINER_FORWARD_ENV:-}" ]; then
 fi
 
 usage() {
-    echo "Usage: $(basename "$0") <claude|codex|copilot> [agent args...] [-- docker run args...]" >&2
+    echo "Usage: $(basename "$0") [claude|codex|copilot] [agent args...] [-- docker run args...]" >&2
+    echo "With no agent, launch an interactive Bash shell." >&2
     exit 1
 }
 
-[ $# -lt 1 ] && usage
-
-TOOL="$1"; shift
+TOOL=bash
+if [ $# -gt 0 ] && [ "$1" != "--" ]; then
+    TOOL="$1"; shift
+fi
 ENV_FLAGS=()
 DEFAULT_AGENT_ARGS=()
+VOLUME_FLAGS=()
+CONFIG_DIRS=()
 
 case "$TOOL" in
+    bash)
+        DEFAULT_AGENT_ARGS=(-i)
+        ;;
     claude)
         DEFAULT_AGENT_ARGS=(--allow-dangerously-skip-permissions)
         VOLUME_FLAGS=(
