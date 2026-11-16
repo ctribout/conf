@@ -17,10 +17,17 @@ if [ -n "${IA_CONTAINER_FORWARD_ENV:-}" ]; then
 fi
 
 usage() {
-    echo "Usage: $(basename "$0") [claude|codex|copilot] [agent args...] [-- docker run args...]" >&2
+    echo "Usage: $(basename "$0") [--dev] [claude|codex|copilot] [agent args...] [-- docker run args...]" >&2
     echo "With no agent, launch an interactive Bash shell." >&2
+    echo "--dev exposes host /dev for USB/UART access and hotplug; place it before the agent name." >&2
     exit 1
 }
+
+DEV=false
+if [ "${1:-}" = "--dev" ]; then
+    DEV=true
+    shift
+fi
 
 TOOL=bash
 if [ $# -gt 0 ] && [ "$1" != "--" ]; then
@@ -61,6 +68,25 @@ case "$TOOL" in
         usage
         ;;
 esac
+
+DEV_FLAGS=()
+if [ "$DEV" = true ]; then
+    DEV_FLAGS=(
+        "--mount" "type=bind,source=/dev,target=/dev,readonly"
+        "--device-cgroup-rule" "c 166:* rw"
+        "--device-cgroup-rule" "c 188:* rw"
+        "--device-cgroup-rule" "c 189:* rw"
+        # Mounting host /dev replaces Docker's private /dev/shm.
+        "--tmpfs" "/dev/shm:rw,nosuid,nodev,noexec,size=64m"
+    )
+    for group in dialout plugdev; do
+        if group_entry=$(getent group "$group"); then
+            IFS=: read -r _ _ group_id _ <<<"$group_entry"
+            DEV_FLAGS+=("--group-add" "$group_id")
+        fi
+    done
+    echo "Warning: --dev exposes host USB/UART devices and other /dev entries, including host terminals and sockets. Read-only mounting does not prevent device writes." >&2
+fi
 
 LAUNCH_DIR="$PWD"
 EXTRA_MOUNTS=()
@@ -142,6 +168,7 @@ docker run --init --rm -it \
     -e TERM -e COLORTERM \
     "${COMMON_ENV_FLAGS[@]}" \
     "${ENV_FLAGS[@]}" \
+    "${DEV_FLAGS[@]}" \
     -v "${WORKSPACE}:${WORKSPACE}" \
     "${EXTRA_MOUNTS[@]}" \
     -w "${LAUNCH_DIR}" \

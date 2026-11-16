@@ -127,4 +127,35 @@ if [ "$tool" = codex ] && [ -f "$rtk_md" ]; then
     fi
 fi
 
+container_instructions="/usr/local/share/ia/container-instructions.md"
+case "$tool" in
+    claude)
+        set -- --append-system-prompt-file "$container_instructions" "$@"
+        ;;
+    codex)
+        instructions_override="$(
+            python3 /usr/local/share/ia/codex-container-instructions.py \
+                "$container_instructions" "$@"
+        )"
+        codex_args=()
+        instructions_added=false
+        for arg in "$@"; do
+            if [ "$arg" = "--" ] && [ "$instructions_added" = false ]; then
+                codex_args+=("--config" "$instructions_override")
+                instructions_added=true
+            fi
+            codex_args+=("$arg")
+        done
+        if [ "$instructions_added" = false ]; then
+            codex_args+=("--config" "$instructions_override")
+        fi
+        set -- "${codex_args[@]}"
+        ;;
+    copilot)
+        instructions_dir="$(mktemp -d)"
+        install -m 600 "$container_instructions" "$instructions_dir/container.instructions.md"
+        export COPILOT_CUSTOM_INSTRUCTIONS_DIRS="${COPILOT_CUSTOM_INSTRUCTIONS_DIRS:+$COPILOT_CUSTOM_INSTRUCTIONS_DIRS,}$instructions_dir"
+        ;;
+esac
+
 exec "$tool" "$@"

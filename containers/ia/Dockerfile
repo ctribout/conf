@@ -169,6 +169,7 @@ RUN DISABLE_TELEMETRY=1 npx --yes "skills@${SKILLS_CLI_VERSION}" add \
     --yes
 
 COPY entrypoint.sh /usr/local/bin/ia-entrypoint
+COPY container-instructions.md codex-container-instructions.py /usr/local/share/ia/
 
 WORKDIR /workspace
 ENTRYPOINT ["/usr/local/bin/ia-entrypoint"]
