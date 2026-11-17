@@ -46,7 +46,6 @@ Applies to all prose: chat replies and files.
 - Write a mechanism as a clause, not a stacked noun phrase, and say what a thing does with a verb, not a compound adjective coined for the occasion.
 - No "not X, but Y" unless X is a mistake the reader would otherwise make; state Y.
 - No filler, intensifiers, hedges or drama: "genuinely", "precisely", "actually", "really", "crucially", "note that", staccato fragments, lines written to be quoted.
-- Split a sentence that makes more than one claim. Never drop a fact, constraint, warning or consequence to be shorter.
 
 # Writing files
 
